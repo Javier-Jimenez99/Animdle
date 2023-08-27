@@ -7,4 +7,9 @@ dependencies:
   - pip
   - django
   - nodejs
+  - requests
+  - typer
+  - bs4
+  - black
+  - pandas
 
