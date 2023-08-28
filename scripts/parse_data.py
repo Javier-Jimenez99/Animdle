@@ -121,6 +121,33 @@ def select_animethemes(
     return days
 
 
+def test_data(df_anime, df_theme, df_day):
+    assert (
+        len(df_anime) == df_anime["id_anime"].nunique()
+    ), "There are duplicated anime ids"
+    assert (
+        len(df_theme) == df_theme["id_theme"].nunique()
+    ), "There are duplicated theme ids"
+    assert len(df_day) == df_day["id_day"].nunique(), "There are duplicated day ids"
+
+    assert (
+        df_theme["id_anime"].isin(df_anime["id_anime"]).all()
+    ), "There are themes that are not in the animes"
+
+    assert (
+        df_day["easy_openings"].isin(df_theme["id_theme"]).all()
+    ), "There are easy openings that are not in the themes"
+    assert (
+        df_day["easy_endings"].isin(df_theme["id_theme"]).all()
+    ), "There are easy endings that are not in the themes"
+    assert (
+        df_day["hardcore_openings"].isin(df_theme["id_theme"]).all()
+    ), "There are hardcore openings that are not in the themes"
+    assert (
+        df_day["hardcore_endings"].isin(df_theme["id_theme"]).all()
+    ), "There are hardcore endings that are not in the themes"
+
+
 def main(
     path_mal_csv: str = typer.Argument(
         "./scripts/raw_data/myanimelist_data.json",
@@ -205,6 +232,8 @@ def main(
     start_date = start_date.floor("D")
 
     df_days["date"] = pd.date_range(start_date, periods=len(df_days), freq="D")
+
+    test_data(df_anime, df_anime_themes, df_days)
 
     df_days.to_csv(f"{path_out}/days.csv", index=False)
 
