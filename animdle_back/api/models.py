@@ -17,6 +17,9 @@ class Anime(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.title} ({self.year})"
+
 
 class Theme(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -29,6 +32,9 @@ class Theme(models.Model):
     video_resolution = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.anime.title} - {self.title}"
 
 
 class Day(models.Model):
@@ -47,6 +53,9 @@ class Day(models.Model):
         on_delete=models.CASCADE,
     )
     date = models.DateField()
+
+    def __str__(self):
+        return f"{self.date}"
 
 
 class AnimdleUser(AbstractUser):
