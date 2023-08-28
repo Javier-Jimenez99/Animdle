@@ -1,7 +1,9 @@
-import typer
 import json
-from fuzzywuzzy import fuzz
+
 import pandas as pd
+import typer
+from fuzzywuzzy import fuzz
+
 
 def parse_at_data(anime_themes_json):
     animes_parsed = []
@@ -46,6 +48,7 @@ def parse_at_data(anime_themes_json):
 
     return animes_parsed, anime_themes_parsed
 
+
 def max_ration_index(x, col):
     ratios = []
     for i in col:
@@ -63,6 +66,7 @@ def fuzzy_merge(row, df2):
 
     return pd.concat([row, df2_row], axis=0)
 
+
 def merge_data(df_mal, df_at_animes):
     df_mal["title_parsed"] = df_mal["title"].str.lower()
 
@@ -70,14 +74,10 @@ def merge_data(df_mal, df_at_animes):
     df_at_animes["title_parsed"] = df_at_animes["title"].str.lower()
 
     # view final DataFrame
-    df_merged = df_mal.merge(
-        df_at_animes, on="title_parsed", suffixes=("_mal", "_at")
-    )
+    df_merged = df_mal.merge(df_at_animes, on="title_parsed", suffixes=("_mal", "_at"))
     df_merged["title_matched"] = df_merged["title_parsed"]
 
-    not_merged = df_mal[
-        ~df_mal["title_parsed"].isin(df_merged["title_parsed"])
-    ]
+    not_merged = df_mal[~df_mal["title_parsed"].isin(df_merged["title_parsed"])]
 
     fix_merge = not_merged.apply(lambda x: fuzzy_merge(x, df_at_animes), axis=1)
 
@@ -85,6 +85,7 @@ def merge_data(df_mal, df_at_animes):
     df_anime_merged = df_merged.drop_duplicates(subset=["id_anime"], keep="first")
 
     return df_anime_merged
+
 
 def select_animethemes(
     df_anime_themes,
@@ -119,46 +120,44 @@ def select_animethemes(
 
     return days
 
+
 def main(
-    path_mal_csv: str = typer.Argument("./scripts/raw_data/myanimelist_data.json", help="Path to the My Anime List csv data"),
-    path_at_csv: str = typer.Argument("./scripts/raw_data/animethemes_data.json", help="Path to the AnimetThemes csv data"),
-    path_out: str = typer.Argument("./scripts/parsed_data", help="Path to the output folder"),
-    start_date: str = typer.Option(None, help="Start date of the challenge, if it is not provided, it will be the current date"),
+    path_mal_csv: str = typer.Argument(
+        "./scripts/raw_data/myanimelist_data.json",
+        help="Path to the My Anime List csv data",
+    ),
+    path_at_csv: str = typer.Argument(
+        "./scripts/raw_data/animethemes_data.json",
+        help="Path to the AnimetThemes csv data",
+    ),
+    path_out: str = typer.Argument(
+        "./scripts/parsed_data", help="Path to the output folder"
+    ),
+    start_date: str = typer.Option(
+        None,
+        help="Start date of the challenge, if provided, it will be the current date",
+    ),
 ):
-    with open(path_at_csv,"r") as f:
+    with open(path_at_csv, "r") as f:
         anime_themes_json = json.load(f)
     animes_parsed, anime_themes_parsed = parse_at_data(anime_themes_json)
     df_at_animes = pd.DataFrame(animes_parsed)
     df_anime_themes = pd.DataFrame(anime_themes_parsed)
 
-    with open(path_mal_csv,"r") as f:
+    with open(path_mal_csv, "r") as f:
         my_anime_list = json.load(f)
-    df_mal = pd.DataFrame(my_anime_list).sort_values("popularity_score", ascending=False).head(500)
-    
+    df_mal = (
+        pd.DataFrame(my_anime_list)
+        .sort_values("popularity_score", ascending=False)
+        .head(500)
+    )
+
     df_anime = merge_data(df_mal, df_at_animes)
 
     # Filter out anime themes that are not in the top 500
     df_anime_themes = df_anime_themes[
         df_anime_themes["id_anime"].isin(df_anime["id_anime"])
     ]
-
-    op_counts = (
-        df_anime_themes[df_anime_themes["type"] == "OP"]
-        .value_counts(subset=["id_anime"])
-        .rename("op_counts")
-    )
-    ed_counts = (
-        df_anime_themes[df_anime_themes["type"] == "ED"]
-        .value_counts(subset=["id_anime"])
-        .rename("ed_counts")
-    )
-
-    # Merge the counts into the main DataFrame
-    df_anime = df_anime.merge(op_counts, on="id_anime")
-    df_anime = df_anime.merge(ed_counts, on="id_anime")
-    df_anime["total_counts"] = (
-        df_anime["op_counts"] + df_anime["ed_counts"]
-    )
 
     df_anime["hardcore"] = df_anime["rank"] >= 200
 
@@ -188,10 +187,10 @@ def main(
     )
 
     dict_days = {
-    "easy_openings": sampled_easy_openings,
-    "hardcore_openings": sampled_hardcore_openings,
-    "easy_endings": sampled_easy_endings,
-    "hardcore_endings": sampled_hardcore_endings,
+        "easy_openings": sampled_easy_openings,
+        "hardcore_openings": sampled_hardcore_openings,
+        "easy_endings": sampled_easy_endings,
+        "hardcore_endings": sampled_hardcore_endings,
     }
 
     df_days = pd.DataFrame(dict_days)
@@ -212,6 +211,7 @@ def main(
     df_anime.to_csv(f"{path_out}/animes.csv", index=False)
 
     df_anime_themes.to_csv(f"{path_out}/themes.csv", index=False)
+
 
 if __name__ == "__main__":
     typer.run(main)
