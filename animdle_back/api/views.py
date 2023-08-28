@@ -9,7 +9,7 @@ from .models import AnimdleUser, Anime, Day, Result, Theme
 def create_anime(request):
     if request.method == "POST":
         data = request.data
-        anime = Anime.objects.create(**data)
+        anime = Anime.objects.update_or_create(**data)
         return Response(
             {"message": "Anime created successfully"}, status=status.HTTP_201_CREATED
         )
@@ -19,7 +19,7 @@ def create_anime(request):
 def create_theme(request):
     if request.method == "POST":
         data = request.data
-        theme = Theme.objects.create(**data)
+        theme = Theme.objects.update_or_create(**data)
         return Response(
             {"message": "Theme created successfully"}, status=status.HTTP_201_CREATED
         )
@@ -29,7 +29,7 @@ def create_theme(request):
 def create_day(request):
     if request.method == "POST":
         data = request.data
-        day = Day.objects.create(**data)
+        day = Day.objects.update_or_create(**data)
         return Response(
             {"message": "Day created successfully"}, status=status.HTTP_201_CREATED
         )
@@ -39,7 +39,7 @@ def create_day(request):
 def create_result(request):
     if request.method == "POST":
         data = request.data
-        result = Result.objects.create(**data)
+        result = Result.objects.update_or_create(**data)
         return Response(
             {"message": "Result created successfully"}, status=status.HTTP_201_CREATED
         )
@@ -49,7 +49,7 @@ def create_result(request):
 def create_user(request):
     if request.method == "POST":
         data = request.data
-        user = AnimdleUser.objects.create(**data)
+        user = AnimdleUser.objects.update_or_create(**data)
         return Response(
             {"message": "User created successfully"}, status=status.HTTP_201_CREATED
         )
