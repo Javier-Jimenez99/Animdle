@@ -12,4 +12,6 @@ dependencies:
   - bs4
   - black
   - pandas
+  - pip:
+    - djangorestframework
 

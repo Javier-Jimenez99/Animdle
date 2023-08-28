@@ -50,9 +50,11 @@ class Day(models.Model):
 
 
 class AnimdleUser(AbstractUser):
-    user_browser_id = models.CharField(max_length=100, verbose_name="User Browser ID")
-    last_login = models.DateTimeField()
-    date_joined = models.DateTimeField()
+    user_browser_id = models.CharField(
+        max_length=100, verbose_name="User Browser ID", default=""
+    )
+    last_login = models.DateTimeField(auto_now_add=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
 
 class Result(models.Model):
