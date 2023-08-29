@@ -128,9 +128,9 @@ def todays_anime(request, game_mode):
     if request.method == "GET":
         if game_mode not in [
             "opening",
-            "hardcore_opening",
+            "hardcore-opening",
             "ending",
-            "hardcore_ending",
+            "hardcore-ending",
         ]:
             return Response(
                 {"error": "Invalid game mode"}, status=status.HTTP_400_BAD_REQUEST
@@ -157,11 +157,11 @@ def todays_anime(request, game_mode):
 
             if game_mode == "opening":
                 id_theme = day_obj["easy_opening"]
-            elif game_mode == "hardcore_opening":
+            elif game_mode == "hardcore-opening":
                 id_theme = day_obj["hardcore_opening"]
             elif game_mode == "ending":
                 id_theme = day_obj["easy_ending"]
-            elif game_mode == "hardcore_ending":
+            elif game_mode == "hardcore-ending":
                 id_theme = day_obj["hardcore_ending"]
 
             theme_obj = Theme.objects.get(id=id_theme)
