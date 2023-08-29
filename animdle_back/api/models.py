@@ -5,7 +5,7 @@ from django.db import models
 class Anime(models.Model):
     id = models.IntegerField(primary_key=True)
     rank = models.IntegerField()
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     popularity_score = models.FloatField()
     quality_score = models.FloatField()
     year = models.IntegerField()
@@ -24,7 +24,7 @@ class Anime(models.Model):
 class Theme(models.Model):
     id = models.IntegerField(primary_key=True)
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     type = models.CharField(max_length=100)
     spoiler = models.BooleanField()
     nsfw = models.BooleanField()

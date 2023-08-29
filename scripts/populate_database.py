@@ -111,24 +111,13 @@ def populate_day(base_api_url, day_data_path, auth_token):
     df_day = df_day.rename(
         columns={
             "id_day": "id",
-            "id_easy_opening": "easy_opening",
-            "id_easy_ending": "easy_ending",
-            "id_hardcore_opening": "hardcore_opening",
-            "id_hardcore_ending": "hardcore_ending",
+            "easy_openings": "easy_opening",
+            "easy_endings": "easy_ending",
+            "hardcore_openings": "hardcore_opening",
+            "hardcore_endings": "hardcore_ending",
             "date": "date",
         },
     )
-    df_day = df_day.loc[
-        :,
-        [
-            "id",
-            "easy_opening",
-            "easy_ending",
-            "hardcore_opening",
-            "hardcore_ending",
-            "date",
-        ],
-    ]
 
     df_day["easy_opening"] = df_day["easy_opening"].astype(int)
     df_day["easy_ending"] = df_day["easy_ending"].astype(int)
