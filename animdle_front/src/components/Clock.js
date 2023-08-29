@@ -14,7 +14,7 @@ function Clock() {
         const minutesLeft = 59 - japanTime.getMinutes();
         const secondsLeft = 59 - japanTime.getSeconds();
 
-        setTime(hoursLeft + ":" + minutesLeft + ":" + secondsLeft.toString().padStart(2, "0"))
+        setTime(hoursLeft.toString().padStart(2, "0") + ":" + minutesLeft.toString().padStart(2, "0") + ":" + secondsLeft.toString().padStart(2, "0"))
     }
     setInterval(UpdateTime)
 

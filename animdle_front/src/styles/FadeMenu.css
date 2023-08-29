@@ -1,0 +1,16 @@
+#icon-menu{
+    color:white;
+    font-size: 35px;
+}
+
+.MuiMenu-list{
+    color: white;
+    background-color: #dd6559;
+}
+
+.menu-link{
+    font-size: 18px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: white;
+    text-decoration: none;
+}

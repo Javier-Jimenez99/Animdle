@@ -1,10 +1,10 @@
 import "../styles/Pages.css";
 import Navbar from "../components/Navbar";
 
-function OpeningPage() {
-    const actual_mode = "Openings Wordle";
+function EndingPage() {
+    const actual_mode = "Endings Wordle";
     return (
-        <div className="main-page opening">
+        <div className="main-page ending">
             <Navbar colors={["#fbede4", "#dd6559", "#e4a892"]} actual_mode={actual_mode} />
             <div>
             </div>
@@ -12,4 +12,4 @@ function OpeningPage() {
     )
 }
 
-export default OpeningPage; 
+export default EndingPage; 

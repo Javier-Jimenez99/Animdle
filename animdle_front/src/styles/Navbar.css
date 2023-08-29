@@ -11,7 +11,7 @@
 .navbar-logo{
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 40px;
     font-size: 24px;
     font-family: Kaushan Script;
     color: #d8475a;
@@ -38,13 +38,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 20px;
+  padding-right: 40px;
   font-size: 16px;
   color: #333;
 }
 
 .navbar-clock{
     color: #fbede4;
+    margin-right:20px;
 }
 
 .navbar-end, .navbar-logo{

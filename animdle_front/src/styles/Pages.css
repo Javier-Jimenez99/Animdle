@@ -1,0 +1,20 @@
+.main-page{
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.opening{
+    background-image: url(../assets/images/temple_background.png);
+}
+
+.opening-hardcore{
+    background-image: url(../assets/images/drake_background.png);
+}
+
+.ending-hardcore{
+    background-image: url(../assets/images/temple_background.png);
+}
+
+.ending{
+    background-image: url(../assets/images/drake_background.png);
+}
