@@ -49,8 +49,7 @@ class Day(models.Model):
         Theme, on_delete=models.CASCADE, related_name="hardcore_opening"
     )
     hardcore_ending = models.ForeignKey(
-        Theme,
-        on_delete=models.CASCADE,
+        Theme, on_delete=models.CASCADE, related_name="hardcore_ending"
     )
     date = models.DateField()
 

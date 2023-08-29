@@ -1,4 +1,11 @@
-from api.views import create_anime, create_day, create_result, create_theme, create_user
+from api.views import (
+    create_anime,
+    create_day,
+    create_result,
+    create_theme,
+    create_user,
+    todays_anime,
+)
 from django.urls import path
 
 urlpatterns = [
@@ -7,4 +14,5 @@ urlpatterns = [
     path("create-day/", create_day, name="create-day"),
     path("create-result/", create_result, name="create-result"),
     path("create-user/", create_user, name="create-user"),
+    path("todays-anime/<str:game_mode>", todays_anime, name="todays-anime"),
 ]
