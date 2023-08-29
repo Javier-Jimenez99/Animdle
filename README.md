@@ -34,7 +34,7 @@ A continuación, puedes ejecutar el proyecto con los siguientes pasos:
 1. Backend (Django):
 - Navega a la carpeta 'backend':
   ```
-  cd backend
+  cd animdle_back
   ```
 - Ejecuta las migraciones para configurar la base de datos:
   ```

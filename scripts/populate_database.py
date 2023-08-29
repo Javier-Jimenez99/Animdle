@@ -142,11 +142,14 @@ def populate_day(base_api_url, day_data_path, auth_token):
 
 def main(
     base_api_url: str = "http://localhost:8000/",
-    username: str = "animdle",
-    passwd: str = "S@l739567",
+    username: str = None,
+    passwd: str = None,
     anime_data_path: str = "scripts/parsed_data/animes.csv",
     theme_data_path: str = "scripts/parsed_data/themes.csv",
     day_data_path: str = "scripts/parsed_data/days.csv",
+    anime: bool = True,
+    theme: bool = True,
+    day: bool = True,
 ):
     if username is None:
         username = typer.prompt("Username")
@@ -155,12 +158,15 @@ def main(
 
     auth_token = authenticate(base_api_url, username, passwd)
     print("Authenticated successfully...")
-    print("Populating animes table...")
-    populate_anime(base_api_url, anime_data_path, auth_token=auth_token)
-    print("Populating themes table...")
-    populate_theme(base_api_url, theme_data_path, auth_token=auth_token)
-    print("Populating days table...")
-    populate_day(base_api_url, day_data_path, auth_token=auth_token)
+    if anime:
+        print("Populating animes table...")
+        populate_anime(base_api_url, anime_data_path, auth_token=auth_token)
+    if theme:
+        print("Populating themes table...")
+        populate_theme(base_api_url, theme_data_path, auth_token=auth_token)
+    if day:
+        print("Populating days table...")
+        populate_day(base_api_url, day_data_path, auth_token=auth_token)
 
 
 if __name__ == "__main__":
