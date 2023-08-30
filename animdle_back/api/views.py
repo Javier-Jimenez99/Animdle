@@ -121,6 +121,38 @@ def create_user(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+def get_today_theme(game_mode):
+    japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
+    year = japan_date.year
+    month = japan_date.month
+    day = japan_date.day
+
+    day_obj = Day.objects.filter(date__year=year, date__month=month, date__day=day)
+
+    if len(day_obj) == 0:
+        return Response(
+            {"error": "No anime for today"}, status=status.HTTP_400_BAD_REQUEST
+        )
+
+    day_obj = day_obj[0]
+    serializer = DaySerializer(day_obj)
+    day_obj = serializer.data
+
+    if game_mode == "opening":
+        id_theme = day_obj["easy_opening"]
+    elif game_mode == "hardcore-opening":
+        id_theme = day_obj["hardcore_opening"]
+    elif game_mode == "ending":
+        id_theme = day_obj["easy_ending"]
+    elif game_mode == "hardcore-ending":
+        id_theme = day_obj["hardcore_ending"]
+
+    theme_obj = Theme.objects.get(id=id_theme)
+    serializer = ThemeSerializer(theme_obj)
+
+    return serializer.data
+
+
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -137,45 +169,41 @@ def todays_anime(request, game_mode):
             )
 
         try:
-            japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
-            year = japan_date.year
-            month = japan_date.month
-            day = japan_date.day
-
-            day_obj = Day.objects.filter(
-                date__year=year, date__month=month, date__day=day
-            )
-
-            if len(day_obj) == 0:
-                return Response(
-                    {"error": "No anime for today"}, status=status.HTTP_400_BAD_REQUEST
-                )
-
-            day_obj = day_obj[0]
-            serializer = DaySerializer(day_obj)
-            day_obj = serializer.data
-
-            if game_mode == "opening":
-                id_theme = day_obj["easy_opening"]
-            elif game_mode == "hardcore-opening":
-                id_theme = day_obj["hardcore_opening"]
-            elif game_mode == "ending":
-                id_theme = day_obj["easy_ending"]
-            elif game_mode == "hardcore-ending":
-                id_theme = day_obj["hardcore_ending"]
-
-            theme_obj = Theme.objects.get(id=id_theme)
-            serializer = ThemeSerializer(theme_obj)
-            theme_obj = serializer.data
-            id_anime = theme_obj["anime"]
+            theme_data = get_today_theme(game_mode)
+            id_anime = theme_data["anime"]
 
             anime_obj = Anime.objects.get(id=id_anime)
             serializer = AnimeSerializer(anime_obj)
             anime_obj = serializer.data
 
-            response_data = theme_obj
+            response_data = theme_data
             response_data["anime"] = anime_obj
 
             return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def todays_video(request, game_mode):
+    if request.method == "GET":
+        if game_mode not in [
+            "opening",
+            "hardcore-opening",
+            "ending",
+            "hardcore-ending",
+        ]:
+            return Response(
+                {"error": "Invalid game mode"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            theme_data = get_today_theme(game_mode)
+
+            return Response(
+                {"video_url": theme_data["video_url"]}, status=status.HTTP_200_OK
+            )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

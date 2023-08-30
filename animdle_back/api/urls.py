@@ -1,3 +1,5 @@
+from django.urls import path
+
 from api.views import (
     create_anime,
     create_day,
@@ -5,8 +7,8 @@ from api.views import (
     create_theme,
     create_user,
     todays_anime,
+    todays_video,
 )
-from django.urls import path
 
 urlpatterns = [
     path("create-anime/", create_anime, name="create-anime"),
@@ -15,4 +17,5 @@ urlpatterns = [
     path("create-result/", create_result, name="create-result"),
     path("create-user/", create_user, name="create-user"),
     path("todays-anime/<str:game_mode>", todays_anime, name="todays-anime"),
+    path("todays-video/<str:game_mode>", todays_video, name="todays-video"),
 ]
