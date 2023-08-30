@@ -18,6 +18,8 @@ export default function FadeMenu({ options }) {
         setAnchorEl(null);
     };
 
+    console.log(options);
+
     return (
         <div>
             <IconButton
@@ -40,9 +42,10 @@ export default function FadeMenu({ options }) {
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                {options.map(({ name, link }, index) => (
+                {options.map(({ name, link, icon }, index) => (
                     <MenuItem key={index}>
                         <Link className="menu-link" to={link}>
+                            <img className="menu-icon" src={icon} alt={name + " icon"} />
                             {name}
                         </Link>
                     </MenuItem>

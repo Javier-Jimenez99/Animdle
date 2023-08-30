@@ -2,6 +2,8 @@ import "../styles/Navbar.css";
 import logo from "../assets/images/logo.png";
 import Clock from "../components/Clock";
 import FadeMenu from "../components/FadeMenu";
+import templeIcon from '../assets/images/temple_icon.png';
+import drakeIcon from '../assets/images/drake_icon.png';
 
 function Navbar({ colors, actual_mode }) {
     const gradient = `linear-gradient(90deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
@@ -13,9 +15,16 @@ function Navbar({ colors, actual_mode }) {
         "Endings Hardcore": "/endings-hardcore"
     };
 
+    const possibleIcons = {
+        "Openings Wordle": templeIcon,
+        "Openings Hardcore": drakeIcon,
+        "Endings Wordle": templeIcon,
+        "Endings Hardcore": drakeIcon
+    };
+
     const options = Object.entries(possibleModes)
         .filter(([mode]) => mode !== actual_mode)
-        .map(([name, link]) => ({ name, link }));
+        .map(([name, link]) => ({ name, link, icon: possibleIcons[name] }));
 
 
     return (
