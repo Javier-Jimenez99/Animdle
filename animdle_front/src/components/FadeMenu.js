@@ -18,8 +18,6 @@ export default function FadeMenu({ options }) {
         setAnchorEl(null);
     };
 
-    console.log(options);
-
     return (
         <div>
             <IconButton
