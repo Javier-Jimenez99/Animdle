@@ -1,7 +1,6 @@
 import secrets
 from datetime import datetime as dt
 
-import pytz
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -13,14 +12,15 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Anime, Day, Result, Theme
-from .serializers import (
+from ..models import AnimdleUser, Anime, Day, Result, Theme
+from ..serializers import (
     AnimdleUserSerializer,
     AnimeSerializer,
     DaySerializer,
     ResultSerializer,
     ThemeSerializer,
 )
+from .utils import check_game_mode, get_all_titles, get_theme, get_today_day
 
 
 @api_view(["POST"])
@@ -84,26 +84,6 @@ def create_day(request):
 
 
 @api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_result(request):
-    if request.method == "POST":
-        try:
-            result = Result.objects.get(id=request.data["id"])
-            serializer = ResultSerializer(result, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Result.DoesNotExist:
-            serializer = ResultSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
 def create_guest(request):
     if request.method == "POST":
         browser_id = secrets.token_hex(16)
@@ -129,55 +109,19 @@ def create_guest(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def get_today_theme(game_mode):
-    japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
-    year = japan_date.year
-    month = japan_date.month
-    day = japan_date.day
-
-    day_obj = Day.objects.filter(date__year=year, date__month=month, date__day=day)
-
-    if len(day_obj) == 0:
-        return Response(
-            {"error": "No anime for today"}, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    day_obj = day_obj[0]
-    serializer = DaySerializer(day_obj)
-    day_obj = serializer.data
-
-    if game_mode == "opening":
-        id_theme = day_obj["easy_opening"]
-    elif game_mode == "hardcore-opening":
-        id_theme = day_obj["hardcore_opening"]
-    elif game_mode == "ending":
-        id_theme = day_obj["easy_ending"]
-    elif game_mode == "hardcore-ending":
-        id_theme = day_obj["hardcore_ending"]
-
-    theme_obj = Theme.objects.get(id=id_theme)
-    serializer = ThemeSerializer(theme_obj)
-
-    return serializer.data
-
-
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def todays_anime(request, game_mode):
     if request.method == "GET":
-        if game_mode not in [
-            "opening",
-            "hardcore-opening",
-            "ending",
-            "hardcore-ending",
-        ]:
-            return Response(
-                {"error": "Invalid game mode"}, status=status.HTTP_400_BAD_REQUEST
-            )
+        game_mode = check_game_mode(game_mode)
+
+        if isinstance(game_mode, Response):
+            return game_mode
 
         try:
-            theme_data = get_today_theme(game_mode)
+            day_obj = get_today_day()
+            theme_data = get_theme(game_mode, day_obj)
             id_anime = theme_data["anime"]
 
             anime_obj = Anime.objects.get(id=id_anime)
@@ -197,21 +141,57 @@ def todays_anime(request, game_mode):
 @permission_classes([IsAuthenticated])
 def todays_video(request, game_mode):
     if request.method == "GET":
-        if game_mode not in [
-            "opening",
-            "hardcore-opening",
-            "ending",
-            "hardcore-ending",
-        ]:
-            return Response(
-                {"error": "Invalid game mode"}, status=status.HTTP_400_BAD_REQUEST
-            )
+        game_mode = check_game_mode(game_mode)
+
+        if isinstance(game_mode, Response):
+            return game_mode
 
         try:
-            theme_data = get_today_theme(game_mode)
+            day_obj = get_today_day()
+            theme_data = get_theme(game_mode, day_obj)
 
             return Response(
                 {"video_url": theme_data["video_url"]}, status=status.HTTP_200_OK
             )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def game_state(request, game_mode, date="today"):
+    if request.method == "GET":
+        game_mode = check_game_mode(game_mode)
+
+        if isinstance(game_mode, Response):
+            return game_mode
+
+        user_obj = request.user
+
+        if date == "today":
+            day_obj = get_today_day()
+        else:
+            date = dt.strptime(date, "%Y-%m-%d")
+            day_obj = Day.objects.get(date=date)
+
+        try:
+            result_obj = Result.objects.get(
+                user=user_obj, day=day_obj, game_mode=game_mode
+            )
+        except Result.DoesNotExist:
+            result_obj = Result.objects.create(
+                user=user_obj, day=day_obj, game_mode=game_mode
+            )
+
+        theme_data = get_theme(game_mode, day_obj)
+        all_titles = get_all_titles()
+
+        response_data = {
+            "state": result_obj.state,
+            "attempts": result_obj.attempts,
+            "video_url": theme_data["video_url"],
+            "all_titles": all_titles,
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
