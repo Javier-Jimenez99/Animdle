@@ -7,6 +7,7 @@ axios.interceptors.response.use(
     async error => {
         debugger;
         if (error.response.status === 401) {
+            // Creates a new guest user
             localStorage.clear();
             sessionStorage.clear();
             try {
