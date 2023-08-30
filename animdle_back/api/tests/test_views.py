@@ -1,13 +1,12 @@
-import json
-import secrets
 from datetime import datetime
 
-from api.models import AnimdleUser, Anime, Day, Result, Theme
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
+
+from api.models import AnimdleUser, Anime, Day, Theme
 
 
 class APITestCase(TestCase):

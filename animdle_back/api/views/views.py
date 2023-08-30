@@ -12,12 +12,11 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import AnimdleUser, Anime, Day, Result, Theme
+from ..models import Anime, Day, Result, Theme
 from ..serializers import (
     AnimdleUserSerializer,
     AnimeSerializer,
     DaySerializer,
-    ResultSerializer,
     ThemeSerializer,
 )
 from .utils import check_game_mode, get_all_titles, get_theme, get_today_day
