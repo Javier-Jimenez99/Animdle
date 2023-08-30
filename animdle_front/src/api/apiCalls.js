@@ -5,7 +5,6 @@ const API_BASE_URL = 'http://localhost:8000/';
 axios.interceptors.response.use(
     response => response,
     async error => {
-        debugger;
         if (error.response.status === 401) {
             // Creates a new guest user
             localStorage.clear();
@@ -59,10 +58,16 @@ export const authGuest = async () => {
     return token;
 }
 
-export const getTodaysVideo = async (mode) => {
+export const getGameState = async (mode, date) => {
     try {
         const token = await authGuest();
-        const response = await axios.get(API_BASE_URL + 'api/todays-video/' + mode, {
+        let url;
+        if (date === null) {
+            url = API_BASE_URL + 'api/game-state/' + mode + '/';
+        } else {
+            url = API_BASE_URL + 'api/game-state/' + mode + '/' + date + '/';
+        }
+        const response = await axios.get(url, {
             headers: { "Authorization": "Token " + token }
         });
         return response.data;

@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react"
-import { getTodaysVideo } from "../api/apiCalls";
+import { getGameState } from "../api/apiCalls";
 
-function Game({ mode }) {
-    const [videoURL, setVideoURL] = useState(null);
+function Game({ mode, date = null }) {
+    const [gameState, setGameState] = useState(null);
 
     useEffect(() => {
-        getTodaysVideo(mode).then(response => {
-            setVideoURL(response.video_url);
+        getGameState(mode, date).then(response => {
+            setGameState(response);
             console.log(response);
         }).catch(error => {
             console.log(error);
         })
-    }, [mode])
+    }, [mode, date])
 
     return (
         <div>
             <h1>Game</h1>
-            {videoURL !== null ?
+            {gameState !== null ?
                 <div>
-                    <p>{videoURL}</p>
+
                 </div>
                 : null}
         </div>

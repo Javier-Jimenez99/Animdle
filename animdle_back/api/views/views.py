@@ -188,7 +188,7 @@ def game_state(request, game_mode, date="today"):
 
         response_data = {
             "state": result_obj.state,
-            "attempts": result_obj.attempts,
+            "attempts": eval(result_obj.attempts),
             "video_url": theme_data["video_url"],
             "all_titles": all_titles,
         }

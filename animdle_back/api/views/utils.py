@@ -48,7 +48,7 @@ def check_game_mode(game_mode):
     return game_mode
 
 
-def get_all_titles():
+def get_all_synonyms_relations():
     anime_objs = Anime.objects.all()
 
     all_animes_relations = {}
@@ -58,3 +58,15 @@ def get_all_titles():
             all_animes_relations[synonim] = anime.title
 
     return all_animes_relations
+
+
+def get_all_titles():
+    anime_objs = Anime.objects.all()
+
+    all_titles = []
+    for anime in anime_objs:
+        all_titles.append(anime.title)
+        for synonim in eval(anime.synonyms):
+            all_titles.append(synonim)
+
+    return all_titles
