@@ -1,8 +1,10 @@
+import secrets
 from datetime import datetime as dt
 
 import pytz
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -11,7 +13,7 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import AnimdleUser, Anime, Day, Result, Theme
+from .models import Anime, Day, Result, Theme
 from .serializers import (
     AnimdleUserSerializer,
     AnimeSerializer,
@@ -102,23 +104,29 @@ def create_result(request):
 
 
 @api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_user(request):
+def create_guest(request):
     if request.method == "POST":
-        try:
-            user = AnimdleUser.objects.get(id=request.data["id"])
-            serializer = AnimdleUserSerializer(user, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except AnimdleUser.DoesNotExist:
-            serializer = AnimdleUserSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        browser_id = secrets.token_hex(16)
+        username = "guest-" + browser_id
+
+        serializer = AnimdleUserSerializer(
+            data={
+                "username": username,
+                "user_browser_id": browser_id,
+                "password": "guest",
+            }
+        )
+        if serializer.is_valid():
+            user_obj = serializer.save()
+            user_obj.set_password("guest")
+            user_obj.save()
+            token_obj = Token.objects.create(user=user_obj)
+
+            response_data = {"token": str(token_obj), "browser_id": browser_id}
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def get_today_theme(game_mode):
