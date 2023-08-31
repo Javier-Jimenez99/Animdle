@@ -4,17 +4,17 @@
 }
 
 .opening{
-    background-image: url(../assets/images/temple_background.png);
+    background-image: url(../assets/background/temple_background.png);
 }
 
 .opening-hardcore{
-    background-image: url(../assets/images/drake_background.png);
+    background-image: url(../assets/background/dark_drake_background.png);
 }
 
 .ending{
-    background-image: url(../assets/images/temple_background.png);
+    background-image: url(../assets/background/matsuri_background.png);
 }
 
 .ending-hardcore{
-    background-image: url(../assets/images/drake_background.png);
+    background-image: url(../assets/background/white_drake_background.png);
 }

@@ -1,9 +1,11 @@
 import "../styles/Navbar.css";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/logo.png";
 import Clock from "../components/Clock";
 import FadeMenu from "../components/FadeMenu";
-import templeIcon from '../assets/images/temple_icon.png';
-import drakeIcon from '../assets/images/drake_icon.png';
+import templeIcon from '../assets/icon/temple_icon.png';
+import darkDrakeIcon from '../assets/icon/dark_drake_icon.png';
+import whiteDrakeIcon from '../assets/icon/white_drake_icon.png';
+
 
 function Navbar({ colors, actual_mode }) {
     const gradient = `linear-gradient(90deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
@@ -17,9 +19,9 @@ function Navbar({ colors, actual_mode }) {
 
     const possibleIcons = {
         "Openings Wordle": templeIcon,
-        "Openings Hardcore": drakeIcon,
+        "Openings Hardcore": darkDrakeIcon,
         "Endings Wordle": templeIcon,
-        "Endings Hardcore": drakeIcon
+        "Endings Hardcore": whiteDrakeIcon
     };
 
     const options = Object.entries(possibleModes)
