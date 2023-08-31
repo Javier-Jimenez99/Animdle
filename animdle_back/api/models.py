@@ -41,12 +41,8 @@ class Theme(models.Model):
 
 class Day(models.Model):
     id = models.IntegerField(primary_key=True)
-    easy_opening = models.ForeignKey(
-        Theme, on_delete=models.CASCADE, related_name="easy_opening"
-    )
-    easy_ending = models.ForeignKey(
-        Theme, on_delete=models.CASCADE, related_name="easy_ending"
-    )
+    opening = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="opening")
+    ending = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="ending")
     hardcore_opening = models.ForeignKey(
         Theme, on_delete=models.CASCADE, related_name="hardcore_opening"
     )
@@ -76,9 +72,9 @@ class Result(models.Model):
         default="opening",
         choices=[
             ("opening", "opening"),
-            ("hardcore-opening", "hardcore-opening"),
+            ("hardcore_opening", "hardcore_opening"),
             ("ending", "ending"),
-            ("hardcore-ending", "hardcore-ending"),
+            ("hardcore_ending", "hardcore_ending"),
         ],
     )
     state = models.CharField(

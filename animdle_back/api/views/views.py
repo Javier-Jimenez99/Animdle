@@ -1,6 +1,7 @@
 import secrets
 from datetime import datetime as dt
 
+import pytz
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -19,7 +20,12 @@ from ..serializers import (
     DaySerializer,
     ThemeSerializer,
 )
-from .utils import check_game_mode, get_all_titles, get_theme, get_today_day
+from .utils import (
+    get_all_synonyms_relations,
+    get_all_titles,
+    get_day_by_date,
+    get_theme,
+)
 
 
 @api_view(["POST"])
@@ -113,13 +119,9 @@ def create_guest(request):
 @permission_classes([IsAuthenticated])
 def todays_anime(request, game_mode):
     if request.method == "GET":
-        game_mode = check_game_mode(game_mode)
-
-        if isinstance(game_mode, Response):
-            return game_mode
-
         try:
-            day_obj = get_today_day()
+            japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
+            day_obj = get_day_by_date(japan_date)
             theme_data = get_theme(game_mode, day_obj)
             id_anime = theme_data["anime"]
 
@@ -140,13 +142,9 @@ def todays_anime(request, game_mode):
 @permission_classes([IsAuthenticated])
 def todays_video(request, game_mode):
     if request.method == "GET":
-        game_mode = check_game_mode(game_mode)
-
-        if isinstance(game_mode, Response):
-            return game_mode
-
         try:
-            day_obj = get_today_day()
+            japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
+            day_obj = get_day_by_date(japan_date)
             theme_data = get_theme(game_mode, day_obj)
 
             return Response(
@@ -159,20 +157,11 @@ def todays_video(request, game_mode):
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def game_state(request, game_mode, date="today"):
+def game_state(request, game_mode, date=dt.now(tz=pytz.timezone("Asia/Tokyo"))):
     if request.method == "GET":
-        game_mode = check_game_mode(game_mode)
-
-        if isinstance(game_mode, Response):
-            return game_mode
-
         user_obj = request.user
 
-        if date == "today":
-            day_obj = get_today_day()
-        else:
-            date = dt.strptime(date, "%Y-%m-%d")
-            day_obj = Day.objects.get(date=date)
+        day_obj = get_day_by_date(date)
 
         try:
             result_obj = Result.objects.get(
@@ -193,4 +182,57 @@ def game_state(request, game_mode, date="today"):
             "all_titles": all_titles,
         }
 
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def guess(request, game_mode, title, date=dt.now(tz=pytz.timezone("Asia/Tokyo"))):
+    if request.method == "POST":
+        user_obj = request.user
+
+        day_obj = get_day_by_date(date)
+
+        try:
+            result_obj = Result.objects.get(
+                user=user_obj, day=day_obj, game_mode=game_mode
+            )
+        except Result.DoesNotExist:
+            return Response(
+                {"error": "You must start the game first"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if result_obj.state != "pending":
+            return Response(
+                {"error": "You already finished the game"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        theme_obj = getattr(day_obj, game_mode)
+        anime_obj = theme_obj.anime
+
+        all_animes_relations = get_all_synonyms_relations()
+
+        # Allways save the title attempt
+        attempts = eval(result_obj.attempts)
+        attempts.append(title)
+        result_obj.attempts = str(attempts)
+
+        # Check if the title is correct
+        if all_animes_relations[title] == anime_obj.title:
+            result_obj.state = "win"
+
+        # If not, check if the user has more attempts
+        # Else result_obj.state = "pending"
+        elif len(attempts) >= 5:
+            result_obj.state = "lose"
+
+        result_obj.save()
+
+        response_data = {
+            "attempts": eval(result_obj.attempts),
+            "state": result_obj.state,
+        }
         return Response(response_data, status=status.HTTP_200_OK)
