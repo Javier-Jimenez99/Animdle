@@ -13,79 +13,14 @@ from rest_framework.decorators import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import Anime, Day, Result, Theme
-from ..serializers import (
-    AnimdleUserSerializer,
-    AnimeSerializer,
-    DaySerializer,
-    ThemeSerializer,
-)
+from ..models import Anime, Result
+from ..serializers import AnimdleUserSerializer, AnimeSerializer
 from .utils import (
     get_all_synonyms_relations,
     get_all_titles,
     get_day_by_date,
     get_theme,
 )
-
-
-@api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_anime(request):
-    if request.method == "POST":
-        try:
-            anime = Anime.objects.get(id=request.data["id"])
-            serializer = AnimeSerializer(anime, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Anime.DoesNotExist:
-            serializer = AnimeSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_theme(request):
-    if request.method == "POST":
-        try:
-            theme = Theme.objects.get(id=request.data["id"])
-            serializer = ThemeSerializer(theme, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Theme.DoesNotExist:
-            serializer = ThemeSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_day(request):
-    if request.method == "POST":
-        try:
-            day = Day.objects.get(id=request.data["id"])
-            serializer = DaySerializer(day, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Day.DoesNotExist:
-            serializer = DaySerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])

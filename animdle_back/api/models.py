@@ -50,6 +50,8 @@ class Day(models.Model):
         Theme, on_delete=models.CASCADE, related_name="hardcore_ending"
     )
     date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.date}"

@@ -148,17 +148,125 @@ def test_data(df_anime, df_theme, df_day):
     ), "There are hardcore endings that are not in the themes"
 
 
+def animes_to_json(df_anime, save_path):
+    df_anime = df_anime.rename(
+        columns={
+            "id_anime": "id",
+            "title_mal": "title",
+            "image": "image_url",
+        },
+    )
+    df_anime = df_anime.loc[
+        :,
+        [
+            "id",
+            "rank",
+            "title",
+            "popularity_score",
+            "quality_score",
+            "year",
+            "season",
+            "synopsis",
+            "synonyms",
+            "image_url",
+            "hardcore",
+        ],
+    ]
+
+    df_anime["created_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+    df_anime["updated_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+    df_anime["synonyms"] = df_anime["synonyms"].astype(str).fillna("[]")
+    df_anime["synopsis"] = df_anime["synopsis"].fillna("")
+
+    dict_animes = df_anime.to_dict(orient="records")
+
+    dict_result = []
+    for anime in dict_animes:
+        dict_result.append({"model": "api.anime", "pk": anime["id"], "fields": anime})
+
+    with open(save_path, "w") as f:
+        json.dump(dict_result, f, indent=4)
+
+
+def themes_to_json(df_theme, save_path):
+    df_theme = df_theme.rename(
+        columns={
+            "id_theme": "id",
+            "id_anime": "anime",
+            "song": "title",
+            "video_link": "video_url",
+        },
+    )
+    df_theme = df_theme.loc[
+        :,
+        [
+            "id",
+            "anime",
+            "title",
+            "type",
+            "spoiler",
+            "nsfw",
+            "video_url",
+            "video_resolution",
+        ],
+    ]
+
+    df_theme["anime"] = df_theme["anime"].astype(int)
+    df_theme["video_resolution"] = df_theme["video_resolution"].astype(int)
+    df_theme["created_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+    df_theme["updated_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    dict_themes = df_theme.to_dict(orient="records")
+
+    dict_result = []
+    for theme in dict_themes:
+        dict_result.append({"model": "api.theme", "pk": theme["id"], "fields": theme})
+
+    with open(save_path, "w") as f:
+        json.dump(dict_result, f, indent=4)
+
+
+def days_to_json(df_day, save_path):
+    df_day = df_day.rename(
+        columns={
+            "id_day": "id",
+            "easy_openings": "opening",
+            "easy_endings": "ending",
+            "hardcore_openings": "hardcore_opening",
+            "hardcore_endings": "hardcore_ending",
+            "date": "date",
+        },
+    )
+
+    df_day["opening"] = df_day["opening"].astype(int)
+    df_day["ending"] = df_day["ending"].astype(int)
+    df_day["hardcore_opening"] = df_day["hardcore_opening"].astype(int)
+    df_day["hardcore_ending"] = df_day["hardcore_ending"].astype(int)
+    df_day["date"] = df_day["date"].dt.strftime("%Y-%m-%d")
+    df_day["created_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+    df_day["updated_at"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    dict_days = df_day.to_dict(orient="records")
+
+    dict_result = []
+    for day in dict_days:
+        dict_result.append({"model": "api.day", "pk": day["id"], "fields": day})
+
+    with open(save_path, "w") as f:
+        json.dump(dict_result, f, indent=4)
+
+
 def main(
     path_mal_csv: str = typer.Argument(
-        "./scripts/raw_data/myanimelist_data.json",
+        "./api/scripts/raw_data/myanimelist_data.json",
         help="Path to the My Anime List csv data",
     ),
     path_at_csv: str = typer.Argument(
-        "./scripts/raw_data/animethemes_data.json",
+        "./api/scripts/raw_data/animethemes_data.json",
         help="Path to the AnimetThemes csv data",
     ),
     path_out: str = typer.Argument(
-        "./scripts/parsed_data", help="Path to the output folder"
+        "./api/scripts/parsed_data", help="Path to the output folder"
     ),
     start_date: str = typer.Option(
         None,
@@ -235,11 +343,18 @@ def main(
 
     test_data(df_anime, df_anime_themes, df_days)
 
-    df_days.to_csv(f"{path_out}/days.csv", index=False)
+    animes_to_json(df_anime, f"{path_out}/animes.json")
+    themes_to_json(df_anime_themes, f"{path_out}/themes.json")
+    days_to_json(df_days, f"{path_out}/days.json")
 
-    df_anime.to_csv(f"{path_out}/animes.csv", index=False)
+    # After this, you can run the following commands to populate the database:
+    # python manage.py loaddata scripts/parsed_data/animes.json
+    # python manage.py loaddata scripts/parsed_data/themes.json
+    # python manage.py loaddata scripts/parsed_data/days.json
 
-    df_anime_themes.to_csv(f"{path_out}/themes.csv", index=False)
+    # df_days.to_csv(f"{path_out}/days.csv", index=False)
+    # df_anime.to_csv(f"{path_out}/animes.csv", index=False)
+    # df_anime_themes.to_csv(f"{path_out}/themes.csv", index=False)
 
 
 if __name__ == "__main__":

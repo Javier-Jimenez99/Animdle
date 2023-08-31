@@ -1,11 +1,12 @@
 from datetime import datetime
 
-from api.models import AnimdleUser, Anime, Day, Result, Theme
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
+
+from api.models import AnimdleUser, Anime, Day, Result, Theme
 
 
 class APITestCase(TestCase):
@@ -77,51 +78,6 @@ class APITestCase(TestCase):
         self.result = Result.objects.create(
             user=self.user, day=day, game_mode="opening"
         )
-
-    def test_create_anime(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
-        data = {
-            "id": 3,
-            "rank": 3,
-            "title": "test3",
-            "popularity_score": 1.0,
-            "quality_score": 1.0,
-            "year": 2021,
-            "season": "test",
-            "synopsis": "test",
-            "synonyms": "[]",
-            "image_url": "https://www.google.com",
-            "hardcore": False,
-        }
-        response = self.client.post(reverse("create-anime"), data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-    def test_create_theme(self):
-        data = {
-            "id": 2,
-            "anime": 1,
-            "title": "test",
-            "type": "OP",
-            "spoiler": False,
-            "nsfw": False,
-            "video_url": "https://www.youtube.com/watch?v=1",
-            "video_resolution": 1080,
-        }
-        response = self.client.post(reverse("create-theme"), data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-    def test_create_day(self):
-        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
-        data = {
-            "id": 2,
-            "opening": 1,
-            "ending": 1,
-            "hardcore_opening": 1,
-            "hardcore_ending": 1,
-            "date": datetime.now().date(),
-        }
-        response = self.client.post(reverse("create-day"), data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_guest(self):
         data = {}
