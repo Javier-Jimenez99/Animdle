@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import datetime as dt
 
+import pytz
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -63,6 +64,7 @@ class APITestCase(TestCase):
         )
         theme.save()
 
+        self.today_date = dt.now(tz=pytz.timezone("Asia/Tokyo")).date()
         # Create days
         day = Day.objects.create(
             id=1,
@@ -70,7 +72,7 @@ class APITestCase(TestCase):
             ending=theme,
             hardcore_opening=theme,
             hardcore_ending=theme,
-            date=datetime.now().date(),
+            date=self.today_date,
         )
         day.save()
 
@@ -111,8 +113,8 @@ class APITestCase(TestCase):
     def test_game_state_custom_date(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
         game_mode = "hardcore-opening"  # Modificar según corresponda
-        custom_date = (
-            datetime.now().date().strftime("%Y-%m-%d")
+        custom_date = self.today_date.strftime(
+            "%Y-%m-%d"
         )  # Modificar según corresponda
         response = self.client.get(
             reverse("game-state", args=[game_mode, custom_date]), format="json"
@@ -123,7 +125,7 @@ class APITestCase(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
         game_mode = "opening"  # Modificar según corresponda
         title = "test"
-        date = datetime.now().date().strftime("%Y-%m-%d")
+        date = self.today_date.strftime("%Y-%m-%d")
         response = self.client.post(
             reverse("guess", args=[game_mode, title, date]), format="json"
         )
@@ -136,7 +138,7 @@ class APITestCase(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
         game_mode = "opening"
         title = "test2"
-        date = datetime.now().date().strftime("%Y-%m-%d")
+        date = self.today_date.strftime("%Y-%m-%d")
 
         for i in range(1, 5):
             response = self.client.post(

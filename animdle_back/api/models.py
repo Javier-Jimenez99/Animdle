@@ -61,6 +61,7 @@ class AnimdleUser(AbstractUser):
     user_browser_id = models.CharField(
         max_length=32, verbose_name="User Browser ID", default=secrets.token_hex(16)
     )
+    guest = models.BooleanField(default=False)
     last_login = models.DateTimeField(auto_now_add=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 

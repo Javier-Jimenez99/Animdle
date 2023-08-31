@@ -34,6 +34,7 @@ def create_guest(request):
                 "username": username,
                 "user_browser_id": browser_id,
                 "password": "guest",
+                "guest": True,
             }
         )
         if serializer.is_valid():

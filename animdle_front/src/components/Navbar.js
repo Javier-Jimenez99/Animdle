@@ -2,9 +2,9 @@ import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 import Clock from "../components/Clock";
 import FadeMenu from "../components/FadeMenu";
-import templeIcon from '../assets/icon/temple_icon.png';
-import darkDrakeIcon from '../assets/icon/dark_drake_icon.png';
-import whiteDrakeIcon from '../assets/icon/white_drake_icon.png';
+import templeIcon from '../assets/pixelart_icon/temple_icon.png';
+import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
+import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 
 
 function Navbar({ colors, actual_mode }) {
