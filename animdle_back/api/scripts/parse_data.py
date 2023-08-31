@@ -292,7 +292,11 @@ def main(
     # Filter out anime themes that are not in the top 500
     df_anime_themes = df_anime_themes[
         df_anime_themes["id_anime"].isin(df_anime["id_anime"])
+        & ~df_anime_themes["nsfw"]
     ]
+
+    # Drop animes that doestn have any theme
+    df_anime = df_anime[df_anime["id_anime"].isin(df_anime_themes["id_anime"].unique())]
 
     df_anime["hardcore"] = df_anime["rank"] >= 200
 
