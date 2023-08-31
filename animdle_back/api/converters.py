@@ -18,9 +18,9 @@ class DateConverter:
 
     def to_python(self, value):
         if value == "today":
-            return dt.now(tz=pytz.timezone("Asia/Tokyo"))
+            return dt.now(tz=pytz.timezone("Asia/Tokyo")).date()
         else:
-            return dt.strptime(value, "%Y-%m-%d")
+            return dt.strptime(value, "%Y-%m-%d").date()
 
     def to_url(self, value):
         if value == "today":

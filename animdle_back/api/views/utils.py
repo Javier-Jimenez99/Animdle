@@ -1,3 +1,7 @@
+from datetime import datetime as dt
+
+import pytz
+
 from ..models import Anime, Day
 from ..serializers import ThemeSerializer
 
@@ -40,3 +44,7 @@ def get_all_titles():
             all_titles.append(synonim)
 
     return all_titles
+
+
+def japan_date():
+    return dt.now(tz=pytz.timezone("Asia/Tokyo")).date()

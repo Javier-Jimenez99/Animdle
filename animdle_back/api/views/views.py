@@ -1,7 +1,5 @@
 import secrets
-from datetime import datetime as dt
 
-import pytz
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -20,6 +18,7 @@ from .utils import (
     get_all_titles,
     get_day_by_date,
     get_theme,
+    japan_date,
 )
 
 
@@ -56,8 +55,7 @@ def create_guest(request):
 def todays_anime(request, game_mode):
     if request.method == "GET":
         try:
-            japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
-            day_obj = get_day_by_date(japan_date)
+            day_obj = get_day_by_date(japan_date())
             theme_data = get_theme(game_mode, day_obj)
             id_anime = theme_data["anime"]
 
@@ -79,8 +77,7 @@ def todays_anime(request, game_mode):
 def todays_video(request, game_mode):
     if request.method == "GET":
         try:
-            japan_date = dt.now(tz=pytz.timezone("Asia/Tokyo"))
-            day_obj = get_day_by_date(japan_date)
+            day_obj = get_day_by_date(japan_date())
             theme_data = get_theme(game_mode, day_obj)
 
             return Response(
@@ -93,8 +90,14 @@ def todays_video(request, game_mode):
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def game_state(request, game_mode, date=dt.now(tz=pytz.timezone("Asia/Tokyo"))):
+def game_state(request, game_mode, date=japan_date()):
     if request.method == "GET":
+        if date > japan_date():
+            return Response(
+                {"error": "You can't play in the future"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         user_obj = request.user
 
         day_obj = get_day_by_date(date)
@@ -124,8 +127,14 @@ def game_state(request, game_mode, date=dt.now(tz=pytz.timezone("Asia/Tokyo"))):
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def guess(request, game_mode, title, date=dt.now(tz=pytz.timezone("Asia/Tokyo"))):
+def guess(request, game_mode, title, date=japan_date()):
     if request.method == "POST":
+        if date > japan_date():
+            return Response(
+                {"error": "You can't play in the future"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         user_obj = request.user
 
         day_obj = get_day_by_date(date)

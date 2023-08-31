@@ -1,13 +1,13 @@
+import datetime
 from datetime import datetime as dt
 
 import pytz
+from api.models import AnimdleUser, Anime, Day, Result, Theme
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
-
-from api.models import AnimdleUser, Anime, Day, Result, Theme
 
 
 class APITestCase(TestCase):
@@ -121,6 +121,14 @@ class APITestCase(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+        date = (self.today_date + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+        response = self.client.get(
+            reverse("game-state", args=[game_mode, date]), format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data["error"], "You can't play in the future")
+
     def test_guess_win(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
         game_mode = "opening"  # Modificar según corresponda
@@ -133,6 +141,14 @@ class APITestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["attempts"], ["test"])
         self.assertEqual(response.data["state"], "win")
+
+        date = (self.today_date + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+        response = self.client.post(
+            reverse("guess", args=[game_mode, title, date]), format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data["error"], "You can't play in the future")
 
     def test_guess_lose(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
