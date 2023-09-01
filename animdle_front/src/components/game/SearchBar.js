@@ -1,6 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import "../../styles/SearchBar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function SearchBar({ inputValue, setInputValue, allResults }) {
     const [results, setResults] = useState([]);
@@ -21,6 +21,12 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
         }
         setResults(newResults);
     };
+
+    useEffect(() => {
+        if (inputValue === "") {
+            setResults([]);
+        }
+    }, [inputValue]);
 
     return (
         <div className='results-container'>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { getGameState, postGuess } from "../api/apiCalls";
 import "../styles/Game.css";
 import Video from "./game/Video";
@@ -6,6 +6,7 @@ import Lives from "./game/Lives"
 import SearchBar from "./game/SearchBar";
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -17,6 +18,8 @@ const DIFFICULTY = [
 ]
 
 function Game({ mode, date = null }) {
+    const windowSize = useRef([window.innerWidth, window.innerHeight]);
+
     // Game variables
     const [gameState, setGameState] = useState(null);
     const [videoURL, setVideoURL] = useState(null);
@@ -47,6 +50,7 @@ function Game({ mode, date = null }) {
             setAttempts(response.attempts);
             const newTitles = allTitles.filter(title => title !== inputValue);
             setAllTitles(newTitles);
+            setInputValue("");
         }).catch(error => {
             console.log(error);
         })
@@ -67,6 +71,31 @@ function Game({ mode, date = null }) {
         <>
             {gameState ?
                 <div className="game-container">
+                    {gameState === "win" ?
+                        <>
+                            <ConfettiExplosion
+                                className="confetti1"
+                                force={0.8}
+                                duration={3000}
+                                particleCount={400}
+                                colors={["#DD675B", "#E4A892", "#FBEDE4"]}
+                                zIndex={0}
+                                width={windowSize.current[0]}
+                                height={windowSize.current[1]}
+                            />
+                            <ConfettiExplosion
+                                className="confetti2"
+                                force={0.8}
+                                duration={3000}
+                                particleCount={400}
+                                colors={["#DD675B", "#E4A892", "#FBEDE4"]}
+                                zIndex={0}
+                                width={windowSize.current[0]}
+                                height={windowSize.current[1]}
+                            />
+                        </>
+                        : null}
+
                     <Video
                         maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
                         blur={gameState === "win" ? 0 : DIFFICULTY[attempts.length].blur}
