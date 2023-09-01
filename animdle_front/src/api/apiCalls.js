@@ -62,12 +62,33 @@ export const getGameState = async (mode, date) => {
     try {
         const token = await authGuest();
         let url;
-        if (date === null) {
-            url = API_BASE_URL + 'api/game-state/' + mode + '/';
-        } else {
+        if (date) {
             url = API_BASE_URL + 'api/game-state/' + mode + '/' + date + '/';
+        } else {
+            url = API_BASE_URL + 'api/game-state/' + mode + '/';
         }
         const response = await axios.get(url, {
+            headers: { "Authorization": "Token " + token }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return "error";
+    }
+}
+
+export const postGuess = async (mode, date, title) => {
+    try {
+        const token = await authGuest();
+
+        let url;
+        if (date) {
+            url = API_BASE_URL + 'api/guess/' + mode + '/' + date + '/';
+        }
+        else {
+            url = API_BASE_URL + 'api/guess/' + mode + '/';
+        }
+        const response = await axios.post(url, { "title": title }, {
             headers: { "Authorization": "Token " + token }
         });
         return response.data;

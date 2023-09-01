@@ -32,4 +32,39 @@
     background-position: right center; /* change the direction of the change here */
     color: #fff;
 }
- 
+
+.search-btn:disabled {
+    background-color: #a7a7a7;
+    background-image: none;
+    color: #fff;
+}
+
+.attempts-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top:20px;
+}
+
+.attempt{
+    background-color: rgb(255, 255, 255, 0.8);
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.attempt-error{
+    box-shadow: 0 0 8px #e34f4f;
+}
+
+.attempt-correct{
+    box-shadow: 0 0 8px #5eba61;
+}
+
+.attempt-text{
+    margin-left: 10px;
+    font-size:16px;
+}

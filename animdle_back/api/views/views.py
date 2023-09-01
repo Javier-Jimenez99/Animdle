@@ -162,7 +162,10 @@ def guess(request, game_mode, date=japan_date()):
         result_obj.attempts = str(attempts)
 
         # Check if the title is correct
-        if all_animes_relations[title] == anime_obj.title:
+        if (
+            title in all_animes_relations.keys()
+            and all_animes_relations[title] == anime_obj.title
+        ):
             result_obj.state = "win"
 
         # If not, check if the user has more attempts
