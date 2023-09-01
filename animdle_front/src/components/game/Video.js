@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import LinearProgress from '@mui/material/LinearProgress';
-import "../styles/Video.css";
+import "../../styles/Video.css";
 
 function Video({ maxPlayableTime, blur, videoURL }) {
     const [playing, setPlaying] = useState(false);

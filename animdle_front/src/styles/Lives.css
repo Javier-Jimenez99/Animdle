@@ -1,0 +1,15 @@
+.hearts-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    width:100%;
+}
+
+.heart{
+    margin:5px 10px;
+}
+
+.dead-heart{
+    filter: grayscale(100%);
+}

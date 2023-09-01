@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import { getGameState } from "../api/apiCalls";
 import "../styles/Game.css";
-import Video from "./Video";
+import Video from "./game/Video";
+import Lives from "./game/Lives"
+import SearchBar from "./game/SearchBar";
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -15,14 +17,16 @@ function Game({ mode, date = null }) {
     // Game variables
     const [gameState, setGameState] = useState(null);
     const [maxPlayableTime, setMaxPlayableTime] = useState(5);
-    //const maxLives = 5;
-    const [usedLives, setUsedLives] = useState(0);
+    const [attempts, setAttempts] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+    const [allTitles, setAllTitles] = useState([]);
 
     useEffect(() => {
         getGameState(mode, date).then(response => {
             setGameState(response);
-            setUsedLives(response.attempts.length)
+            setAttempts(response.attempts);
             setMaxPlayableTime(DIFFICULTY[response.attempts.length].maxPlayableTime);
+            setAllTitles(response.all_titles);
             console.log(response);
         }).catch(error => {
             console.log(error);
@@ -33,7 +37,9 @@ function Game({ mode, date = null }) {
         <>
             {gameState !== null ?
                 <div className="game-container">
-                    <Video maxPlayableTime={maxPlayableTime} blur={DIFFICULTY[usedLives].blur} videoURL={gameState.video_url} />
+                    <Video maxPlayableTime={maxPlayableTime} blur={DIFFICULTY[attempts.length].blur} videoURL={gameState.video_url} />
+                    <Lives livesUsed={attempts.length} />
+                    <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
                 </div>
                 : null}
         </>
