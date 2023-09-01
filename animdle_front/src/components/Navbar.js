@@ -5,6 +5,7 @@ import FadeMenu from "./FadeMenu";
 import templeIcon from '../assets/pixelart_icon/temple_icon.png';
 import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
+import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 
 
 function Navbar({ colors, actual_mode }) {
@@ -20,7 +21,7 @@ function Navbar({ colors, actual_mode }) {
     const possibleIcons = {
         "Openings Wordle": templeIcon,
         "Openings Hardcore": darkDrakeIcon,
-        "Endings Wordle": templeIcon,
+        "Endings Wordle": lanternIcon,
         "Endings Hardcore": whiteDrakeIcon
     };
 
