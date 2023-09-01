@@ -9,7 +9,7 @@ function Lives({ livesUsed, maxLives = 5 }) {
         }
 
         for (let i = 0; i < livesUsed; i++) {
-            hearts.push(<img className="heart dead-heart" src={heartIcon} alt="Dead Hearts" key={i} />);
+            hearts.push(<img className="heart dead-heart" width={"10%"} src={heartIcon} alt="Dead Hearts" key={i} />);
         }
 
         return hearts;
