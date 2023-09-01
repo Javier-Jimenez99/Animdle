@@ -16,8 +16,6 @@ const DIFFICULTY = [
     { "maxPlayableTime": 1000, "blur": 0 } // This is to dont crash the game
 ]
 
-const MAX_LIVES = 5;
-
 function Game({ mode, date = null }) {
     // Game variables
     const [gameState, setGameState] = useState(null);
@@ -41,7 +39,6 @@ function Game({ mode, date = null }) {
 
     useEffect(() => {
         setGuessDisabled(!allTitles.includes(inputValue));
-        console.log(guessDisabled);
     }, [inputValue, allTitles])
 
     const handleGuess = () => {
@@ -71,11 +68,11 @@ function Game({ mode, date = null }) {
             {gameState ?
                 <div className="game-container">
                     <Video
-                        maxPlayableTime={DIFFICULTY[attempts.length].maxPlayableTime}
-                        blur={DIFFICULTY[attempts.length].blur}
+                        maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
+                        blur={gameState === "win" ? 0 : DIFFICULTY[attempts.length].blur}
                         videoURL={videoURL}
                     />
-                    <Lives livesUsed={attempts.length} />
+                    <Lives livesUsed={attempts.length} gameState={gameState} />
 
                     <div className="guess-container">
                         <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
