@@ -102,14 +102,9 @@ def game_state(request, game_mode, date=japan_date()):
 
         day_obj = get_day_by_date(date)
 
-        try:
-            result_obj = Result.objects.get(
-                user=user_obj, day=day_obj, game_mode=game_mode
-            )
-        except Result.DoesNotExist:
-            result_obj = Result.objects.create(
-                user=user_obj, day=day_obj, game_mode=game_mode
-            )
+        result_obj, created = Result.objects.get_or_create(
+            user=user_obj, day=day_obj, game_mode=game_mode
+        )
 
         theme_data = get_theme(game_mode, day_obj)
         all_titles = get_all_titles()
