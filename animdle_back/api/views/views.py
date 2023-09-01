@@ -122,7 +122,7 @@ def game_state(request, game_mode, date=japan_date()):
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def guess(request, game_mode, title, date=japan_date()):
+def guess(request, game_mode, date=japan_date()):
     if request.method == "POST":
         if date > japan_date():
             return Response(
@@ -157,6 +157,7 @@ def guess(request, game_mode, title, date=japan_date()):
 
         # Allways save the title attempt
         attempts = eval(result_obj.attempts)
+        title = request.data["title"]
         attempts.append(title)
         result_obj.attempts = str(attempts)
 

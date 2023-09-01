@@ -2,12 +2,13 @@ import datetime
 from datetime import datetime as dt
 
 import pytz
-from api.models import AnimdleUser, Anime, Day, Result, Theme
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
+
+from api.models import AnimdleUser, Anime, Day, Result, Theme
 
 
 class APITestCase(TestCase):
@@ -135,7 +136,9 @@ class APITestCase(TestCase):
         title = "test"
         date = self.today_date.strftime("%Y-%m-%d")
         response = self.client.post(
-            reverse("guess", args=[game_mode, title, date]), format="json"
+            reverse("guess", args=[game_mode, date]),
+            data={"title": title},
+            format="json",
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -144,7 +147,9 @@ class APITestCase(TestCase):
 
         date = (self.today_date + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         response = self.client.post(
-            reverse("guess", args=[game_mode, title, date]), format="json"
+            reverse("guess", args=[game_mode, date]),
+            data={"title": title},
+            format="json",
         )
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -158,7 +163,9 @@ class APITestCase(TestCase):
 
         for i in range(1, 5):
             response = self.client.post(
-                reverse("guess", args=[game_mode, title, date]), format="json"
+                reverse("guess", args=[game_mode, date]),
+                data={"title": title},
+                format="json",
             )
 
             self.assertEqual(response.status_code, status.HTTP_200_OK)
