@@ -23,6 +23,8 @@ function Game({ mode, date = null }) {
     // Game variables
     const [gameState, setGameState] = useState(null);
     const [videoURL, setVideoURL] = useState(null);
+    // This is to reset the video when there is a guess or a skip
+    const [resetVideo, setResetVideo] = useState(false);
     const [attempts, setAttempts] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [allTitles, setAllTitles] = useState([]);
@@ -51,6 +53,7 @@ function Game({ mode, date = null }) {
             const newTitles = allTitles.filter(title => title !== inputValue);
             setAllTitles(newTitles);
             setInputValue("");
+            setResetVideo(true);
         }).catch(error => {
             console.log(error);
         })
@@ -62,6 +65,7 @@ function Game({ mode, date = null }) {
             newAttempts.push("Skip!");
             setGameState(response.state);
             setAttempts(newAttempts);
+            setResetVideo(true);
         }).catch(error => {
             console.log(error);
         })
@@ -100,6 +104,8 @@ function Game({ mode, date = null }) {
                         maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
                         blur={gameState === "win" ? 0 : DIFFICULTY[attempts.length].blur}
                         videoURL={videoURL}
+                        resetVideo={resetVideo}
+                        setResetVideo={setResetVideo}
                     />
                     <Lives livesUsed={attempts.length} gameState={gameState} />
 

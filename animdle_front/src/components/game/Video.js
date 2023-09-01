@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import ReactPlayer from "react-player";
 import { IconButton } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -6,10 +6,18 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
 
-function Video({ maxPlayableTime, blur, videoURL }) {
+function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo }) {
     const [playing, setPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const playerRef = useRef(null);
+
+    useEffect(() => {
+        if (resetVideo) {
+            setPlaying(false);
+            setProgress(0);
+            playerRef.current.seekTo(0);
+        }
+    }, [resetVideo])
 
     const handleProgress = (progress) => {
         if (progress.playedSeconds > maxPlayableTime) {
@@ -20,6 +28,7 @@ function Video({ maxPlayableTime, blur, videoURL }) {
     }
 
     const handlePlay = () => {
+        setResetVideo(false);
         setPlaying(true);
     }
 
