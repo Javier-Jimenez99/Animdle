@@ -39,9 +39,21 @@ function Game({ mode, date = null }) {
                 <div className="game-container">
                     <Video maxPlayableTime={maxPlayableTime} blur={DIFFICULTY[attempts.length].blur} videoURL={gameState.video_url} />
                     <Lives livesUsed={attempts.length} />
-                    <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
-                </div>
-                : null}
+
+                    <div className="guess-container">
+                        <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
+                        <div className="guess-buttons">
+                            <button className="search-btn">
+                                GUESS
+                            </button>
+                            <button className="search-btn">
+                                SKIP
+                            </button>
+                        </div>
+                    </div>
+                </div >
+                : null
+            }
         </>
     )
 }

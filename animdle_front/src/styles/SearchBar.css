@@ -1,5 +1,5 @@
 .input-wrapper {
-    width: 60%;
+    width: 90%;
     height: 2.5rem;
     border: none;
     border-radius: 10px;
@@ -33,6 +33,11 @@ input:focus {
     margin-top: 1rem;
     max-height: 300px;
     overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .search-result {
@@ -47,4 +52,10 @@ input:focus {
     width: 100%;
     display: flex;
     flex-direction: column;
+    position:relative;
+}
+
+.results-container {
+    position: relative;
+    flex: 1; /* Ocupar el espacio restante */
 }

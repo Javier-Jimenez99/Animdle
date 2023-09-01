@@ -23,29 +23,31 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
     };
 
     return (
-        <div className="search-bar-container">
-            <div className="input-wrapper">
-                <SearchIcon style={{ color: "#DD675B" }} />
-                <input className="search-bar" type="text" value={inputValue} placeholder="Search for an anime..." onChange={(e) => handleChange(e.target.value)} />
-            </div>
-            {results && results.length > 0 ?
-                <div className="results-list">
-                    {results.map((result, id) => {
-                        return (
-                            <div
-                                key={id}
-                                className="search-result"
-                                onClick={(e) => {
-                                    setInputValue(result);
-                                    handleChange(result);
-                                }}
-                            >
-                                {result}
-                            </div>
-                        )
-                    })}
+        <div className='results-container'>
+            <div className="search-bar-container">
+                <div className="input-wrapper">
+                    <SearchIcon style={{ color: "#DD675B" }} />
+                    <input className="search-bar" type="text" value={inputValue} placeholder="Search for an anime..." onChange={(e) => handleChange(e.target.value)} />
                 </div>
-                : null}
+                {results && results.length > 0 ?
+                    <div className="results-list">
+                        {results.map((result, id) => {
+                            return (
+                                <div
+                                    key={id}
+                                    className="search-result"
+                                    onClick={(e) => {
+                                        setInputValue(result);
+                                        handleChange(result);
+                                    }}
+                                >
+                                    {result}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    : null}
+            </div>
         </div>
     )
 }
