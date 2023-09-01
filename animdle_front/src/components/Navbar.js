@@ -1,7 +1,7 @@
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 import Clock from "../components/Clock";
-import FadeMenu from "../components/FadeMenu";
+import FadeMenu from "./FadeMenu";
 import templeIcon from '../assets/pixelart_icon/temple_icon.png';
 import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';

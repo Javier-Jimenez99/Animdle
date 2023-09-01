@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 animdle_front/node_modules/
+package-lock.json
