@@ -5,7 +5,7 @@ import Video from "./game/Video";
 import Lives from "./game/Lives"
 import SearchBar from "./game/SearchBar";
 import ErrorIcon from '@mui/icons-material/Error';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -95,7 +95,7 @@ function Game({ mode, date = null }) {
                                 if (gameState === "win" && index === attempts.length - 1) {
                                     return (
                                         <div key={index} className="attempt attempt-correct">
-                                            <ThumbUpAltIcon style={{ color: "#5eba61" }} />
+                                            <CheckCircleIcon style={{ color: "#5eba61" }} />
                                             <div className="attempt-text">{attempt}</div>
                                         </div>
                                     );
