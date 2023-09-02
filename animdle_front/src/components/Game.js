@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react"
+import { useParams } from "react-router-dom";
 import { getGameState, postGuess } from "../api/apiCalls";
 import "../styles/Game.css";
 import Video from "./game/Video";
@@ -17,7 +18,9 @@ const DIFFICULTY = [
     { "maxPlayableTime": 1000, "blur": 0 } // This is to dont crash the game
 ]
 
-function Game({ mode, date = null }) {
+function Game({ mode }) {
+    const date = useParams().date;
+
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
     // Game variables
@@ -30,20 +33,22 @@ function Game({ mode, date = null }) {
     const [allTitles, setAllTitles] = useState([]);
     const [guessDisabled, setGuessDisabled] = useState(true);
 
+    console.log(attempts);
+
     useEffect(() => {
         getGameState(mode, date).then(response => {
             setVideoURL(response.video_url);
             setGameState(response.state);
             setAttempts(response.attempts);
             setAllTitles(response.all_titles);
-            console.log(response);
         }).catch(error => {
             console.log(error);
         })
     }, [mode, date])
 
     useEffect(() => {
-        setGuessDisabled(!allTitles.includes(inputValue));
+        if (allTitles)
+            setGuessDisabled(!allTitles.includes(inputValue));
     }, [inputValue, allTitles])
 
     const handleGuess = () => {
@@ -61,10 +66,8 @@ function Game({ mode, date = null }) {
 
     const handleSkip = () => {
         postGuess(mode, date, "Skip!").then(response => {
-            let newAttempts = [...attempts];
-            newAttempts.push("Skip!");
             setGameState(response.state);
-            setAttempts(newAttempts);
+            setAttempts(response.attempts);
             setResetVideo(true);
         }).catch(error => {
             console.log(error);
@@ -124,7 +127,6 @@ function Game({ mode, date = null }) {
                     {attempts.length > 0 ?
                         <div className="attempts-container">
                             {attempts.map((attempt, index) => {
-                                console.log(gameState, index, attempt);
                                 if (gameState === "win" && index === attempts.length - 1) {
                                     return (
                                         <div key={index} className="attempt attempt-correct">

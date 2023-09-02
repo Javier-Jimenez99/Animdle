@@ -1,23 +1,25 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import OpeningPage from "./pages/OpeningPage";
-import OpeningHardcorePage from "./pages/OpeningHardcorePage";
-import EndingPage from "./pages/EndingPage";
-import EndingHardcorePage from "./pages/EndingHardcorePage";
+import Navbar from "./components/Navbar";
+import Game from "./components/Game";
 
 function App() {
+  const modes = ["opening", "hardcore-opening", "ending", "hardcore-ending"];
   return (
-    <Routes>
-      <Route path="/" element={<OpeningPage />} />
-      <Route path="/openings" element={<OpeningPage />} />
-      <Route path="/openings/:date" element={<OpeningPage />} />
-      <Route path="/openings-hardcore" element={<OpeningHardcorePage />} />
-      <Route path="/openings-hardcore/:date" element={<OpeningHardcorePage />} />
-      <Route path="/endings" element={<EndingPage />} />
-      <Route path="/endings/:date" element={<EndingPage />} />
-      <Route path="/endings-hardcore" element={<EndingHardcorePage />} />
-      <Route path="/endings-hardcore/:date" element={<EndingHardcorePage />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Navbar actual_mode={"opening"} />}>
+          <Route index element={<Game mode={"opening"} />} />
+          <Route path=":date" element={<Game mode={"opening"} />} />
+        </Route>
+        {modes.map(mode =>
+          <Route path={"/" + mode} element={<Navbar actual_mode={mode} />}>
+            <Route index element={<Game mode={mode} />} />
+            <Route path=":date" element={<Game mode={mode} />} />
+          </Route>
+        )}
+      </Routes>
+    </>
   );
 }
 

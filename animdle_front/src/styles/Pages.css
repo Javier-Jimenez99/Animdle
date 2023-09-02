@@ -10,7 +10,7 @@
     background-image: url(../assets/background/temple_background.png);
 }
 
-.opening-hardcore{
+.hardcore-opening{
     background-image: url(../assets/background/dark_drake_background.png);
 }
 
@@ -18,6 +18,6 @@
     background-image: url(../assets/background/matsuri_background.png);
 }
 
-.ending-hardcore{
+.hardcore-ending{
     background-image: url(../assets/background/white_drake_background.png);
 }

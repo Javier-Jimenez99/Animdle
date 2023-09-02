@@ -6,7 +6,6 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
-import createPalette from "@mui/material/styles/createPalette";
 
 function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState }) {
     const [playing, setPlaying] = useState(false);

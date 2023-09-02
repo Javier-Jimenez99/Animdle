@@ -40,7 +40,7 @@ export default function FadeMenu({ options }) {
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                {options.map(({ name, link, icon }, index) => (
+                {options.map(({ name, icon, link }, index) => (
                     <MenuItem key={index}>
                         <Link className="menu-link" to={link}>
                             <img className="menu-icon" src={icon} alt={name + " icon"} />
