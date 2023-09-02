@@ -33,8 +33,6 @@ function Game({ mode }) {
     const [allTitles, setAllTitles] = useState([]);
     const [guessDisabled, setGuessDisabled] = useState(true);
 
-    console.log(attempts);
-
     useEffect(() => {
         getGameState(mode, date).then(response => {
             setVideoURL(response.video_url);
@@ -76,9 +74,9 @@ function Game({ mode }) {
 
     return (
         <>
-            {gameState ?
+            {gameState &&
                 <div className="game-container">
-                    {gameState === "win" ?
+                    {gameState === "win" &&
                         <>
                             <ConfettiExplosion
                                 className="confetti1"
@@ -101,7 +99,7 @@ function Game({ mode }) {
                                 height={windowSize.current[1] * 3}
                             />
                         </>
-                        : null}
+                    }
 
                     <Video
                         maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
@@ -124,7 +122,7 @@ function Game({ mode }) {
                             </button>
                         </div>
                     </div>
-                    {attempts.length > 0 ?
+                    {attempts.length > 0 &&
                         <div className="attempts-container">
                             {attempts.map((attempt, index) => {
                                 if (gameState === "win" && index === attempts.length - 1) {
@@ -145,10 +143,8 @@ function Game({ mode }) {
                                 }
 
                             })}
-                        </div>
-                        : null}
+                        </div>}
                 </div >
-                : null
             }
         </>
     )

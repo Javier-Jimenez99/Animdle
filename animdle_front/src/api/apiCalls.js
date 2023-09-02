@@ -97,3 +97,27 @@ export const postGuess = async (mode, date, title) => {
         return "error";
     }
 }
+
+export const getResults = async (mode, date) => {
+    try {
+        const token = await authGuest();
+
+        let url;
+        if (date) {
+            url = API_BASE_URL + 'api/results/' + mode + '/' + date + '/';
+        }
+        else {
+            url = API_BASE_URL + 'api/results/' + mode + '/';
+        }
+
+        const response = await axios.get(url, {
+            headers: { "Authorization": "Token " + token }
+        });
+
+        return response.data;
+    }
+    catch (error) {
+        console.log(error);
+        return "error";
+    }
+}

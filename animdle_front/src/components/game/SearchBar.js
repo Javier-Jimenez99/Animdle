@@ -29,13 +29,13 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
     }, [inputValue]);
 
     return (
-        <div className='results-container'>
+        <div className='search-results-container'>
             <div className="search-bar-container">
                 <div className="input-wrapper">
                     <SearchIcon style={{ color: "#DD675B" }} />
                     <input className="search-bar" type="text" value={inputValue} placeholder="Search for an anime..." onChange={(e) => handleChange(e.target.value)} />
                 </div>
-                {results && results.length > 0 ?
+                {results && results.length > 0 &&
                     <div className="results-list">
                         {results.map((result, id) => {
                             return (
@@ -52,7 +52,7 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
                             )
                         })}
                     </div>
-                    : null}
+                }
             </div>
         </div>
     )

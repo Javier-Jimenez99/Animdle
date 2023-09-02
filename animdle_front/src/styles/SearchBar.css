@@ -55,7 +55,7 @@ input:focus {
     position:relative;
 }
 
-.results-container {
+.search-results-container {
     position: relative;
     flex: 1; /* Ocupar el espacio restante */
 }
