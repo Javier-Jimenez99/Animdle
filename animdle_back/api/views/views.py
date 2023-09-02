@@ -188,7 +188,6 @@ def guess(request, game_mode, date=japan_date()):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def results(request, game_mode, date=japan_date()):
-    print(request)
     if request.method == "GET":
         user_obj = request.user
 
