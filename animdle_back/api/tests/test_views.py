@@ -2,13 +2,12 @@ import datetime
 from datetime import datetime as dt
 
 import pytz
+from api.models import AnimdleUser, Anime, Day, Result, Theme
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
-
-from api.models import AnimdleUser, Anime, Day, Result, Theme
 
 
 class APITestCase(TestCase):
@@ -82,6 +81,16 @@ class APITestCase(TestCase):
             user=self.user, day=day, game_mode="opening"
         )
 
+        day = Day.objects.create(
+            id=2,
+            opening=theme,
+            ending=theme,
+            hardcore_opening=theme,
+            hardcore_ending=theme,
+            date=self.today_date + datetime.timedelta(days=1),
+        )
+        day.save()
+
     def test_create_guest(self):
         data = {}
         response = self.client.post(reverse("create-guest"), data, format="json")
@@ -117,6 +126,7 @@ class APITestCase(TestCase):
         custom_date = self.today_date.strftime(
             "%Y-%m-%d"
         )  # Modificar según corresponda
+
         response = self.client.get(
             reverse("game-state", args=[game_mode, custom_date]), format="json"
         )
@@ -135,6 +145,7 @@ class APITestCase(TestCase):
         game_mode = "opening"  # Modificar según corresponda
         title = "test"
         date = self.today_date.strftime("%Y-%m-%d")
+
         response = self.client.post(
             reverse("guess", args=[game_mode, date]),
             data={"title": title},
@@ -174,3 +185,29 @@ class APITestCase(TestCase):
                 self.assertEqual(response.data["state"], "lose")
             else:
                 self.assertEqual(response.data["state"], "pending")
+
+    def test_results(self):
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token}")
+        game_mode = "opening"
+
+        date = self.today_date.strftime("%Y-%m-%d")
+        response = self.client.get(
+            reverse("results", args=[game_mode, date]), format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        title = "test2"
+
+        for i in range(5):
+            response = self.client.post(
+                reverse("guess", args=[game_mode, date]),
+                data={"title": title},
+                format="json",
+            )
+
+        response = self.client.get(
+            reverse("results", args=[game_mode, date]), format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

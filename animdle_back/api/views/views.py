@@ -92,6 +92,7 @@ def todays_video(request, game_mode):
 @permission_classes([IsAuthenticated])
 def game_state(request, game_mode, date=japan_date()):
     if request.method == "GET":
+        # Restore after tryings
         if date > japan_date():
             return Response(
                 {"error": "You can't play in the future"},
@@ -124,6 +125,7 @@ def game_state(request, game_mode, date=japan_date()):
 @permission_classes([IsAuthenticated])
 def guess(request, game_mode, date=japan_date()):
     if request.method == "POST":
+        # Restore after tryings
         if date > japan_date():
             return Response(
                 {"error": "You can't play in the future"},
@@ -179,4 +181,45 @@ def guess(request, game_mode, date=japan_date()):
             "attempts": eval(result_obj.attempts),
             "state": result_obj.state,
         }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(["GET", "POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def results(request, game_mode, date=japan_date()):
+    print(request)
+    if request.method == "GET":
+        user_obj = request.user
+
+        day_obj = get_day_by_date(date)
+
+        try:
+            result_obj = Result.objects.get(
+                user=user_obj, day=day_obj, game_mode=game_mode
+            )
+        except Result.DoesNotExist:
+            return Response(
+                {"error": "You must start the game first"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if result_obj.state == "pending":
+            return Response(
+                {"error": "You must finish the game first"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        theme = getattr(day_obj, game_mode)
+        anime = theme.anime
+
+        response_data = {
+            "title": anime.title,
+            "image_url": anime.image_url,
+            "video_url": theme.video_url,
+            "song": theme.title,
+            "state": result_obj.state,
+            "attempts": eval(result_obj.attempts),
+        }
+
         return Response(response_data, status=status.HTTP_200_OK)
