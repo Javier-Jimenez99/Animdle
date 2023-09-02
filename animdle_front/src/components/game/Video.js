@@ -3,8 +3,10 @@ import ReactPlayer from "react-player";
 import { IconButton } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
+import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
+import createPalette from "@mui/material/styles/createPalette";
 
 function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState }) {
     const [playing, setPlaying] = useState(false);
@@ -34,6 +36,11 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
 
     const handlePause = () => {
         setPlaying(false);
+    }
+
+    const handleReplay = () => {
+        playerRef.current.seekTo(0);
+        setPlaying(true);
     }
 
     return (
@@ -83,6 +90,9 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                                 {progress.toFixed() + " s"}
                             </p>
                         </div>
+                        <IconButton onClick={handleReplay} >
+                            <ReplayRoundedIcon className="control-icon" />
+                        </IconButton>
                     </div>
             }
         </div>
