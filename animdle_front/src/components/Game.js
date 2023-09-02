@@ -106,6 +106,7 @@ function Game({ mode, date = null }) {
                         videoURL={videoURL}
                         resetVideo={resetVideo}
                         setResetVideo={setResetVideo}
+                        gameState={gameState}
                     />
                     <Lives livesUsed={attempts.length} gameState={gameState} />
 

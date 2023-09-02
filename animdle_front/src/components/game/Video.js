@@ -6,7 +6,7 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
 
-function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo }) {
+function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState }) {
     const [playing, setPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const playerRef = useRef(null);
@@ -56,7 +56,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo }) {
                         ref={playerRef}
                         url={videoURL}
                         playing={playing}
-                        controls={false}
+                        controls={["win", "lose"].includes(gameState)}
                         width="100%"
                         height="100%"
                         onProgress={handleProgress}
@@ -66,22 +66,25 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo }) {
                     />
                 </div>
             </div>
-            <div className="video-controls">
-                {playing ?
-                    <IconButton onClick={handlePause}>
-                        <PauseRoundedIcon className="control-icon" />
-                    </IconButton> :
-                    <IconButton onClick={handlePlay} >
-                        <PlayArrowRoundedIcon className="control-icon" />
-                    </IconButton>
-                }
-                <div className="progress-bar">
-                    <LinearProgress className="progress-bar-line" variant="determinate" value={progress / maxPlayableTime * 100} />
-                    <p className="progress-bar-time">
-                        {progress.toFixed() + " s"}
-                    </p>
-                </div>
-            </div>
+            {
+                ["win", "lose"].includes(gameState) ? null :
+                    <div className="video-controls">
+                        {playing ?
+                            <IconButton onClick={handlePause}>
+                                <PauseRoundedIcon className="control-icon" />
+                            </IconButton> :
+                            <IconButton onClick={handlePlay} >
+                                <PlayArrowRoundedIcon className="control-icon" />
+                            </IconButton>
+                        }
+                        <div className="progress-bar">
+                            <LinearProgress className="progress-bar-line" variant="determinate" value={progress / maxPlayableTime * 100} />
+                            <p className="progress-bar-time">
+                                {progress.toFixed() + " s"}
+                            </p>
+                        </div>
+                    </div>
+            }
         </div>
     )
 }
