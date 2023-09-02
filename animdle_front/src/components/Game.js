@@ -82,23 +82,23 @@ function Game({ mode }) {
                         <>
                             <ConfettiExplosion
                                 className="confetti1"
-                                force={0.8}
+                                force={0.2}
                                 duration={3000}
                                 particleCount={400}
                                 colors={["#DD675B", "#E4A892", "#FBEDE4"]}
                                 zIndex={0}
-                                width={windowSize.current[0]}
-                                height={windowSize.current[1]}
+                                width={windowSize.current[0] * 1.5}
+                                height={windowSize.current[1] * 3}
                             />
                             <ConfettiExplosion
                                 className="confetti2"
-                                force={0.8}
+                                force={0.2}
                                 duration={3000}
                                 particleCount={400}
                                 colors={["#DD675B", "#E4A892", "#FBEDE4"]}
                                 zIndex={0}
-                                width={windowSize.current[0]}
-                                height={windowSize.current[1]}
+                                width={windowSize.current[0] * 1.5}
+                                height={windowSize.current[1] * 3}
                             />
                         </>
                         : null}
