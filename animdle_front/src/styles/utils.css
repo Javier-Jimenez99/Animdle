@@ -6,6 +6,10 @@
     box-shadow: 0 0 8px #5eba61;
 }
 
+.simple-shadow{
+    box-shadow: 0 0 8px #0000;
+}
+
 .round-border{
     border-radius: 10px;
 }

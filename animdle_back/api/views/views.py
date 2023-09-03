@@ -209,6 +209,20 @@ def results(request, game_mode, date=japan_date()):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        user_results = Result.objects.filter(user=user_obj)
+        played = user_results.count()
+        wins = user_results.filter(state="win").count()
+        streaks = []
+        current_streak = 0
+        for result in user_results:
+            if result.state == "win":
+                current_streak += 1
+            else:
+                streaks.append(current_streak)
+                current_streak = 0
+
+        record_streak = max(streaks)
+
         theme = getattr(day_obj, game_mode)
         anime = theme.anime
 
@@ -220,6 +234,10 @@ def results(request, game_mode, date=japan_date()):
             "state": result_obj.state,
             "attempts": eval(result_obj.attempts),
             "synopsis": anime.synopsis.replace("\n", "").replace("<br>", "</br>"),
+            "played": played,
+            "wins": wins,
+            "record_streak": record_streak,
+            "current_streak": current_streak,
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
