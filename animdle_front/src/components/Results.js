@@ -6,17 +6,19 @@ import "../styles/utils.css";
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CountUp from 'react-countup';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Share from "./game/Share";
 import templeIcon from '../assets/pixelart_icon/temple_icon.png';
 import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
+import { motion } from 'framer-motion';
 
 function Results({ mode }) {
     const date = useParams().date;
     const dateString = date ? "/" + date : "";
     const [results, setResults] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getResults(mode, date).then(response => {
@@ -30,7 +32,17 @@ function Results({ mode }) {
     return (
         <>
             {results &&
-                <div class="results-container">
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { y: '100vh' },
+                        visible: {
+                            y: 0, transition: { duration: 0.2 }
+                        }
+                    }}
+                    class="results-container"
+                >
                     <div class="anime-data">
                         <img
                             class={"anime-image round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
@@ -80,29 +92,28 @@ function Results({ mode }) {
 
                         <div className="redirect-buttons">
                             <div className="buttons-row">
-                                <button className="redirect-button search-btn round-border" onClick={<Link to={"opening" + dateString} />}>
+                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/opening" + dateString)}>
                                     <img className="button-icon" src={templeIcon} alt="Opening icon" />
                                     Openings
                                 </button>
-                                <button className="redirect-button search-btn round-border" onClick={<Link to={"ending" + dateString} />}>
+                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/ending" + dateString)}>
                                     <img className="button-icon" src={lanternIcon} alt="Ending icon" />
                                     Endings
                                 </button>
                             </div>
                             <div className="buttons-row">
-                                <button className="redirect-button search-btn round-border" onClick={<Link to={"hardcore-opening" + dateString} />}>
+                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-opening" + dateString)}>
                                     <img className="button-icon" src={darkDrakeIcon} alt="Hardcore opening icon" />
                                     Hardcore Openings
                                 </button>
-                                <button className="redirect-button search-btn round-border" onClick={<Link to={"hardcore-ending" + dateString} />}>
+                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-ending" + dateString)}>
                                     <img className="button-icon" src={whiteDrakeIcon} alt="Hardcore ending icon" />
                                     Hardcore Endings
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div >
-
+                </motion.div >
             }
         </>
     )
