@@ -52,14 +52,13 @@ function Results({ mode }) {
                         />
                         <div class={"anime-info round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}>
                             <div className="anime-title">
-                                <h1 class="anime-text">{results.title}</h1>
+                                <h1 class="anime-text cut-one-line" style={{ marginBottom: 0 }}>{results.title}</h1>
                                 {results && results.state === "win" ?
                                     <CheckCircleIcon style={{ color: "#5eba61" }} /> :
                                     <ErrorIcon style={{ color: "#e34f4f" }} />
                                 }
                             </div>
                             <h2 class="anime-text">({results.song})</h2>
-                            {/*<p dangerouslySetInnerHTML={{ __html: results.synopsis }} />*/}
                             <div className="video-wrapper">
                                 <ReactPlayer
                                     url={results.video_url}

@@ -239,7 +239,7 @@ def results(request, game_mode, date=japan_date()):
         if current_streak > 0:
             streaks.append(current_streak)
 
-        record_streak = max(streaks)
+        record_streak = max(streaks) if len(streaks) > 0 else 0
 
         theme = getattr(day_obj, game_mode)
         anime = theme.anime

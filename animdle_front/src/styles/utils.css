@@ -42,3 +42,7 @@
     background-image: none;
     color: #fff;
 }
+
+.cut-one-line{
+    white-space: nowrap;
+}
