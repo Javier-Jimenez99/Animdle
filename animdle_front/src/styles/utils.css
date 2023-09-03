@@ -13,3 +13,32 @@
 .round-border{
     border-radius: 10px;
 }
+
+/* BUTTONS PAGE https://gradientbuttons.colorion.co/*/
+         
+.search-btn {
+    background-image: linear-gradient(to right, #DE6262 0%, #FFB88C  51%, #DE6262  100%);
+    margin: 0 5px;
+    text-align: center;
+    padding: 0 15px;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 10px #eee;
+    font-size: 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    width: auto;
+    height: 2.5rem;
+
+}
+
+.search-btn:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+}
+
+.search-btn:disabled {
+    background-color: #a7a7a7;
+    background-image: none;
+    color: #fff;
+}

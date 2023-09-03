@@ -6,11 +6,16 @@ import "../styles/utils.css";
 import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CountUp from 'react-countup';
-
+import { Link } from "react-router-dom";
 import Share from "./game/Share";
+import templeIcon from '../assets/pixelart_icon/temple_icon.png';
+import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
+import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
+import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 
 function Results({ mode }) {
     const date = useParams().date;
+    const dateString = date ? "/" + date : "";
     const [results, setResults] = useState(null);
 
     useEffect(() => {
@@ -70,7 +75,32 @@ function Results({ mode }) {
                             </div>
                         </div>
                     </div>
-                    <Share results={results} date={date} />
+                    <div className="results-last-row">
+                        <Share results={results} date={date} />
+
+                        <div className="redirect-buttons">
+                            <div className="buttons-row">
+                                <button className="redirect-button search-btn round-border" onClick={<Link to={"opening" + dateString} />}>
+                                    <img className="button-icon" src={templeIcon} alt="Opening icon" />
+                                    Openings
+                                </button>
+                                <button className="redirect-button search-btn round-border" onClick={<Link to={"ending" + dateString} />}>
+                                    <img className="button-icon" src={lanternIcon} alt="Ending icon" />
+                                    Endings
+                                </button>
+                            </div>
+                            <div className="buttons-row">
+                                <button className="redirect-button search-btn round-border" onClick={<Link to={"hardcore-opening" + dateString} />}>
+                                    <img className="button-icon" src={darkDrakeIcon} alt="Hardcore opening icon" />
+                                    Hardcore Openings
+                                </button>
+                                <button className="redirect-button search-btn round-border" onClick={<Link to={"hardcore-ending" + dateString} />}>
+                                    <img className="button-icon" src={whiteDrakeIcon} alt="Hardcore ending icon" />
+                                    Hardcore Endings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div >
 
             }

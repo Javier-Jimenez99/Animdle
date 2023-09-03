@@ -12,7 +12,7 @@ function Share({ results, date }) {
     const generateMessage = () => {
         let message = "🌸 Animdle";
 
-        message += " (" + (date ? date : new Date().toLocaleDateString()) + ")\n\n";
+        message += "【" + (date ? date : new Date().toLocaleDateString()) + "】\n\n";
 
         for (let i = 0; i < results.attempts.length - 1; i++) {
             message += "💔";
