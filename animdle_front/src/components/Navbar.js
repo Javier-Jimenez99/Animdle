@@ -42,15 +42,17 @@ function Navbar({ actual_mode, colors = ["#fbede4", "#dd6559", "#e4a892"] }) {
             <nav className="navbar" style={{ background: gradient }}>
                 <div className="navbar-logo">
                     <img className="logo" src={logo} alt="Animdle Logo" />
-                    <h2>ANIMDLE</h2>
+                    <h2 style={{ margin: 0 }}>ANIMDLE</h2>
                 </div>
                 <div className="navbar-title">
                     <h1>{modes[actual_mode].name}</h1>
                 </div>
                 <div className="navbar-end">
-                    <div className="navbar-clock">
-                        <Clock />
-                    </div>
+                    {false &&
+                        <div className="navbar-clock">
+                            <Clock />
+                        </div>
+                    }
                     <FadeMenu options={options} />
                 </div>
             </nav>

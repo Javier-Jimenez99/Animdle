@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+#long-button{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .menu-icon{
     width: 50px;
     margin-right: 5px;

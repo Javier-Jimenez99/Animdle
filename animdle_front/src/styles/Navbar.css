@@ -1,31 +1,33 @@
 .navbar{
     height: 50px;
-    width: 100%;
+    width: 100vw;
     position: fixed;
     top: 0;
     z-index: 100;
     display: flex;
     justify-content: space-between;
+    margin: 0 2.5vw;
 }
 
 .navbar-logo{
     display: flex;
     align-items: center;
-    padding-left: 40px;
-    font-size: 24px;
+    font-size: 1rem;
     font-family: Kaushan Script;
     color: #427D91;
+    width:fit-content !important;
+    padding-left: 2.5vw;
     /*color: #d8475a;*/
 }
 
 .logo{
     height: 40px;
     width: auto;
-    margin: 20px;
+    margin-right: min(2.5vw,10px);
 }
 
 .navbar-title{
-    font-size: 20px;
+    font-size: min(3vw,20px);
     font-family: Kaushan Script;
     color: white;
     flex-grow: 2;
@@ -35,21 +37,16 @@
     text-shadow: 2px 2px 4px #000000;
 }
 
-
 .navbar-end {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 40px;
   font-size: 16px;
   color: #333;
+  padding-right:2.5vw;
 }
 
 .navbar-clock{
     color: #fbede4;
     margin-right:20px;
-}
-
-.navbar-end, .navbar-logo{
-    width: 20%;
 }
