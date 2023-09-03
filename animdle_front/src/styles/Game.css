@@ -34,7 +34,6 @@
     background-size: 200% auto;
     color: white;            
     box-shadow: 0 0 10px #eee;
-    border-radius: 10px;
     font-size: 16px;
     font-family: 'Nunito Sans', sans-serif;
     width: auto;
@@ -62,20 +61,11 @@
 
 .attempt{
     background-color: rgb(255, 255, 255, 0.8);
-    border-radius: 10px;
     height: 2.5rem;
     padding: 0 10px;
     margin-top: 10px;
     display: flex;
     align-items: center;
-}
-
-.attempt-error{
-    box-shadow: 0 0 8px #e34f4f;
-}
-
-.attempt-correct{
-    box-shadow: 0 0 8px #5eba61;
 }
 
 .attempt-text{

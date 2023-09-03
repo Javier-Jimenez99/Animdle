@@ -6,6 +6,7 @@ import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
+import "../../styles/utils.css";
 
 function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState }) {
     const [playing, setPlaying] = useState(false);
@@ -43,7 +44,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
     }
 
     return (
-        <div className="video-container">
+        <div className="video-container round-border">
             <style>
                 {
                     `.blur {
@@ -84,7 +85,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                             </IconButton>
                         }
                         <div className="progress-bar">
-                            <LinearProgress className="progress-bar-line" variant="determinate" value={progress / maxPlayableTime * 100} />
+                            <LinearProgress className="progress-bar-line round-border" variant="determinate" value={progress / maxPlayableTime * 100} />
                             <p className="progress-bar-time">
                                 {progress.toFixed() + " s"}
                             </p>

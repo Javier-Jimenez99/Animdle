@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getResults } from "../api/apiCalls"
-import Lives from "./game/Lives"
 import "../styles/Results.css";
+import "../styles/utils.css";
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function Results({ mode }) {
     const date = useParams().date;
@@ -20,30 +22,27 @@ function Results({ mode }) {
     return (
         <>
             {results &&
-                <div className="results-container">
-                    <div className="anime-data">
+                <div class="results-container">
+                    <div class="anime-data">
                         <img
-                            className={"anime-image " + (results.state === "win" ? "win-image" : "lose-image")}
+                            class={"anime-image " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
                             src={results.image_url}
                             alt={"Image from " + results.title}
                         />
-                        <div className="anime-info">
-                            <div className="anime-info-inner">
-                                <h1 className="anime-text">{results.title}</h1>
-                                <h2 className="anime-text">{"(" + results.song + ")"}</h2>
-                                <video
-                                    className="anime-video"
-                                    src={results.video_url}
-                                    playing={false}
-                                    controls={true}
-                                    width="70%"
-                                    height="auto"
-                                />
-                                <Lives livesUsed={results.attempts.length} gameState={results.state} />
+                        <div class={"anime-info " + (results.state === "win" ? "correct-shadow" : "error-shadow")}>
+                            <div className="anime-title">
+                                <h1 class="anime-text">{results.title}</h1>
+                                {results && results.state === "win" ?
+                                    <CheckCircleIcon style={{ color: "#5eba61" }} /> :
+                                    <ErrorIcon style={{ color: "#e34f4f" }} />
+                                }
                             </div>
+                            <h2 class="anime-text">({results.song})</h2>
+                            <p dangerouslySetInnerHTML={{ __html: results.synopsis }} />
                         </div>
                     </div>
                 </div>
+
             }
         </>
     )

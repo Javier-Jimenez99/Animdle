@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom";
 import { getGameState, postGuess } from "../api/apiCalls";
 import "../styles/Game.css";
+import "../styles/utils.css";
 import Video from "./game/Video";
 import Lives from "./game/Lives"
 import SearchBar from "./game/SearchBar";
@@ -114,10 +115,10 @@ function Game({ mode }) {
                     <div className="guess-container">
                         <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
                         <div className="guess-buttons">
-                            <button className="search-btn" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
+                            <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
                                 GUESS
                             </button>
-                            <button className="search-btn" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
+                            <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
                                 SKIP
                             </button>
                         </div>
@@ -127,7 +128,7 @@ function Game({ mode }) {
                             {attempts.map((attempt, index) => {
                                 if (gameState === "win" && index === attempts.length - 1) {
                                     return (
-                                        <div key={index} className="attempt attempt-correct">
+                                        <div key={index} className="attempt correct-shadow round-border">
                                             <CheckCircleIcon style={{ color: "#5eba61" }} />
                                             <div className="attempt-text">{attempt}</div>
                                         </div>
@@ -135,7 +136,7 @@ function Game({ mode }) {
                                 }
                                 else {
                                     return (
-                                        <div key={index} className="attempt attempt-error">
+                                        <div key={index} className="attempt error-shadow round-border">
                                             <ErrorIcon style={{ color: "#e34f4f" }} />
                                             <div className="attempt-text">{attempt}</div>
                                         </div>

@@ -219,6 +219,7 @@ def results(request, game_mode, date=japan_date()):
             "song": theme.title,
             "state": result_obj.state,
             "attempts": eval(result_obj.attempts),
+            "synopsis": anime.synopsis.replace("\n", "").replace("<br>", "</br>"),
         }
 
         return Response(response_data, status=status.HTTP_200_OK)

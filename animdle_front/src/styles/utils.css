@@ -1,0 +1,11 @@
+.error-shadow{
+    box-shadow: 0 0 8px #e34f4f;
+}
+
+.correct-shadow{
+    box-shadow: 0 0 8px #5eba61;
+}
+
+.round-border{
+    border-radius: 10px;
+}
