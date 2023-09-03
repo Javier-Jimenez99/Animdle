@@ -1,4 +1,5 @@
 import secrets
+from datetime import timedelta
 
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
@@ -209,17 +210,34 @@ def results(request, game_mode, date=japan_date()):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        user_results = Result.objects.filter(user=user_obj)
+        user_results = Result.objects.filter(user=user_obj, game_mode=game_mode)
         played = user_results.count()
         wins = user_results.filter(state="win").count()
         streaks = []
         current_streak = 0
+        user_results = user_results.order_by("day__date")
+        current_date = user_results[0].day.date
+
         for result in user_results:
-            if result.state == "win":
-                current_streak += 1
-            else:
+            new_date = result.day.date
+
+            if new_date > date:
+                break
+
+            if new_date - current_date > timedelta(days=1):
                 streaks.append(current_streak)
                 current_streak = 0
+
+            if result.state == "win":
+                current_streak += 1
+            elif current_streak > 0:
+                streaks.append(current_streak)
+                current_streak = 0
+
+            current_date = new_date
+
+        if current_streak > 0:
+            streaks.append(current_streak)
 
         record_streak = max(streaks)
 

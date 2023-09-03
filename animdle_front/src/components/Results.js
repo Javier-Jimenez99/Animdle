@@ -57,7 +57,7 @@ function Results({ mode }) {
                             </div>
                         </div>
                         <div className="result-circle simple-shadow">
-                            <h3 className="result-title">WINS RATE</h3>
+                            <h3 className="result-title">WIN RATE</h3>
                             <div className="result-text">
                                 <p style={{ margin: "0px" }}><CountUp end={results.wins / results.played * 100} duration={2} /> %</p>
                             </div>
