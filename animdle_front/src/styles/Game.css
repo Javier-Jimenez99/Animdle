@@ -1,7 +1,19 @@
 .game-container{
-    width: 30%; /* Cambiar esto para hacerlo responsive */
+    width: 90vw; /* Cambiar esto para hacerlo responsive */
     z-index: 1;
     margin-top: 80px;
+}
+
+@media (min-width: 600px) {
+    .game-container{
+        width: 50vw;
+    }
+}
+
+@media (min-width: 1000px) {
+    .game-container{
+        width: 30vw;
+    }
 }
 
 .confetti1{

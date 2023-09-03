@@ -126,14 +126,14 @@ function Game({ mode }) {
 
                         <div className="guess-container">
                             <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
-                            <div className="guess-buttons">
-                                <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
-                                    GUESS
-                                </button>
-                                <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
-                                    SKIP
-                                </button>
-                            </div>
+
+                            <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
+                                GUESS
+                            </button>
+                            <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
+                                SKIP
+                            </button>
+
                         </div>
                         {attempts.length > 0 &&
                             <div className="attempts-container">

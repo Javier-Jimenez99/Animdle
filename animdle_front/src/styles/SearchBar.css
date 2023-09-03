@@ -1,9 +1,9 @@
 .input-wrapper {
-    width: 90%;
+    width: auto;
     height: 2.5rem;
     border: none;
     border-radius: 10px;
-    padding: 0 15px;
+    padding: 0 5%;
     box-shadow: 0px 0px 8px #ddd;
     background-color: white;
     display: flex;
@@ -14,7 +14,7 @@ input {
     background-color: transparent;
     border: none;
     height: 100%;
-    font-size: 1.25rem;
+    font-size: 1rem;
     width: 100%;
     margin-left: 5px;
 }
@@ -24,7 +24,7 @@ input:focus {
 }
 
 .results-list {
-    width: 100%;
+    width: 70vw;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -38,6 +38,13 @@ input:focus {
     left: 0;
     right: 0;
     z-index: 1;
+    height: min(30vh,auto);
+}
+
+@media (min-width: 600px) {
+    .results-list {
+        width: 100%;
+    }
 }
 
 .search-result {
@@ -57,5 +64,11 @@ input:focus {
 
 .search-results-container {
     position: relative;
-    flex: 1; /* Ocupar el espacio restante */
+    width:40%;
+}
+
+@media (min-width: 600px) {
+    .search-results-container {
+        width: 65%;
+    }
 }
