@@ -13,6 +13,7 @@ import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 import { motion } from 'framer-motion';
+import ReactPlayer from "react-player";
 
 function Results({ mode }) {
     const date = useParams().date;
@@ -58,7 +59,15 @@ function Results({ mode }) {
                                 }
                             </div>
                             <h2 class="anime-text">({results.song})</h2>
-                            <p dangerouslySetInnerHTML={{ __html: results.synopsis }} />
+                            {/*<p dangerouslySetInnerHTML={{ __html: results.synopsis }} />*/}
+                            <div className="video-wrapper">
+                                <ReactPlayer
+                                    url={results.video_url}
+                                    controls={true}
+                                    width="100%"
+                                    height="auto"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="anime-result round-border simple-shadow">

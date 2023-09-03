@@ -5,9 +5,9 @@
 
 .anime-data {
     display: flex;
-    justify-content: space-between; /* Alineación superior */
+    justify-content: space-between;
     width: 100%;
-    height: 400px;
+    height: 400px; /* Change to make responsive */
 }
 
 .anime-image {
@@ -29,6 +29,7 @@
 .anime-text {
     margin: 0;
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .anime-title {
@@ -104,4 +105,25 @@
 .button-icon{
     width: 80px;
     padding: 5px;
+}
+
+.video-wrapper {
+    position: relative;
+    height: 0;
+    padding-top: 56.25%; /* 16:9 */
+    width: 60%; /* Change to make responsive*/
+    margin:auto;
+}
+
+.video-wrapper > div { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-wrapper > div > video{
+    overflow: hidden;
+    border-radius: 10px;
 }
