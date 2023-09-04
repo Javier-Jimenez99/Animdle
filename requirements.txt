@@ -1,0 +1,8 @@
+django
+requests
+typer
+bs4
+black
+pandas
+djangorestframework
+gunicorn
