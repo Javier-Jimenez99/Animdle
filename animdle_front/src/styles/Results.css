@@ -3,27 +3,27 @@
     flex-direction: column;
     margin-top: 80px;
     width: 60vw;
-    max-width: 100%; /* Asegura que no se exceda del ancho de la pantalla */
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .anime-data {
-    display: flex; /* Colocar el contenido en línea */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay espacio */
-    gap: 20px; /* Espacio entre la imagen y la tarjeta */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .anime-data img {
-    width: 100%; /* Ocupar todo el ancho de su contenedor */
-    height: auto; /* Para mantener la relación de aspecto */
-    flex: 1; /* Ocupa espacio disponible */
-    object-fit: cover; /* Cubrir el espacio sin deformar */
+    width: 100%;
+    height: auto;
+    flex: 1;
+    object-fit: cover;
 }
 
 
 .anime-info {
-    flex: 2; /* Ocupa el doble de espacio que la imagen */
+    flex: 2;
     padding: 20px;
     background-color: #f5f5f5d9;
     border-radius: 8px;
@@ -47,7 +47,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding-bottom: 56.25%; /* Proporción 16:9 */
+    padding-bottom: 56.25%;
 }
 
 video {
@@ -62,17 +62,19 @@ video {
     box-sizing: border-box;
 }
 
-.anime-result{
+.anime-result {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 3vw;
     background-color: #f5f5f5d9;
-    width:100%;
-    height: 10vh;
+    width: 100%;
+    height: 8vw;
+    overflow: visible;
+    position: relative;
 }
-
-.result-circle{
+  
+.result-circle {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,20 +82,21 @@ video {
     text-align: center;
     border-radius: 50%;
     background-color: #fff7d8;
-    width: 12vh;
-    height: 12vh
+    width: 10vw;
+    height: 10vw;
+    margin: -1vw;
 }
 
-.result-title{
+.result-title {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.5vw;
 }
 
-.result-text{
+.result-text {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 2.5vw;
 }
-
+  
 .results-last-row{
     flex-direction: column;
     align-items: center;
@@ -137,7 +140,7 @@ video {
 
 @media (max-width: 768px) {
     .results-container {
-      width: 95%; /* Usar un mayor porcentaje del ancho de la pantalla en móviles */
+      width: 95%;
     }
   
     .anime-data {
@@ -156,49 +159,48 @@ video {
     }
   
     .anime-info {
-      width: 100%; /* Ocupa todo el ancho de su contenedor */
-      box-sizing: border-box; /* Incluye padding y bordes en el ancho */
+      width: 100%; 
+      box-sizing: border-box; 
     }
   
     .video-wrapper,
     video {
-      width: 100%; /* Ocupa todo el ancho de su contenedor */
-      max-width: 100%; /* Establecer un ancho máximo */
-    }
-  }
-  
-
-@media (min-width: 400px) and (max-width: 600px){
-
-    .result-circle{
-        width: 10vh;
-        height: 10vh;
+      width: 100%; 
+      max-width: 100%; 
     }
 }
 
 
-@media (min-width: 600px) and (max-width: 800px){
-    .result-circle{
-        width: 22vh;
-        height: 22vh;
+  
+@media (max-width: 400px) {
+    .result-title {
+      font-size: 2vw;
     }
+  
+    .result-text {
+      font-size: 3.5vw;
+    }
+}
+  
+@media (min-width: 401px) and (max-width: 800px) {
+    .result-title {
+      font-size: 1.5vw;
+    }
+  
+    .result-text {
+      font-size: 3vw;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px){
     .results-last-row{
         margin-top: 10vh;
     }
 }
 
 @media (min-width: 800px) and (max-width: 1000px){
-    .result-circle{
-        width: 18vh;
-        height: 18vh;
-    }
     .results-last-row{
         margin-top: 10vh;
-    }
-
-    .result-circle{
-        width: 11vh;
-        height: 11vh;
     }
 
     .results-last-row{
@@ -213,16 +215,8 @@ video {
 }
 
 @media (min-width: 1000px) and (max-width: 1200px){
-    .result-circle{
-        width: 18vh;
-        height: 18vh;
-    }
     .results-last-row{
         margin-top: 10vh;
-    }
-    .result-circle{
-        width: 11vh;
-        height: 11vh;
     }
 
     .results-last-row{
@@ -235,10 +229,6 @@ video {
 @media (min-width: 1200px) {
     .buttons-row{
         flex-direction: row;
-    }
-
-    .result-text{
-        font-size: 2rem;
     }
     .results-last-row{
         flex-direction: row;

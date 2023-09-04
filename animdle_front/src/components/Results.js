@@ -13,7 +13,6 @@ import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 import { motion } from 'framer-motion';
-import ReactPlayer from "react-player";
 
 function Results({ mode }) {
     const date = useParams().date;
