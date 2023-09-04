@@ -43,7 +43,7 @@ function Share({ results, date }) {
     };
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(decodeURIComponent(urlToShare));
+        navigator.clipboard.writeText(generateMessage(results) + "\n\nhttps://animdle.com/");
         alert('Link copied to clipboard!');
     };
 
