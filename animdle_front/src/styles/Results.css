@@ -1,5 +1,5 @@
 .results-container {
-    width: 60%;
+    width: 90vw;
     margin-top: 80px;
 }
 
@@ -7,29 +7,28 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 400px; /* Change to make responsive */
+    height: 35vh; /* Change to make responsive */
 }
 
 .anime-image {
-    height: 100%; 
-    width:auto;
-    object-fit: cover;
-    margin-right: 30px;
+    width:0;
 }
 
 .anime-info {
     background-color: #f5f5f5d9;
     border-radius: 8px;
-    padding: 10px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     flex: 1;
+    width:20%;
 }
 
 .anime-text {
     margin: 0;
     margin-right: 10px;
     margin-bottom: 10px;
+    font-size:1rem;
 }
 
 .anime-title {
@@ -44,7 +43,7 @@
     margin-top: 20px;
     background-color: #f5f5f5d9;
     width:100%;
-    height: 100px;
+    height: 10vh;
 }
 
 .result-circle{
@@ -55,24 +54,26 @@
     text-align: center;
     border-radius: 50%;
     background-color: #fff7d8;
-    width: 10rem;
-    height: 10rem;
+    width: 12vh;
+    height: 12vh
 }
 
 .result-title{
-    margin-bottom: 6px;
-    font-size: 1.3rem;
+    margin: 0;
+    font-size: 1rem;
 }
 
 .result-text{
-    margin-bottom: 10px;
-    font-size: 2.7rem;
+    margin: 0;
+    font-size: 1.5rem;
 }
 
 .results-last-row{
+    flex-direction: column;
+    align-items: center;
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 5vh;
     width: 100%;
 }
 
@@ -80,21 +81,20 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin-top: 20px;
-    width: 60%;
+    width: 100%;
 }
 
 .buttons-row{
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-top: 20px;
+    flex-direction: column;
 }
 
 .redirect-button{
-    width: 70%;
+    width: 100%;
     margin-right: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5vh;
     font-size: 20px;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 700;
@@ -111,7 +111,7 @@
     position: relative;
     height: 0;
     padding-top: 56.25%; /* 16:9 */
-    width: 60%; /* Change to make responsive*/
+    width: 75%; /* Change to make responsive*/
     margin:auto;
 }
 
@@ -126,4 +126,75 @@
 .video-wrapper > div > video{
     overflow: hidden;
     border-radius: 10px;
+}
+
+/* MEDIA QUERY */
+
+@media (min-width: 400px) and (max-width: 600px){
+    .anime-data{
+        height: 28vh; 
+    }
+
+    .result-circle{
+        width: 10vh;
+        height: 10vh;
+    }
+}
+
+@media (min-width: 600px){
+    .results-container{
+        width: 60vw;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1000px){
+    .anime-data{
+        height: 70vh; 
+    }
+    .result-circle{
+        width: 22vh;
+        height: 22vh;
+    }
+    .results-last-row{
+        margin-top: 10vh;
+    }
+}
+
+
+
+@media (min-width: 1000px) {
+    .anime-data{
+        height: 45vh; 
+    }
+
+    .buttons-row{
+        flex-direction: row;
+    }
+
+    .anime-image{
+        height: 100%; 
+        width:auto;
+        object-fit: cover;
+        margin-right: 4vw;
+    }
+
+    .anime-text{
+        font-size:1.4rem;
+    }
+
+    .result-title{
+        font-size: 1.4rem;
+    }
+
+    .result-text{
+        font-size: 2rem;
+    }
+    .results-last-row{
+        flex-direction: row;
+        align-items: initial;
+    }
+    .redirect-button{
+        width:18vw;
+        margin-bottom: 3vh;
+    }
 }

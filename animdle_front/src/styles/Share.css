@@ -1,9 +1,9 @@
 .share-container{
-    margin-top: 40px;
     background-color: #f5f5f5d9;
     width:fit-content;
     padding: 10px;
     height: fit-content;
+    margin-bottom: 5vh;
 }
 
 .share-title{
@@ -17,4 +17,17 @@
     color:white;
     background: linear-gradient(45deg, #ff5e62, #ff9966);
     padding: 5px;
+}
+
+@media (min-width: 600px) and (max-width: 1000px){
+    .share-container{
+        margin-bottom: 10vh;
+    }
+}
+
+@media (min-width: 1000px) {
+    .share-container{
+        margin-bottom: 0;
+        width: 18vw;
+    }
 }
