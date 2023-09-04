@@ -8,9 +8,11 @@ import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 import { Outlet } from "react-router-dom";
+import { useRef } from "react";
 
 
 function Navbar({ actual_mode, colors = ["#fbede4", "#dd6559", "#e4a892"] }) {
+    const windowWidth = useRef(window.innerWidth);
     const gradient = `linear-gradient(90deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
 
     const modes = {
@@ -48,7 +50,7 @@ function Navbar({ actual_mode, colors = ["#fbede4", "#dd6559", "#e4a892"] }) {
                     <h1>{modes[actual_mode].name}</h1>
                 </div>
                 <div className="navbar-end">
-                    {false &&
+                    {windowWidth.current > 1000 &&
                         <div className="navbar-clock">
                             <Clock />
                         </div>

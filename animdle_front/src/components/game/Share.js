@@ -31,7 +31,6 @@ function Share({ results, date }) {
 
     const twitterMessage = encodeURIComponent(generateMessage(results) + "\n\n");
     const whatsappMessage = encodeURIComponent(generateMessage(results) + "\n\nhttps://animdle.com/");
-    console.log(whatsappMessage);
     const urlToShare = encodeURIComponent("https://animdle.com/");
 
     const openPopup = (url) => {

@@ -24,7 +24,6 @@ function Results({ mode }) {
     useEffect(() => {
         getResults(mode, date).then(response => {
             setResults(response);
-            console.log(response);
         }).catch(error => {
             console.log(error);
         })
@@ -42,23 +41,23 @@ function Results({ mode }) {
                             y: 0, transition: { duration: 0.2 }
                         }
                     }}
-                    class="results-container"
+                    className="results-container"
                 >
-                    <div class="anime-data">
+                    <div className="anime-data">
                         <img
-                            class={"anime-image round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
+                            className={"anime-image round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
                             src={results.image_url}
                             alt={"Image from " + results.title}
                         />
-                        <div class={"anime-info round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}>
+                        <div className={"anime-info round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}>
                             <div className="anime-title">
-                                <h1 class="anime-text" style={{ marginBottom: 0 }}>{results.title}</h1>
+                                <h1 className="anime-text" style={{ marginBottom: 0 }}>{results.title}</h1>
                                 {results && results.state === "win" ?
                                     <CheckCircleIcon style={{ color: "#5eba61" }} /> :
                                     <ErrorIcon style={{ color: "#e34f4f" }} />
                                 }
                             </div>
-                            <h2 class="anime-text">({results.song})</h2>
+                            <h2 className="anime-text">({results.song})</h2>
                             <div className="video-wrapper">
                                 <ReactPlayer
                                     url={results.video_url}
