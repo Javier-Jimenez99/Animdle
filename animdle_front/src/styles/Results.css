@@ -147,7 +147,7 @@
     }
 }
 
-@media (min-width: 600px) and (max-width: 1000px){
+@media (min-width: 600px) and (max-width: 800px){
     .anime-data{
         height: 70vh; 
     }
@@ -160,9 +160,70 @@
     }
 }
 
+@media (min-width: 800px) and (max-width: 1000px){
+    .anime-data{
+        height: 20vh; 
+    }
+    .result-circle{
+        width: 18vh;
+        height: 18vh;
+    }
+    .results-last-row{
+        margin-top: 10vh;
+    }
+    .anime-image{
+        height: 100%; 
+        width:auto;
+        object-fit: cover;
+        margin-right: 4vw;
+    }
+
+    .result-circle{
+        width: 11vh;
+        height: 11vh;
+    }
+
+    .results-last-row{
+        margin-top: 2vh;
+        
+    }
+
+    .share-container{
+        margin-bottom: 2vh;
+    }
+
+}
+
+@media (min-width: 1000px) and (max-width: 1200px){
+    .anime-data{
+        height: 33vh; 
+    }
+    .result-circle{
+        width: 18vh;
+        height: 18vh;
+    }
+    .results-last-row{
+        margin-top: 10vh;
+    }
+    .anime-image{
+        height: 100%; 
+        width:auto;
+        object-fit: cover;
+        margin-right: 4vw;
+    }
+    .result-circle{
+        width: 11vh;
+        height: 11vh;
+    }
+
+    .results-last-row{
+        margin-top: 2vh;
+        
+    }
+}
 
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
     .anime-data{
         height: 45vh; 
     }

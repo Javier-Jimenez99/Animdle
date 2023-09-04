@@ -50,7 +50,7 @@ function Navbar({ actual_mode, colors = ["#fbede4", "#dd6559", "#e4a892"] }) {
                     <h1>{modes[actual_mode].name}</h1>
                 </div>
                 <div className="navbar-end">
-                    {windowWidth.current > 1000 &&
+                    {windowWidth.current > 800 &&
                         <div className="navbar-clock">
                             <Clock />
                         </div>
