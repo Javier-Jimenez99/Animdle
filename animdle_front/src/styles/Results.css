@@ -1,28 +1,34 @@
 .results-container {
-    width: 90vw;
+    display: flex;
+    flex-direction: column;
     margin-top: 80px;
+    width: 60vw;
+    max-width: 100%; /* Asegura que no se exceda del ancho de la pantalla */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .anime-data {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 35vh; /* Change to make responsive */
+    display: flex; /* Colocar el contenido en línea */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay espacio */
+    gap: 20px; /* Espacio entre la imagen y la tarjeta */
 }
 
-.anime-image {
-    width:0;
+.anime-data img {
+    width: 100%; /* Ocupar todo el ancho de su contenedor */
+    height: auto; /* Para mantener la relación de aspecto */
+    flex: 1; /* Ocupa espacio disponible */
+    object-fit: cover; /* Cubrir el espacio sin deformar */
 }
+
 
 .anime-info {
+    flex: 2; /* Ocupa el doble de espacio que la imagen */
+    padding: 20px;
     background-color: #f5f5f5d9;
     border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width:20%;
 }
+
 
 .anime-text {
     margin: 0;
@@ -34,6 +40,26 @@
 .anime-title {
     display:flex;
     align-items: center;
+}
+
+.video-wrapper {
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 56.25%; /* Proporción 16:9 */
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .anime-result{
@@ -107,33 +133,42 @@
     padding: 5px;
 }
 
-.video-wrapper {
-    position: relative;
-    height: 0;
-    padding-top: 56.25%; /* 16:9 */
-    width: 75%; /* Change to make responsive*/
-    margin:auto;
-}
-
-.video-wrapper > div { 
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.video-wrapper > div > video{
-    overflow: hidden;
-    border-radius: 10px;
-}
-
 /* MEDIA QUERY */
 
-@media (min-width: 400px) and (max-width: 600px){
-    .anime-data{
-        height: 28vh; 
+@media (max-width: 768px) {
+    .results-container {
+      width: 95%; /* Usar un mayor porcentaje del ancho de la pantalla en móviles */
     }
+  
+    .anime-data {
+      flex-direction: column;
+    }
+  
+    .anime-data img {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+  
+    .anime-info {
+      flex: none;
+      width: 100%;
+    }
+  
+    .anime-info {
+      width: 100%; /* Ocupa todo el ancho de su contenedor */
+      box-sizing: border-box; /* Incluye padding y bordes en el ancho */
+    }
+  
+    .video-wrapper,
+    video {
+      width: 100%; /* Ocupa todo el ancho de su contenedor */
+      max-width: 100%; /* Establecer un ancho máximo */
+    }
+  }
+  
+
+@media (min-width: 400px) and (max-width: 600px){
 
     .result-circle{
         width: 10vh;
@@ -141,16 +176,8 @@
     }
 }
 
-@media (min-width: 600px){
-    .results-container{
-        width: 60vw;
-    }
-}
 
 @media (min-width: 600px) and (max-width: 800px){
-    .anime-data{
-        height: 70vh; 
-    }
     .result-circle{
         width: 22vh;
         height: 22vh;
@@ -161,21 +188,12 @@
 }
 
 @media (min-width: 800px) and (max-width: 1000px){
-    .anime-data{
-        height: 20vh; 
-    }
     .result-circle{
         width: 18vh;
         height: 18vh;
     }
     .results-last-row{
         margin-top: 10vh;
-    }
-    .anime-image{
-        height: 100%; 
-        width:auto;
-        object-fit: cover;
-        margin-right: 4vw;
     }
 
     .result-circle{
@@ -195,21 +213,12 @@
 }
 
 @media (min-width: 1000px) and (max-width: 1200px){
-    .anime-data{
-        height: 33vh; 
-    }
     .result-circle{
         width: 18vh;
         height: 18vh;
     }
     .results-last-row{
         margin-top: 10vh;
-    }
-    .anime-image{
-        height: 100%; 
-        width:auto;
-        object-fit: cover;
-        margin-right: 4vw;
     }
     .result-circle{
         width: 11vh;
@@ -224,27 +233,8 @@
 
 
 @media (min-width: 1200px) {
-    .anime-data{
-        height: 45vh; 
-    }
-
     .buttons-row{
         flex-direction: row;
-    }
-
-    .anime-image{
-        height: 100%; 
-        width:auto;
-        object-fit: cover;
-        margin-right: 4vw;
-    }
-
-    .anime-text{
-        font-size:1.4rem;
-    }
-
-    .result-title{
-        font-size: 1.4rem;
     }
 
     .result-text{

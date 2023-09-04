@@ -45,7 +45,7 @@ function Results({ mode }) {
                 >
                     <div className="anime-data">
                         <img
-                            className={"anime-image round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
+                            className={"round-border " + (results.state === "win" ? "correct-shadow" : "error-shadow")}
                             src={results.image_url}
                             alt={"Image from " + results.title}
                         />
@@ -59,11 +59,9 @@ function Results({ mode }) {
                             </div>
                             <h2 className="anime-text">({results.song})</h2>
                             <div className="video-wrapper">
-                                <ReactPlayer
-                                    url={results.video_url}
-                                    controls={true}
-                                    width="100%"
-                                    height="auto"
+                                <video
+                                    src={results.video_url}
+                                    controls
                                 />
                             </div>
                         </div>
