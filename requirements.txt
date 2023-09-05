@@ -6,3 +6,5 @@ black
 pandas
 djangorestframework
 gunicorn
+django-cors-headers
+whitenoise
