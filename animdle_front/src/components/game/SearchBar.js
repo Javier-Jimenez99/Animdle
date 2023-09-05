@@ -14,7 +14,7 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
 
             allResults.forEach((title) => {
                 // No se si dejar que aparezca debajo si el texto es igual al de la lista
-                if (title.toLowerCase().includes(inputLower) && title.toLowerCase() !== inputLower) {
+                if (title.toLowerCase().includes(inputLower) && title !== value) {
                     newResults.push(title);
                 }
             });
