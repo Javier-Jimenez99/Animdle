@@ -59,6 +59,7 @@ function Results({ mode }) {
                             <h2 className="anime-text">({results.song})</h2>
                             <div className="video-wrapper">
                                 <video
+                                    style={{ backgroundColor: "black" }}
                                     src={results.video_url}
                                     controls
                                 />
