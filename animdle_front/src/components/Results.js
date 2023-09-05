@@ -93,7 +93,11 @@ function Results({ mode }) {
                         </div>
                     </div>
                     <div className="results-last-row">
-                        <Share results={results} date={date} />
+                        <Share
+                            results={results}
+                            date={date}
+                            game_mode={mode}
+                        />
 
                         <div className="redirect-buttons">
                             <div className="buttons-row">

@@ -7,7 +7,7 @@ import { IconButton } from "@mui/material";
 import "../../styles/Share.css"
 import "../../styles/utils.css"
 
-function Share({ results, date }) {
+function Share({ results, date, game_mode }) {
 
     const generateMessage = () => {
         let message = "🌸 Animdle";
@@ -24,7 +24,17 @@ function Share({ results, date }) {
             message += "🤍";
         }
 
-        message += "\n\n#animdle";
+        message += "\n\n#";
+        game_mode.split("-").forEach((word) => {
+            message += word.charAt(0).toUpperCase() + word.slice(1);
+        });
+
+        if (game_mode.includes("hardcore"))
+            message += "🔥";
+        else
+            message += "Mode";
+
+        message += " #animdle";
 
         return message;
     }
