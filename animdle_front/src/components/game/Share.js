@@ -29,6 +29,8 @@ function Share({ results, date }) {
         return message;
     }
 
+    console.log(navigator);
+
     const twitterMessage = encodeURIComponent(generateMessage(results) + "\n\n");
     const whatsappMessage = encodeURIComponent(generateMessage(results) + "\n\nhttps://animdle.com/");
     const urlToShare = encodeURIComponent("https://animdle.com/");
@@ -63,9 +65,11 @@ function Share({ results, date }) {
                 <IconButton onClick={() => openPopup(`https://www.reddit.com/submit?url=${decodeURIComponent(urlToShare)}&title=${twitterMessage}`)}>
                     <RedditIcon className="share-icon round-border" />
                 </IconButton>
-                <IconButton onClick={copyToClipboard}>
-                    <FileCopyIcon className="share-icon round-border" />
-                </IconButton>
+                {navigator.clipboard &&
+                    <IconButton onClick={copyToClipboard}>
+                        <FileCopyIcon className="share-icon round-border" />
+                    </IconButton>
+                }
             </div>
         </div>
     );
