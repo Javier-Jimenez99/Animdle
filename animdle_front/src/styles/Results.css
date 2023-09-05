@@ -97,43 +97,41 @@ video {
     font-size: 2vw;
 }
   
-.results-last-row{
+.results-last-row {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    display: flex;
-    justify-content: space-around;
-    margin-top: 5vh;
+    justify-content: space-between;
     width: 100%;
+    margin-top: 2vh;
 }
-
-.redirect-buttons{
+  
+.redirect-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     width: 100%;
 }
-
-.buttons-row{
+  
+.buttons-row {
     display: flex;
-    justify-content: space-around;
-    width: 100%;
     flex-direction: column;
-}
-
-.redirect-button{
+    justify-content: space-between;
     width: 100%;
-    margin-right: 20px;
+}
+  
+.redirect-button {
+    flex-grow: 1;
     margin-bottom: 5vh;
     font-size: 20px;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 700;
     display: flex;
+    justify-content: left;
     align-items: center;
 }
-
-.button-icon{
-    width: 80px;
-    padding: 5px;
+  
+.button-icon {
+    width: 60px;
 }
 
 /* MEDIA QUERY */
@@ -170,7 +168,7 @@ video {
     }
 }
   
-@media (max-width: 800px) {
+@media (max-width: 768px) {
     .result-circle {
         width: 12vw;
         height: 12vw;
@@ -184,51 +182,28 @@ video {
     font-size: 3.5vw;
     }
 }
-
-@media (min-width: 600px) and (max-width: 800px){
-    .results-last-row{
-        margin-top: 10vh;
+  
+  
+@media (min-width: 600px) {
+    .results-last-row {
+      margin-top: 5vh;
     }
 }
-
-@media (min-width: 800px) and (max-width: 1000px){
-    .results-last-row{
-        margin-top: 10vh;
-    }
-
-    .results-last-row{
-        margin-top: 2vh;
-        
-    }
-
-    .share-container{
-        margin-bottom: 2vh;
-    }
-
-}
-
-@media (min-width: 1000px) and (max-width: 1200px){
-    .results-last-row{
-        margin-top: 10vh;
-    }
-
-    .results-last-row{
-        margin-top: 2vh;
-        
-    }
-}
-
-
+  
 @media (min-width: 1200px) {
-    .buttons-row{
+    .results-last-row {
         flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
     }
-    .results-last-row{
+    .buttons-row {
         flex-direction: row;
-        align-items: initial;
-    }
-    .redirect-button{
-        width:18vw;
+        gap: 20px;    
         margin-bottom: 3vh;
     }
+    .redirect-button {
+        width: 15vw; 
+        margin: 0 1vw; 
+    }
 }
+  
