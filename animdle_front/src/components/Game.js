@@ -10,6 +10,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { useNavigate } from "react-router-dom";
+import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -41,6 +42,7 @@ function Game({ mode }) {
             setGameState(response.state);
             setAttempts(response.attempts);
             setAllTitles(response.all_titles);
+
         }).catch(error => {
             console.log(error);
         })
@@ -84,82 +86,180 @@ function Game({ mode }) {
         })
     }
 
+    const guideSteps = [
+        {
+            target: "body",
+            placement: "center",
+            content: (
+                <div style={{ textAlign: "center" }}>
+                    <h2>🌸 Welcome to Animdle!</h2>
+                    <p>
+                        Dive into the world of anime by guessing titles based on their openings.
+                        <br />
+                        Are you ready for the challenge?
+                    </p>
+                </div>
+            )
+        },
+        {
+            target: ".video-container",
+            content: (
+                <div>
+                    <h2>🎥 Video Player</h2>
+                    <p>
+                        Play, pause, or replay the video here.
+                        <br />
+                        It might be tricky at first, but with each play, you'll become a master!
+                    </p>
+                </div>
+            )
+        },
+        {
+            target: ".guess-container",
+            content: (
+                <div>
+                    <h2>✏️ Make Your Guess!</h2>
+                    <p>
+                        Enter your anime title guess here. Not sure?
+                        <br />
+                        You can skip, but it'll cost you a life.
+                    </p>
+                </div>
+            )
+        },
+        {
+            target: ".hearts-container",
+            content: (
+                <div>
+                    <h2>❤️ Track Your Lives</h2>
+                    <p>
+                        Keep an eye on your hearts!
+                        <br />
+                        Lose them all, and it's game over.
+                        <br />
+                        A green heart? You've triumphed in the challenge!
+                    </p>
+                </div>
+            )
+        },
+        {
+            target: "#long-button",
+            content: (
+                <div>
+                    <h2>🔄 Game Modes</h2>
+                    <p>
+                        Why stop at openings?
+                        <br />
+                        Explore endings and the hardcore modes.
+                        <br />
+                        Switch things up right here!
+                    </p>
+                </div>
+            )
+        },
+        {
+            target: "body",
+            placement: "center",
+            content: (
+                <div>
+                    <h2>Best of luck and dive into the anime adventure! 🚀 </h2>
+                </div>
+            )
+        }
+    ]
+
     return (
         <>
             {gameState &&
-                <>
-                    <div className="game-container">
-                        {gameState === "win" &&
-                            <>
-                                <ConfettiExplosion
-                                    className="confetti1"
-                                    force={0.2}
-                                    duration={3000}
-                                    particleCount={400}
-                                    colors={["#DD675B", "#E4A892", "#FBEDE4"]}
-                                    zIndex={0}
-                                    width={windowSize.current[0] * 1.5}
-                                    height={windowSize.current[1] * 3}
-                                />
-                                <ConfettiExplosion
-                                    className="confetti2"
-                                    force={0.2}
-                                    duration={3000}
-                                    particleCount={400}
-                                    colors={["#DD675B", "#E4A892", "#FBEDE4"]}
-                                    zIndex={0}
-                                    width={windowSize.current[0] * 1.5}
-                                    height={windowSize.current[1] * 3}
-                                />
-                            </>
-                        }
+                <div className="game-container">
+                    <Joyride
+                        steps={guideSteps}
+                        run={!localStorage.getItem("visited") && gameState === "pending"}
+                        callback={(data) => {
+                            if ([STATUS.FINISHED, STATUS.SKIPPED].includes(data.status)) {
+                                localStorage.setItem("visited", true);
+                            }
+                        }}
+                        continuous={true}
+                        showProgress={true}
+                        styles={{
+                            options: {
+                                primaryColor: '#dd6559',
+                            }
+                        }}
+                    />
 
-                        <Video
-                            maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
-                            blur={gameState === "win" ? 0 : DIFFICULTY[attempts.length].blur}
-                            videoURL={videoURL}
-                            resetVideo={resetVideo}
-                            setResetVideo={setResetVideo}
-                            gameState={gameState}
-                        />
-                        <Lives livesUsed={attempts.length} gameState={gameState} />
 
-                        <div className="guess-container">
-                            <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
+                    {gameState === "win" &&
+                        <>
+                            <ConfettiExplosion
+                                className="confetti1"
+                                force={0.2}
+                                duration={3000}
+                                particleCount={400}
+                                colors={["#DD675B", "#E4A892", "#FBEDE4"]}
+                                zIndex={0}
+                                width={windowSize.current[0] * 1.5}
+                                height={windowSize.current[1] * 3}
+                            />
+                            <ConfettiExplosion
+                                className="confetti2"
+                                force={0.2}
+                                duration={3000}
+                                particleCount={400}
+                                colors={["#DD675B", "#E4A892", "#FBEDE4"]}
+                                zIndex={0}
+                                width={windowSize.current[0] * 1.5}
+                                height={windowSize.current[1] * 3}
+                            />
+                        </>
+                    }
 
-                            <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
-                                GUESS
-                            </button>
-                            <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
-                                SKIP
-                            </button>
+                    <Video
+                        maxPlayableTime={gameState === "win" ? 1000 : DIFFICULTY[attempts.length].maxPlayableTime}
+                        blur={gameState === "win" ? 0 : DIFFICULTY[attempts.length].blur}
+                        videoURL={videoURL}
+                        resetVideo={resetVideo}
+                        setResetVideo={setResetVideo}
+                        gameState={gameState}
+                    />
+                    <Lives livesUsed={attempts.length} gameState={gameState} />
 
+                    <div className="guess-container">
+                        <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
+
+                        <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
+                            GUESS
+                        </button>
+                        <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
+                            SKIP
+                        </button>
+
+                    </div>
+                    {attempts.length > 0 &&
+                        <div className="attempts-container">
+                            {attempts.map((attempt, index) => {
+                                if (gameState === "win" && index === attempts.length - 1) {
+                                    return (
+                                        <div key={index} className="attempt correct-shadow round-border">
+                                            <CheckCircleIcon style={{ color: "#5eba61" }} />
+                                            <div className="attempt-text">{attempt}</div>
+                                        </div>
+                                    );
+                                }
+                                else {
+                                    return (
+                                        <div key={index} className="attempt error-shadow round-border">
+                                            <ErrorIcon style={{ color: "#e34f4f" }} />
+                                            <div className="attempt-text">{attempt}</div>
+                                        </div>
+                                    );
+                                }
+
+                            })}
                         </div>
-                        {attempts.length > 0 &&
-                            <div className="attempts-container">
-                                {attempts.map((attempt, index) => {
-                                    if (gameState === "win" && index === attempts.length - 1) {
-                                        return (
-                                            <div key={index} className="attempt correct-shadow round-border">
-                                                <CheckCircleIcon style={{ color: "#5eba61" }} />
-                                                <div className="attempt-text">{attempt}</div>
-                                            </div>
-                                        );
-                                    }
-                                    else {
-                                        return (
-                                            <div key={index} className="attempt error-shadow round-border">
-                                                <ErrorIcon style={{ color: "#e34f4f" }} />
-                                                <div className="attempt-text">{attempt}</div>
-                                            </div>
-                                        );
-                                    }
-
-                                })}
-                            </div>
-                        }
-                    </div >
-                </>
+                    }
+                </div >
             }
 
         </>
