@@ -39,8 +39,6 @@ function Share({ results, date, game_mode }) {
         return message;
     }
 
-    console.log(navigator);
-
     const twitterMessage = encodeURIComponent(generateMessage(results) + "\n\n");
     const whatsappMessage = encodeURIComponent(generateMessage(results) + "\n\nhttps://animdle.com/");
     const urlToShare = encodeURIComponent("https://animdle.com/");

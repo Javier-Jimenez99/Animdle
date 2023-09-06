@@ -10,7 +10,6 @@ def get_day_by_date(date):
     day_obj = Day.objects.get(
         date__year=date.year, date__month=date.month, date__day=date.day
     )
-
     return day_obj
 
 

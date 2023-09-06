@@ -21,8 +21,8 @@ const DIFFICULTY = [
 ]
 
 function Game({ mode }) {
-    const date = useParams().date;
     const navigate = useNavigate();
+    const date = useParams().date;
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
     // Game variables

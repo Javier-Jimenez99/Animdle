@@ -1,6 +1,20 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://143.47.54.19:5000/';
+const API_BASE_URL = 'http://localhost:8000/';
+
+function prepareDate(date) {
+    if (!date) {
+        const now = new Date();
+        const japanTime = new Date(
+            now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' })
+        );
+        date = japanTime.getFullYear();
+        date += "-" + (japanTime.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false, timeZone: "Asia/Tokyo" });
+        date += "-" + japanTime.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false, timeZone: "Asia/Tokyo" });
+    }
+
+    return date;
+}
 
 axios.interceptors.response.use(
     response => response,
@@ -59,14 +73,10 @@ export const authGuest = async () => {
 }
 
 export const getGameState = async (mode, date) => {
+    date = prepareDate(date);
     try {
         const token = await authGuest();
-        let url;
-        if (date) {
-            url = API_BASE_URL + 'api/game-state/' + mode + '/' + date + '/';
-        } else {
-            url = API_BASE_URL + 'api/game-state/' + mode + '/';
-        }
+        const url = API_BASE_URL + 'api/game-state/' + mode + '/' + date + '/';
         const response = await axios.get(url, {
             headers: { "Authorization": "Token " + token }
         });
@@ -78,16 +88,11 @@ export const getGameState = async (mode, date) => {
 }
 
 export const postGuess = async (mode, date, title) => {
+    date = prepareDate(date);
     try {
         const token = await authGuest();
 
-        let url;
-        if (date) {
-            url = API_BASE_URL + 'api/guess/' + mode + '/' + date + '/';
-        }
-        else {
-            url = API_BASE_URL + 'api/guess/' + mode + '/';
-        }
+        const url = API_BASE_URL + 'api/guess/' + mode + '/' + date + '/';
         const response = await axios.post(url, { "title": title }, {
             headers: { "Authorization": "Token " + token }
         });
@@ -99,16 +104,11 @@ export const postGuess = async (mode, date, title) => {
 }
 
 export const getResults = async (mode, date) => {
+    date = prepareDate(date);
     try {
         const token = await authGuest();
 
-        let url;
-        if (date) {
-            url = API_BASE_URL + 'api/results/' + mode + '/' + date + '/';
-        }
-        else {
-            url = API_BASE_URL + 'api/results/' + mode + '/';
-        }
+        const url = API_BASE_URL + 'api/results/' + mode + '/' + date + '/';
 
         const response = await axios.get(url, {
             headers: { "Authorization": "Token " + token }

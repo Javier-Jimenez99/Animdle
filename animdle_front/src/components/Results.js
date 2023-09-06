@@ -22,11 +22,13 @@ function Results({ mode }) {
 
     useEffect(() => {
         getResults(mode, date).then(response => {
+            if (!response.attempts)
+                navigate("/" + mode + dateString);
             setResults(response);
         }).catch(error => {
             console.log(error);
         })
-    }, [mode, date])
+    }, [mode, date, dateString, navigate])
 
     return (
         <>
