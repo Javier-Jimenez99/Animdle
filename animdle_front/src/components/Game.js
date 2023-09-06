@@ -182,6 +182,7 @@ function Game({ mode }) {
                         }}
                         continuous={true}
                         showProgress={true}
+                        showSkipButton={true}
                         styles={{
                             options: {
                                 primaryColor: '#dd6559',
