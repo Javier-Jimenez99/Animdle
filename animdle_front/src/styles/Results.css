@@ -134,6 +134,12 @@ video {
     width: 60px;
 }
 
+.buttons-row .MuiBadge-badge{
+    position: absolute;
+    right: 15px;
+    top: -7px;
+}
+
 /* MEDIA QUERY */
 
 @media (max-width: 768px) {

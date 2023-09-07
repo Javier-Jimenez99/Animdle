@@ -10,7 +10,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { useNavigate } from "react-router-dom";
-import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
+import Joyride, { STATUS } from 'react-joyride';
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },

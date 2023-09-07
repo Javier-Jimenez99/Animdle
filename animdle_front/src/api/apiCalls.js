@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://143.47.54.19:5000/';
+const API_BASE_URL = 'http://localhost:8000/';
 
 function prepareDate(date) {
     if (!date) {
@@ -109,6 +109,25 @@ export const getResults = async (mode, date) => {
         const token = await authGuest();
 
         const url = API_BASE_URL + 'api/results/' + mode + '/' + date + '/';
+
+        const response = await axios.get(url, {
+            headers: { "Authorization": "Token " + token }
+        });
+
+        return response.data;
+    }
+    catch (error) {
+        console.log(error);
+        return "error";
+    }
+}
+
+export const getPlayedModes = async (date) => {
+    date = prepareDate(date);
+    try {
+        const token = await authGuest();
+
+        const url = API_BASE_URL + 'api/played-modes/' + date + '/';
 
         const response = await axios.get(url, {
             headers: { "Authorization": "Token " + token }

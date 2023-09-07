@@ -259,3 +259,21 @@ def results(request, game_mode, date=japan_date()):
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def played_modes(request, date=japan_date()):
+    if request.method == "GET":
+        user_obj = request.user
+
+        day_obj = get_day_by_date(date)
+
+        results = Result.objects.filter(user=user_obj, day=day_obj)
+        played_modes = []
+        for result in results:
+            if result.state != "pending" and result.game_mode not in played_modes:
+                played_modes.append(result.game_mode.replace("_", "-"))
+
+        return Response(played_modes, status=status.HTTP_200_OK)

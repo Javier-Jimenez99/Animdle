@@ -4,6 +4,7 @@ from api.views import (
     create_guest,
     game_state,
     guess,
+    played_modes,
     results,
     todays_anime,
     todays_video,
@@ -25,4 +26,6 @@ urlpatterns = [
     path("guess/<mode:game_mode>/<date:date>/", guess, name="guess"),
     path("results/<mode:game_mode>/", results, name="results-today"),
     path("results/<mode:game_mode>/<date:date>/", results, name="results"),
+    path("played-modes/", played_modes, name="played-modes-today"),
+    path("played-modes/<date:date>/", played_modes, name="played-modes"),
 ]

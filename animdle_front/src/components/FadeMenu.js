@@ -7,8 +7,11 @@ import DehazeRoundedIcon from '@mui/icons-material/DehazeRounded';
 
 import '../styles/FadeMenu.css';
 import { Link } from 'react-router-dom';
+import { usePlayedModes } from '../App';
+import Badge from '@mui/material/Badge';
 
 export default function FadeMenu({ options }) {
+    const { playedModes, setPlayedModes } = usePlayedModes();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -40,15 +43,22 @@ export default function FadeMenu({ options }) {
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                {options.map(({ name, icon, link }, index) => (
+                {options.map(({ id, name, icon, link }, index) => (
                     <MenuItem key={index}>
+                        {console.log(playedModes, id, playedModes.includes(id), playedModes.includes(id) ? 0 : " 12321 ")}
+
+
                         <Link className="menu-link" to={link}>
-                            <img className="menu-icon" src={icon} alt={name + " icon"} />
+                            <Badge badgeContent={!playedModes.includes(id) ? "!" : 0} invisible={playedModes.includes(id)} color='error'>
+                                <img className="menu-icon" src={icon} alt={name + " icon"} />
+                            </Badge>
                             {name}
                         </Link>
+
+
                     </MenuItem>
                 ))}
             </Menu>
-        </div>
+        </div >
     );
 }

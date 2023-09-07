@@ -17,21 +17,25 @@ function Navbar({ actual_mode, colors = ["#fbede4", "#dd6559", "#e4a892"] }) {
 
     const modes = {
         "opening": {
+            "id": "opening",
             "name": "Openings Wordle",
             "icon": templeIcon,
             "link": "/opening"
         },
         "hardcore-opening": {
+            "id": "hardcore-opening",
             "name": "Openings Hardcore",
             "icon": darkDrakeIcon,
             "link": "/hardcore-opening"
         },
         "ending": {
+            "id": "ending",
             "name": "Endings Wordle",
             "icon": lanternIcon,
             "link": "/ending"
         },
         "hardcore-ending": {
+            "id": "hardcore-ending",
             "name": "Endings Hardcore",
             "icon": whiteDrakeIcon,
             "link": "/hardcore-ending"

@@ -13,8 +13,12 @@ import darkDrakeIcon from '../assets/pixelart_icon/dark_drake_icon.png';
 import whiteDrakeIcon from '../assets/pixelart_icon/white_drake_icon.png';
 import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 import { motion } from 'framer-motion';
+import { usePlayedModes } from "../App";
+import Badge from '@mui/material/Badge';
 
 function Results({ mode }) {
+    const { playedModes, setPlayedModes } = usePlayedModes();
+    console.log("results " + playedModes);
     const date = useParams().date;
     const dateString = date ? "/" + date : "";
     const [results, setResults] = useState(null);
@@ -103,24 +107,32 @@ function Results({ mode }) {
 
                         <div className="redirect-buttons">
                             <div className="buttons-row">
-                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/opening" + dateString)}>
-                                    <img className="button-icon" src={templeIcon} alt="Opening icon" />
-                                    Openings
-                                </button>
-                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/ending" + dateString)}>
-                                    <img className="button-icon" src={lanternIcon} alt="Ending icon" />
-                                    Endings
-                                </button>
+                                <Badge badgeContent={!playedModes.includes("opening") ? "!" : 0} invisible={playedModes.includes("opening")} color='error'>
+                                    <button className="redirect-button search-btn round-border" onClick={() => navigate("/opening" + dateString)}>
+                                        <img className="button-icon" src={templeIcon} alt="Opening icon" />
+                                        Openings
+                                    </button>
+                                </Badge>
+                                <Badge badgeContent={!playedModes.includes("ending") ? "!" : 0} invisible={playedModes.includes("ending")} color='error'>
+                                    <button className="redirect-button search-btn round-border" onClick={() => navigate("/ending" + dateString)}>
+                                        <img className="button-icon" src={lanternIcon} alt="Ending icon" />
+                                        Endings
+                                    </button>
+                                </Badge>
                             </div>
                             <div className="buttons-row">
-                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-opening" + dateString)}>
-                                    <img className="button-icon" src={darkDrakeIcon} alt="Hardcore opening icon" />
-                                    Hardcore Openings
-                                </button>
-                                <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-ending" + dateString)}>
-                                    <img className="button-icon" src={whiteDrakeIcon} alt="Hardcore ending icon" />
-                                    Hardcore Endings
-                                </button>
+                                <Badge badgeContent={!playedModes.includes("hardcore-opening") ? "!" : 0} invisible={playedModes.includes("hardcore-opening")} color='error'>
+                                    <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-opening" + dateString)}>
+                                        <img className="button-icon" src={darkDrakeIcon} alt="Hardcore opening icon" />
+                                        Hardcore Openings
+                                    </button>
+                                </Badge>
+                                <Badge badgeContent={!playedModes.includes("hardcore-ending") ? "!" : 0} invisible={playedModes.includes("hardcore-ending")} color='error'>
+                                    <button className="redirect-button search-btn round-border" onClick={() => navigate("/hardcore-ending" + dateString)}>
+                                        <img className="button-icon" src={whiteDrakeIcon} alt="Hardcore ending icon" />
+                                        Hardcore Endings
+                                    </button>
+                                </Badge>
                             </div>
                         </div>
                     </div>
