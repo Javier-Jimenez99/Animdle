@@ -63,7 +63,7 @@ function App() {
             <Route path=":date" element={<Game mode="opening" />} />
           </Route>
           {modes.map(mode =>
-            <Route path={"/" + mode} element={<Navbar actual_mode={mode} />}>
+            <Route path={"/" + mode} element={<Navbar actual_mode={mode} />} key={mode}>
               <Route index element={<Game mode={mode} />} />
               <Route path="results" element={<Results mode={mode} />} />
               <Route path="results/:date" element={<Results mode={mode} />} />

@@ -33,6 +33,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1vw;
+}
+
+.search-buttons{
+    display: flex;
+    align-items: center;
+    flex:1;
+    justify-content: right;
+    gap: 1vw;
+}
+
+@media (max-width: 420px) {
+    .guess-container {
+        flex-direction: column-reverse;
+        align-items: initial;
+    }
+    .search-buttons{
+        margin-bottom: 10px;
+        justify-content: left;
+    }
 }
 
 .attempts-container {

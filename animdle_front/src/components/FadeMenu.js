@@ -45,11 +45,8 @@ export default function FadeMenu({ options }) {
             >
                 {options.map(({ id, name, icon, link }, index) => (
                     <MenuItem key={index}>
-                        {console.log(playedModes, id, playedModes.includes(id), playedModes.includes(id) ? 0 : " 12321 ")}
-
-
                         <Link className="menu-link" to={link}>
-                            <Badge badgeContent={!playedModes.includes(id) ? "!" : 0} invisible={playedModes.includes(id)} color='error'>
+                            <Badge badgeContent={!Object.keys(playedModes).includes(id) ? "!" : 0} invisible={Object.keys(playedModes).includes(id)} color='error'>
                                 <img className="menu-icon" src={icon} alt={name + " icon"} />
                             </Badge>
                             {name}

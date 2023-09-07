@@ -11,6 +11,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { useNavigate } from "react-router-dom";
 import Joyride, { STATUS } from 'react-joyride';
+import { usePlayedModes } from "../App";
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -22,6 +23,7 @@ const DIFFICULTY = [
 ]
 
 function Game({ mode }) {
+    const { playedModes, setPlayedModes } = usePlayedModes();
     const navigate = useNavigate();
     const date = useParams().date;
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
@@ -71,6 +73,12 @@ function Game({ mode }) {
             setAllTitles(newTitles);
             setInputValue("");
             setResetVideo(true);
+
+            if (response.state !== "pending") {
+                console.log([mode], response.state);
+                setPlayedModes({ ...playedModes, [mode]: response.state });
+            }
+
         }).catch(error => {
             console.log(error);
         })
@@ -81,6 +89,11 @@ function Game({ mode }) {
             setGameState(response.state);
             setAttempts(response.attempts);
             setResetVideo(true);
+
+            if (response.state !== "pending") {
+                console.log([mode], response.state);
+                setPlayedModes({ ...playedModes, [mode]: response.state });
+            }
         }).catch(error => {
             console.log(error);
         })
@@ -228,14 +241,14 @@ function Game({ mode }) {
 
                     <div className="guess-container">
                         <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
-
-                        <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
-                            GUESS
-                        </button>
-                        <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
-                            SKIP
-                        </button>
-
+                        <div className="search-buttons">
+                            <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
+                                GUESS
+                            </button>
+                            <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
+                                SKIP
+                            </button>
+                        </div>
                     </div>
                     {attempts.length > 0 &&
                         <div className="attempts-container">
