@@ -64,3 +64,19 @@
     text-align: right;
     font-size: 18px;
 }
+
+.overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.795);
+    z-index: 1;  /* Asegúrate de que el texto esté sobre el video */
+  }
+  

@@ -27,6 +27,7 @@ function Game({ mode }) {
     const navigate = useNavigate();
     const date = useParams().date;
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
+    const [showVideo, setShowVideo] = useState(true);
 
     // Game variables
     const [gameState, setGameState] = useState(null);
@@ -156,6 +157,21 @@ function Game({ mode }) {
             )
         },
         {
+            target: ".switch-container",
+            content: (
+                <div>
+                    <h2>📺 Video Switch</h2>
+                    <p>
+                        If you are afraid of spoilers, you can turn off the video here.
+                        <br />
+                        But be careful, you'll have to rely on your ears!
+                        <br />
+                        Anyways, when there is a spoiler you'll be warned.
+                    </p>
+                </div>
+            )
+        },
+        {
             target: "#long-button",
             content: (
                 <div>
@@ -236,8 +252,16 @@ function Game({ mode }) {
                         resetVideo={resetVideo}
                         setResetVideo={setResetVideo}
                         gameState={gameState}
+                        showVideo={showVideo}
                     />
-                    <Lives livesUsed={attempts.length} gameState={gameState} />
+                    <div className="lives-row">
+                        <Lives livesUsed={attempts.length} gameState={gameState} />
+                        <div className="switch-container">
+                            <h1 className="switch-text">VIDEO</h1>
+                            <input className="tgl tgl-skewed" id="cb3" type="checkbox" checked={showVideo} onChange={() => { setShowVideo(!showVideo) }} />
+                            <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                        </div>
+                    </div>
 
                     <div className="guess-container">
                         <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />

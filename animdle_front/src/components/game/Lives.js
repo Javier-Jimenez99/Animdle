@@ -8,19 +8,19 @@ function Lives({ livesUsed, gameState, maxLives = 5 }) {
         let hearts = [];
         let keys = [];
         for (let i = livesUsed; i < maxLives; i++) {
-            hearts.push(<img className="heart" width={"10%"} src={heartIcon} alt="Live Heart of lost tries" key={i} />);
+            hearts.push(<img className="heart" width={"15%"} src={heartIcon} alt="Live Heart of lost tries" key={i} />);
             keys.push(i);
         }
 
         let loopStart = 0;
         if (gameState === "win") {
-            hearts.push(<img className="heart" width={"10%"} src={heartGreenIcon} alt="Live Heart meaning that you won" key={maxLives} />);
+            hearts.push(<img className="heart" width={"15%"} src={heartGreenIcon} alt="Live Heart meaning that you won" key={maxLives} />);
             keys.push(maxLives);
             loopStart++;
         }
 
         for (let i = loopStart; i < livesUsed; i++) {
-            hearts.push(<img className="heart dead-heart" width={"10%"} src={heartIcon} alt="Live Heart of remaining tries" key={i} />);
+            hearts.push(<img className="heart dead-heart" width={"15%"} src={heartIcon} alt="Live Heart of remaining tries" key={i} />);
             keys.push(i);
         }
 

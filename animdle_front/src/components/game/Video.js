@@ -8,8 +8,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
 import "../../styles/utils.css";
 
-function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState }) {
+function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState, showVideo = true }) {
     const [playing, setPlaying] = useState(false);
+    const [filter, setFilter] = useState("blur(0px)")
     const [progress, setProgress] = useState(0);
     const playerRef = useRef(null);
 
@@ -20,6 +21,14 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
             playerRef.current.seekTo(0);
         }
     }, [resetVideo])
+
+    useEffect(() => {
+        let filterString = "blur(" + blur + "px)";
+        if (!showVideo)
+            filterString += " brightness(0)";
+
+        setFilter(filterString);
+    }, [blur, showVideo])
 
     const handleProgress = (progress) => {
         if (progress.playedSeconds > maxPlayableTime) {
@@ -48,11 +57,11 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
             <style>
                 {
                     `.blur {
-                                -webkit-filter: blur(${blur}px); 
-                                -moz-filter: blur(${blur}px); 
-                                -o-filter: blur(${blur}px); 
-                                -ms-filter: blur(${blur}px); 
-                                filter: blur(${blur}px);                                
+                                -webkit-filter: ${filter}; 
+                                -moz-filter: ${filter}; 
+                                -o-filter: ${filter}; 
+                                -ms-filter: ${filter}; 
+                                filter: ${filter};                                
                             }`
                 }
             </style>
@@ -71,6 +80,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                         onPlay={handlePlay}
                         onPause={handlePause}
                     />
+                    {!showVideo && <div className="overlay-text">🚫 VIDEO DEACTIVATED 🚫</div>}
                 </div>
             </div>
             {
