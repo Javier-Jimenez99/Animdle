@@ -17,7 +17,7 @@ import { usePlayedModes } from "../App";
 import Badge from '@mui/material/Badge';
 
 function Results({ mode }) {
-    const { playedModes, setPlayedModes } = usePlayedModes();
+    const { playedModes } = usePlayedModes();
     const date = useParams().date;
     const dateString = date ? "/" + date : "";
     const [results, setResults] = useState(null);
