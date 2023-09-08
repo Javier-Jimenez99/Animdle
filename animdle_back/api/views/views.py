@@ -115,6 +115,7 @@ def game_state(request, game_mode, date=japan_date()):
             "state": result_obj.state,
             "attempts": eval(result_obj.attempts),
             "video_url": theme_data["video_url"],
+            "spoiler": theme_data["spoiler"],
             "all_titles": all_titles,
         }
 

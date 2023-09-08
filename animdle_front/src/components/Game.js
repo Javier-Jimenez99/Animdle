@@ -28,6 +28,7 @@ function Game({ mode }) {
     const date = useParams().date;
     const windowSize = useRef([window.innerWidth, window.innerHeight]);
     const [showVideo, setShowVideo] = useState(true);
+    const [spoiler, setSpoiler] = useState(false);
 
     // Game variables
     const [gameState, setGameState] = useState(null);
@@ -45,6 +46,8 @@ function Game({ mode }) {
             setGameState(response.state);
             setAttempts(response.attempts);
             setAllTitles(response.all_titles);
+            setSpoiler(response.spoiler);
+            setShowVideo(!response.spoiler);
 
         }).catch(error => {
             console.log(error);
@@ -197,6 +200,23 @@ function Game({ mode }) {
         }
     ]
 
+    const spoilerStep = [
+        {
+            target: ".switch-container",
+            content: (
+                <div>
+                    <h2>🚨 Spoiler Alert!</h2>
+                    <p>
+                        This video contains spoilers!
+                        <br />
+                        If you want to continue, you can turn on the video here.
+                    </p>
+                </div>
+            ),
+            disableBeacon: true
+        }
+    ]
+
     return (
         <>
             {gameState &&
@@ -219,6 +239,15 @@ function Game({ mode }) {
                         }}
                     />
 
+                    <Joyride
+                        steps={spoilerStep}
+                        run={spoiler && gameState === "pending"}
+                        styles={{
+                            options: {
+                                primaryColor: '#dd6559',
+                            }
+                        }}
+                    />
 
                     {gameState === "win" &&
                         <>
