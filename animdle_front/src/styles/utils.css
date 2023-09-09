@@ -29,7 +29,7 @@
     font-family: 'Nunito Sans', sans-serif;
     width: auto;
     height: 2.5rem;
-
+    cursor: pointer;
 }
 
 .search-btn:hover {
@@ -41,6 +41,7 @@
     background-color: #a7a7a7;
     background-image: none;
     color: #fff;
+    cursor: initial;
 }
 
 .cut-one-line{
