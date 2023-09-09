@@ -1,5 +1,3 @@
-from django.urls import path, register_converter
-
 from api.views import (
     create_guest,
     game_state,
@@ -9,6 +7,7 @@ from api.views import (
     todays_anime,
     todays_video,
 )
+from django.urls import path, register_converter
 
 from .converters import DateConverter, GameModeConverter
 
@@ -23,7 +22,13 @@ urlpatterns = [
     path("game-state/<mode:game_mode>/", game_state, name="game-state-today"),
     path("game-state/<mode:game_mode>/<date:date>/", game_state, name="game-state"),
     path("guess/<mode:game_mode>/", guess, name="guess-today"),
-    path("guess/<mode:game_mode>/<date:date>/", guess, name="guess"),
+    path("guess/<mode:game_mode>/<date:date>/", guess, name="guess-date"),
+    path("guess/<mode:game_mode>/<int:max_lives>/", guess, name="gues-lives"),
+    path(
+        "guess/<mode:game_mode>/<date:date>/<int:max_lives>/",
+        guess,
+        name="guess-date-lives",
+    ),
     path("results/<mode:game_mode>/", results, name="results-today"),
     path("results/<mode:game_mode>/<date:date>/", results, name="results"),
     path("played-modes/", played_modes, name="played-modes-today"),

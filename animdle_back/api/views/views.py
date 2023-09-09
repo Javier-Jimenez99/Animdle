@@ -125,7 +125,7 @@ def game_state(request, game_mode, date=japan_date()):
 @api_view(["POST"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def guess(request, game_mode, date=japan_date()):
+def guess(request, game_mode, date=japan_date(), max_lives=5):
     if request.method == "POST":
         # Restore after tryings
         if date > japan_date():
@@ -174,7 +174,7 @@ def guess(request, game_mode, date=japan_date()):
 
         # If not, check if the user has more attempts
         # Else result_obj.state = "pending"
-        elif len(attempts) >= 5:
+        elif len(attempts) >= max_lives:
             result_obj.state = "lose"
 
         result_obj.save()

@@ -19,6 +19,7 @@ const DIFFICULTY = [
     { "maxPlayableTime": 10, "blur": 10 },
     { "maxPlayableTime": 15, "blur": 5 },
     { "maxPlayableTime": 20, "blur": 0 },
+    { "maxPlayableTime": 30, "blur": 0 },
     { "maxPlayableTime": 1000, "blur": 0 } // This is to dont crash the game
 ]
 
@@ -39,6 +40,8 @@ function Game({ mode }) {
     const [inputValue, setInputValue] = useState("");
     const [allTitles, setAllTitles] = useState([]);
     const [guessDisabled, setGuessDisabled] = useState(true);
+
+    const maxLives = mode.includes("hardcore") && playedModes[mode.replace("hardcore-", "")] === "win" ? 6 : 5;
 
     useEffect(() => {
         getGameState(mode, date).then(response => {
@@ -70,7 +73,7 @@ function Game({ mode }) {
     }, [inputValue, allTitles])
 
     const handleGuess = () => {
-        postGuess(mode, date, inputValue).then(response => {
+        postGuess(mode, date, inputValue, maxLives).then(response => {
             setGameState(response.state);
             setAttempts(response.attempts);
             const newTitles = allTitles.filter(title => title !== inputValue);
@@ -89,7 +92,7 @@ function Game({ mode }) {
     }
 
     const handleSkip = () => {
-        postGuess(mode, date, "Skip!").then(response => {
+        postGuess(mode, date, "Skip!", maxLives).then(response => {
             setGameState(response.state);
             setAttempts(response.attempts);
             setResetVideo(true);
@@ -284,7 +287,7 @@ function Game({ mode }) {
                         showVideo={showVideo}
                     />
                     <div className="lives-row">
-                        <Lives livesUsed={attempts.length} gameState={gameState} />
+                        <Lives livesUsed={attempts.length} gameState={gameState} hardcore={mode.includes("hardcore")} maxLives={maxLives} />
                         <div className="switch-container">
                             <h1 className="switch-text">VIDEO</h1>
                             <input className="tgl tgl-skewed" id="cb3" type="checkbox" checked={showVideo} onChange={() => { setShowVideo(!showVideo) }} />

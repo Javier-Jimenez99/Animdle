@@ -147,7 +147,7 @@ class APITestCase(TestCase):
         date = self.today_date.strftime("%Y-%m-%d")
 
         response = self.client.post(
-            reverse("guess", args=[game_mode, date]),
+            reverse("guess-date", args=[game_mode, date]),
             data={"title": title},
             format="json",
         )
@@ -158,7 +158,7 @@ class APITestCase(TestCase):
 
         date = (self.today_date + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
         response = self.client.post(
-            reverse("guess", args=[game_mode, date]),
+            reverse("guess-date", args=[game_mode, date]),
             data={"title": title},
             format="json",
         )
@@ -174,7 +174,7 @@ class APITestCase(TestCase):
 
         for i in range(1, 5):
             response = self.client.post(
-                reverse("guess", args=[game_mode, date]),
+                reverse("guess-date", args=[game_mode, date]),
                 data={"title": title},
                 format="json",
             )
@@ -201,7 +201,7 @@ class APITestCase(TestCase):
 
         for i in range(5):
             response = self.client.post(
-                reverse("guess", args=[game_mode, date]),
+                reverse("guess-date", args=[game_mode, date]),
                 data={"title": title},
                 format="json",
             )

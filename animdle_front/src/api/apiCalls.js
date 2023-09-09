@@ -86,12 +86,12 @@ export const getGameState = async (mode, date) => {
     }
 }
 
-export const postGuess = async (mode, date, title) => {
+export const postGuess = async (mode, date, title, maxLives = 5) => {
     date = prepareDate(date);
     try {
         const token = await authGuest();
 
-        const url = API_BASE_URL + 'api/guess/' + mode + '/' + date + '/';
+        const url = API_BASE_URL + 'api/guess/' + mode + '/' + date + '/' + maxLives + '/';
         const response = await axios.post(url, { "title": title }, {
             headers: { "Authorization": "Token " + token }
         });

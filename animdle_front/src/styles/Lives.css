@@ -14,3 +14,23 @@
 .dead-heart{
     filter: grayscale(100%);
 }
+
+.heart-blocked-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 100%;
+    position: relative;
+}
+
+.heart-blocked-container .heart {
+    display: block;
+}
+
+.heart-blocked-container .lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
