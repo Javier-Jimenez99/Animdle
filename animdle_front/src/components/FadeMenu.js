@@ -11,7 +11,7 @@ import { usePlayedModes } from '../App';
 import Badge from '@mui/material/Badge';
 
 export default function FadeMenu({ options }) {
-    const { playedModes, setPlayedModes } = usePlayedModes();
+    const { playedModes } = usePlayedModes();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
