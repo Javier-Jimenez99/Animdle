@@ -36,7 +36,9 @@ function Lives({ livesUsed, gameState, hardcore = false, maxLives = 5 }) {
             if (maxLives === 6 && livesUsed < 1) {
                 hearts.pop();
                 hearts.push(
-                    <img className="heart" width={"15%"} src={heartGoldIcon} alt="Live Heart of remaining tries" key={hearts.length} />
+                    <Tooltip title={"You unlocked this in no hardcore mode"} followCursor>
+                        <img className="heart" width={"15%"} src={heartGoldIcon} alt="Live Heart of remaining tries" key={hearts.length} />
+                    </Tooltip >
                 );
             }
 
