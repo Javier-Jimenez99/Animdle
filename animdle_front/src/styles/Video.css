@@ -78,5 +78,11 @@
     font-weight: bold;
     color: rgba(255, 255, 255, 0.795);
     z-index: 1;  /* Asegúrate de que el texto esté sobre el video */
-  }
+}
+
+@media(max-width: 300px){
+    .overlay-text{
+        font-size: 1rem;
+    }
+}
   
