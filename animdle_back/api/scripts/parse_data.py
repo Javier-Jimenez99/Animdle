@@ -88,37 +88,69 @@ def merge_data(df_mal, df_at_animes):
 
 
 def select_animethemes(
-    df_anime_themes,
-    theme_type="OP",
-    min_days_diff=5,
+    df_anime_themes_easy,
+    df_anime_themes_hardcore,
+    start_date=None,
+    min_days_diff=10,
     max_days_diff=240,
     maximum_days=1080,
 ):
-    anime_themes = df_anime_themes.copy()
-    anime_themes = anime_themes[anime_themes["type"] == theme_type]
-    anime_themes["used"] = False
+    df_anime_themes_easy["used"] = False
+    df_anime_themes_hardcore["used"] = False
+
+    df_ed_easy = df_anime_themes_easy[df_anime_themes_easy["type"] == "ED"]
+    df_ed_hardcore = df_anime_themes_hardcore[df_anime_themes_hardcore["type"] == "ED"]
+
+    df_op_easy = df_anime_themes_easy[df_anime_themes_easy["type"] == "OP"]
+    df_op_hardcore = df_anime_themes_hardcore[df_anime_themes_hardcore["type"] == "OP"]
 
     days = []
+    used_animes = []
     for day in range(maximum_days):
         if day == 0:
             not_valid_animes = []
         else:
-            not_valid_animes = days[-min(min_days_diff, len(days)) :]
+            not_valid_animes = used_animes[-4 * min_days_diff :]
 
-        animes_themes_to_sample = anime_themes[
-            ~anime_themes["id_anime"].isin(not_valid_animes) & ~anime_themes["used"]
-        ]
+        day_row = {}
+        for name, df in {
+            "easy_endings": df_ed_easy,
+            "hardcore_endings": df_ed_hardcore,
+            "easy_openings": df_op_easy,
+            "hardcore_openings": df_op_hardcore,
+        }.items():
+            animes_themes_to_sample = df[
+                ~df["id_anime"].isin(not_valid_animes) & ~df["used"]
+            ]
 
-        sampled_row = animes_themes_to_sample.sample(1)
+            sampled_row = animes_themes_to_sample.sample(1)
 
-        anime_themes.loc[sampled_row.index, "used"] = True
-        days.append(sampled_row["id_theme"].values[0])
+            df.loc[sampled_row.index, "used"] = True
 
-        if day > max_days_diff:
-            id_theme = days[-max_days_diff]
-            anime_themes.loc[anime_themes["id_theme"] == id_theme, "used"] = False
+            day_row[name] = sampled_row["id_theme"].values[0]
 
-    return days
+            used_animes.append(sampled_row["id_anime"].values[0])
+
+            if day > max_days_diff:
+                id_theme = days[-max_days_diff][name]
+                df.loc[df["id_theme"] == id_theme, "used"] = False
+
+        days.append(day_row)
+
+    df_days = pd.DataFrame(days)
+    df_days.index.name = "id_day"
+    df_days = df_days.reset_index()
+
+    if start_date is None:
+        start_date = pd.Timestamp.now()
+    else:
+        start_date = pd.Timestamp(start_date)
+
+    start_date = start_date.floor("D")
+
+    df_days["date"] = pd.date_range(start_date, periods=len(df_days), freq="D")
+
+    return df_days
 
 
 def test_data(df_anime, df_theme, df_day):
@@ -311,39 +343,11 @@ def main(
         df_anime_themes["id_anime"].isin(df_anime_hardcore["id_anime"])
     ]
 
-    sampled_easy_openings = select_animethemes(
-        df_anime_themes_easy, theme_type="OP", min_days_diff=10
+    df_days = select_animethemes(
+        df_anime_themes_easy,
+        df_anime_themes_hardcore,
+        start_date=start_date,
     )
-    sampled_easy_endings = select_animethemes(
-        df_anime_themes_easy, theme_type="ED", min_days_diff=10
-    )
-
-    sampled_hardcore_openings = select_animethemes(
-        df_anime_themes_hardcore, theme_type="OP", min_days_diff=10
-    )
-    sampled_hardcore_endings = select_animethemes(
-        df_anime_themes_hardcore, theme_type="ED", min_days_diff=10
-    )
-
-    dict_days = {
-        "easy_openings": sampled_easy_openings,
-        "hardcore_openings": sampled_hardcore_openings,
-        "easy_endings": sampled_easy_endings,
-        "hardcore_endings": sampled_hardcore_endings,
-    }
-
-    df_days = pd.DataFrame(dict_days)
-    df_days.index.name = "id_day"
-    df_days = df_days.reset_index()
-
-    if start_date is None:
-        start_date = pd.Timestamp.now()
-    else:
-        start_date = pd.Timestamp(start_date)
-
-    start_date = start_date.floor("D")
-
-    df_days["date"] = pd.date_range(start_date, periods=len(df_days), freq="D")
 
     test_data(df_anime, df_anime_themes, df_days)
 
