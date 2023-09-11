@@ -12,6 +12,7 @@ import ConfettiExplosion from 'react-confetti-explosion';
 import { useNavigate } from "react-router-dom";
 import Joyride, { STATUS } from 'react-joyride';
 import { usePlayedModes } from "../App";
+import { useTranslation } from "react-i18next";
 
 const DIFFICULTY = [
     { "maxPlayableTime": 3, "blur": 40 },
@@ -24,6 +25,7 @@ const DIFFICULTY = [
 ]
 
 function Game({ mode }) {
+    const { t } = useTranslation('common');
     const { playedModes, setPlayedModes } = usePlayedModes();
     const navigate = useNavigate();
     const date = useParams().date;
@@ -112,12 +114,8 @@ function Game({ mode }) {
             placement: "center",
             content: (
                 <div style={{ textAlign: "center" }}>
-                    <h2>🌸 Welcome to Animdle!</h2>
-                    <p>
-                        Dive into the world of anime by guessing titles based on their openings.
-                        <br />
-                        Are you ready for the challenge?
-                    </p>
+                    <h2>{t("guide.intro.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.intro.text") }} />
                 </div>
             )
         },
@@ -125,12 +123,8 @@ function Game({ mode }) {
             target: ".video-container",
             content: (
                 <div>
-                    <h2>🎥 Video Player</h2>
-                    <p>
-                        Play, pause, or replay the video here.
-                        <br />
-                        It might be tricky at first, but with each play, you'll become a master!
-                    </p>
+                    <h2>{t("guide.video.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.video.text") }} />
                 </div>
             )
         },
@@ -138,12 +132,8 @@ function Game({ mode }) {
             target: ".guess-container",
             content: (
                 <div>
-                    <h2>✏️ Make Your Guess!</h2>
-                    <p>
-                        Enter your anime title guess here. Not sure?
-                        <br />
-                        You can skip, but it'll cost you a life.
-                    </p>
+                    <h2>{t("guide.guess.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.video.text") }} />
                 </div>
             )
         },
@@ -151,14 +141,8 @@ function Game({ mode }) {
             target: ".hearts-container",
             content: (
                 <div>
-                    <h2>❤️ Track Your Lives</h2>
-                    <p>
-                        Keep an eye on your hearts!
-                        <br />
-                        Lose them all, and it's game over.
-                        <br />
-                        A green heart? You've triumphed in the challenge!
-                    </p>
+                    <h2>{t("guide.lives.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.lives.text") }} />
                 </div>
             )
         },
@@ -166,14 +150,8 @@ function Game({ mode }) {
             target: ".switch-container",
             content: (
                 <div>
-                    <h2>📺 Video Switch</h2>
-                    <p>
-                        If you are afraid of spoilers, you can turn off the video here.
-                        <br />
-                        But be careful, you'll have to rely on your ears!
-                        <br />
-                        Anyways, when there is a spoiler you'll be warned.
-                    </p>
+                    <h2>{t("guide.videoSwitch.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.videoSwitch.text") }} />
                 </div>
             )
         },
@@ -181,14 +159,8 @@ function Game({ mode }) {
             target: "#long-button",
             content: (
                 <div>
-                    <h2>🔄 Game Modes</h2>
-                    <p>
-                        Why stop at openings?
-                        <br />
-                        Explore endings and the hardcore modes.
-                        <br />
-                        Switch things up right here!
-                    </p>
+                    <h2>{t("guide.modes.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.modes.text") }} />
                 </div>
             )
         },
@@ -197,7 +169,7 @@ function Game({ mode }) {
             placement: "center",
             content: (
                 <div>
-                    <h2>Best of luck and dive into the anime adventure! 🚀 </h2>
+                    <h2>{t("guide.end.title")}</h2>
                 </div>
             )
         }
@@ -208,12 +180,8 @@ function Game({ mode }) {
             target: ".switch-container",
             content: (
                 <div>
-                    <h2>🚨 Spoiler Alert!</h2>
-                    <p>
-                        This video contains spoilers!
-                        <br />
-                        If you want to continue, you can turn on the video here.
-                    </p>
+                    <h2>{t("spoilerAlert.title")}</h2>
+                    <p dangerouslySetInnerHTML={{ __html: t("spoilerAlert.text") }} />
                 </div>
             ),
             disableBeacon: true
@@ -240,6 +208,12 @@ function Game({ mode }) {
                                 primaryColor: '#dd6559',
                             }
                         }}
+                        locale={{
+                            back: t("guide.buttons.back"),
+                            close: t("guide.buttons.close"),
+                            last: t("guide.buttons.last"),
+                            next: t("guide.buttons.next"),
+                        }}
                     />
 
                     <Joyride
@@ -249,6 +223,9 @@ function Game({ mode }) {
                             options: {
                                 primaryColor: '#dd6559',
                             }
+                        }}
+                        locale={{
+                            close: t("guide.buttons.close"),
                         }}
                     />
 
@@ -299,10 +276,10 @@ function Game({ mode }) {
                         <SearchBar inputValue={inputValue} setInputValue={setInputValue} allResults={allTitles} />
                         <div className="search-buttons">
                             <button className="search-btn round-border" disabled={guessDisabled || ["win", "lose"].includes(gameState)} onClick={handleGuess}>
-                                GUESS
+                                {t("search.buttons.guess")}
                             </button>
                             <button className="search-btn round-border" disabled={["win", "lose"].includes(gameState)} onClick={handleSkip}>
-                                SKIP
+                                {t("search.buttons.skip")}
                             </button>
                         </div>
                     </div>

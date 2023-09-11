@@ -15,8 +15,11 @@ import lanternIcon from '../assets/pixelart_icon/lantern_icon.png';
 import { motion } from 'framer-motion';
 import { usePlayedModes } from "../App";
 import Badge from '@mui/material/Badge';
+import { useTranslation } from "react-i18next";
+
 
 function Results({ mode }) {
+    const { t } = useTranslation('common');
     const { playedModes } = usePlayedModes();
     const date = useParams().date;
     const dateString = date ? "/" + date : "";
@@ -73,25 +76,25 @@ function Results({ mode }) {
                     </div>
                     <div className="anime-result round-border simple-shadow">
                         <div className="result-circle simple-shadow">
-                            <h3 className="result-title">PLAYED</h3>
+                            <h3 className="result-title">{t("results.label.played")}</h3>
                             <div className="result-text">
                                 <CountUp end={results.played} duration={2} />
                             </div>
                         </div>
                         <div className="result-circle simple-shadow">
-                            <h3 className="result-title">WINS</h3>
+                            <h3 className="result-title">{t("results.label.wins")}</h3>
                             <div className="result-text">
                                 <p style={{ margin: "0px" }}><CountUp end={results.wins / results.played * 100} duration={2} /> %</p>
                             </div>
                         </div>
                         <div className="result-circle simple-shadow">
-                            <h3 className="result-title">STREAK</h3>
+                            <h3 className="result-title">{t("results.label.streak")}</h3>
                             <div className="result-text">
                                 <CountUp end={results.current_streak} duration={2} />
                             </div>
                         </div>
                         <div className="result-circle simple-shadow">
-                            <h3 className="result-title">RECORD</h3>
+                            <h3 className="result-title">{t("results.label.record")}</h3>
                             <div className="result-text">
                                 <CountUp end={results.record_streak} duration={2} />
                             </div>

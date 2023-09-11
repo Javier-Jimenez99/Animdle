@@ -14,12 +14,10 @@ export function usePlayedModes() {
   return useContext(appContext);
 }
 
-
 function App() {
   const modes = ["opening", "hardcore-opening", "ending", "hardcore-ending"];
 
   const [playedModes, setPlayedModes] = useState([]);
-
   useEffect(() => {
     getPlayedModes().then((data) => { setPlayedModes(data) });
   }, []);

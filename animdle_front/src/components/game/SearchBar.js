@@ -1,8 +1,10 @@
 import SearchIcon from '@mui/icons-material/Search';
 import "../../styles/SearchBar.css";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function SearchBar({ inputValue, setInputValue, allResults }) {
+    const { t } = useTranslation('common');
     const [results, setResults] = useState([]);
 
     const handleChange = (value) => {
@@ -33,7 +35,7 @@ function SearchBar({ inputValue, setInputValue, allResults }) {
             <div className="search-bar-container">
                 <div className="input-wrapper">
                     <SearchIcon style={{ color: "#DD675B" }} />
-                    <input className="search-bar" type="text" value={inputValue} placeholder="Search for an anime..." onChange={(e) => handleChange(e.target.value)} />
+                    <input className="search-bar" type="text" value={inputValue} placeholder={t("search.default-input")} onChange={(e) => handleChange(e.target.value)} />
                 </div>
                 {results && results.length > 0 &&
                     <div className="results-list">

@@ -1,0 +1,68 @@
+{
+    "gameModes": {
+        "opening": "Openings Wordle",
+        "ending": "Endings Wordle",
+        "hardcore-opening": "Hardcore Openings",
+        "hardcore-ending": "Hardcore Endings"
+    },
+    "time": "Next: {{time}}",
+    "search": {
+        "buttons": {
+            "guess": "GUESS",
+            "skip": "SKIP"
+        },
+        "default-input": "Search for an anime..."
+    },
+    "results": {
+        "label": {
+            "played": "PLAYED",
+            "wins": "WINS",
+            "streak": "STREAK",
+            "record": "RECORD"
+        },
+        "share": "Share your results!"
+    },
+    "guide": {
+        "intro": {
+            "title": "🌸 Welcome to Animdle!",
+            "text": "Dive into the world of anime by guessing titles based on their openings.</br>Are you ready for the challenge?"
+        },
+        "video": {
+            "title": "🎥 Video Player",
+            "text": "Play, pause, or replay the video here.</br>It might be tricky at first, but with each play, you'll become a master!"
+        },
+        "guess": {
+            "title": "✏️ Make Your Guess!",
+            "text": "Enter your anime title guess here. Not sure?</br>You can skip, but it'll cost you a life."
+        },
+        "lives": {
+            "title": "❤️ Track Your Lives",
+            "text": "Keep an eye on your hearts!</br>Lose them all, and it's game over.</br>A green heart? You've triumphed in the challenge!"
+        },
+        "videoSwitch": {
+            "title": "📺 Video Switch",
+            "text": "If you are afraid of spoilers,</br> you can turn off the video here.</br>Be careful, you'll have to rely on your ears!<br />When there is a spoiler you'll be warned."
+        },
+        "modes": {
+            "title": "🔄 Game Modes",
+            "text": "Choose between different game modes here.</br>Explore endings and the hardcore versions."
+        },
+        "end": {
+            "title": "Best of luck and dive into the anime adventure! 🚀 "
+        },
+        "buttons": {
+            "back": "Back",
+            "close": "Close",
+            "last": "Last",
+            "next": "Next",
+            "skip": "Skip"
+        }
+    },
+    "spoilerAlert": {
+        "title": "🚨 Spoiler Alert!",
+        "text": "This video may contains spoilers<br />enable it under your responsability."
+    },
+    "deactivatedVideo": "🚫 VIDEO DEACTIVATED 🚫",
+    "goldenUnlocked": "🎉 You unlocked the golden heart! 🎉",
+    "goldenLocked": "🔒 Win normal mode to unlock it 🔒"
+}

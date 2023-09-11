@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function Clock() {
+    const { t } = useTranslation('common');
     let time = new Date().toLocaleTimeString()
 
     const [ctime, setTime] = useState(time)
@@ -18,7 +20,7 @@ function Clock() {
     }
     setInterval(UpdateTime)
 
-    return <h1>Next: {ctime}</h1>;
+    return <h1>{t("time", { time: ctime })}</h1>;
 }
 
 export default Clock;

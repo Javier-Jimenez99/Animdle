@@ -4,10 +4,12 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import RedditIcon from '@mui/icons-material/Reddit';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { IconButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import "../../styles/Share.css"
 import "../../styles/utils.css"
 
 function Share({ results, date, game_mode }) {
+    const { t } = useTranslation('common');
 
     const generateMessage = () => {
         let message = "🌸 Animdle";
@@ -59,7 +61,7 @@ function Share({ results, date, game_mode }) {
 
     return (
         <div className="share-container round-border simple-shadow">
-            <h3 className="share-title">Share your results!</h3>
+            <h3 className="share-title">{t("results.share")}</h3>
             <div className="share-icons">
                 <IconButton onClick={() => openPopup(`https://twitter.com/intent/tweet?text=${twitterMessage}&url=${urlToShare}`)}>
                     <TwitterIcon className="share-icon round-border" />

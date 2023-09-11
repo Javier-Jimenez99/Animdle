@@ -1,0 +1,68 @@
+{
+    "gameModes": {
+        "opening": "Wordle de Openings",
+        "ending": "Wordle de Endings",
+        "hardcore-opening": "Openings Hardcore",
+        "hardcore-ending": "Endings Hardcore"
+    },
+    "time": "Siguiente: {{time}}",
+    "search": {
+        "buttons": {
+            "guess": "ADIVINAR",
+            "skip": "SALTAR"
+        },
+        "default-input": "Busca un anime..."
+    },
+    "results": {
+        "label": {
+            "played": "JUGADOS",
+            "wins": "VICTORIAS",
+            "streak": "RACHA",
+            "record": "RÉCORD"
+        },
+        "share": "¡Comparte tus resultados!"
+    },
+    "guide": {
+        "intro": {
+            "title": "🌸 ¡Bienvenido a Animdle!",
+            "text": "Sumérgete en el mundo del anime adivinando títulos basados en sus openings.</br>¿Estás listo para el desafío?"
+        },
+        "video": {
+            "title": "🎥 Reproductor de Video",
+            "text": "Reproduce, pausa o repite el video aquí.</br>Puede ser complicado al principio, pero con cada reproducción se irá simplificando."
+        },
+        "guess": {
+            "title": "✏️ ¡Haz tu suposición!",
+            "text": "Introduce aquí tu suposición del título del anime. ¿No estás seguro?</br>Puedes saltarlo, pero te costará una vida."
+        },
+        "lives": {
+            "title": "❤️ Controla tus vidas",
+            "text": "¡Échale un ojo en tus corazones!</br>Pierde todos, y se acabó el juego.</br>¿Un corazón verde? ¡Has completado el desafío!"
+        },
+        "videoSwitch": {
+            "title": "📺 Cambio de Video",
+            "text": "Si tienes miedo de spoilers,</br>puedes desactivar el video aquí.</br>Ten cuidado, ¡tendrás que confiar en tus oídos!<br />Cuando haya un spoiler serás advertido."
+        },
+        "modes": {
+            "title": "🔄 Modos de Juego",
+            "text": "Elige entre diferentes modos de juego aquí.</br>Explora los endings y los niveles hardcore."
+        },
+        "end": {
+            "title": "¡Buena suerte y sumérgete en la aventura anime! 🚀"
+        },
+        "buttons": {
+            "back": "Atrás",
+            "close": "Cerrar",
+            "last": "Último",
+            "next": "Siguiente",
+            "skip": "Saltar"
+        }
+    },
+    "spoilerAlert": {
+        "title": "🚨 ¡Alerta de Spoiler!",
+        "text": "Este video puede contener spoilers<br />actívalo bajo tu responsabilidad."
+    },
+    "deactivatedVideo": "🚫 VIDEO DESACTIVADO 🚫",
+    "goldenUnlocked": "🎉 ¡Has desbloqueado el corazón dorado! 🎉",
+    "goldenLocked": "🔒 Ganar el modo normal para desbloquearlo 🔒"
+}

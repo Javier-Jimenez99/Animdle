@@ -7,8 +7,10 @@ import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
 import "../../styles/utils.css";
+import { useTranslation } from "react-i18next";
 
 function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gameState, showVideo = true }) {
+    const { t } = useTranslation('common');
     const [playing, setPlaying] = useState(false);
     const [filter, setFilter] = useState("blur(0px)")
     const [progress, setProgress] = useState(0);
@@ -80,7 +82,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                         onPlay={handlePlay}
                         onPause={handlePause}
                     />
-                    {!showVideo && <div className="overlay-text">🚫 VIDEO DEACTIVATED 🚫</div>}
+                    {!showVideo && <div className="overlay-text">{t("deactivatedVideo")}</div>}
                 </div>
             </div>
             {

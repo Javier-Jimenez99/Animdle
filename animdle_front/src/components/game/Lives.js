@@ -4,11 +4,12 @@ import heartGoldIcon from "../../assets/pixelart_icon/heart_gold_icon.png";
 import heartGoldBlockedIcon from "../../assets/pixelart_icon/heart_gold_blocked_icon.png";
 import Tooltip from '@mui/material/Tooltip';
 import "../../styles/Lives.css";
+import { useTranslation } from "react-i18next";
 
 function Lives({ livesUsed, gameState, hardcore = false, maxLives = 5 }) {
+    const { t } = useTranslation('common');
 
     const generateHearts = () => {
-        console.log(livesUsed, maxLives, gameState, hardcore);
         let hearts = [];
         for (let i = 0; i < maxLives - livesUsed; i++) {
             hearts.push(<img className="heart" width={"13%"} src={heartIcon} alt="Live Heart of lost tries" key={hearts.length} />);
@@ -27,8 +28,8 @@ function Lives({ livesUsed, gameState, hardcore = false, maxLives = 5 }) {
         if (hardcore) {
             if (maxLives === 5) {
                 hearts.push(
-                    <Tooltip title={"Win no hardcore mode to unlock this heart"} followCursor>
-                        <img className="heart" width={"13%"} src={heartGoldBlockedIcon} alt="Live Heart of remaining tries" key={hearts.length} />
+                    <Tooltip title={t("goldenLocked")} followCursor>
+                        <img className="heart" width={"13%"} src={heartGoldBlockedIcon} alt="Extra Live Heart locked" key={hearts.length} />
                     </Tooltip>
                 );
             }
@@ -36,8 +37,8 @@ function Lives({ livesUsed, gameState, hardcore = false, maxLives = 5 }) {
             if (maxLives === 6 && livesUsed < 1) {
                 hearts.pop();
                 hearts.push(
-                    <Tooltip title={"You unlocked this in no hardcore mode"} followCursor>
-                        <img className="heart" width={"13%"} src={heartGoldIcon} alt="Live Heart of remaining tries" key={hearts.length} />
+                    <Tooltip title={t("goldenUnlocked")} followCursor>
+                        <img className="heart" width={"13%"} src={heartGoldIcon} alt="Extra Live Heart unlocked" key={hearts.length} />
                     </Tooltip >
                 );
             }
