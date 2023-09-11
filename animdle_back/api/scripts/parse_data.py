@@ -90,7 +90,7 @@ def merge_data(df_mal, df_at_animes):
 def select_animethemes(
     df_anime_themes_easy,
     df_anime_themes_hardcore,
-    start_date=None,
+    date_start=None,
     min_days_diff=10,
     max_days_diff=240,
     maximum_days=1080,
@@ -141,14 +141,14 @@ def select_animethemes(
     df_days.index.name = "id_day"
     df_days = df_days.reset_index()
 
-    if start_date is None:
-        start_date = pd.Timestamp.now()
+    if date_start is None:
+        date_start = pd.Timestamp.now()
     else:
-        start_date = pd.Timestamp(start_date)
+        date_start = pd.Timestamp(date_start)
 
-    start_date = start_date.floor("D")
+    date_start = date_start.floor("D")
 
-    df_days["date"] = pd.date_range(start_date, periods=len(df_days), freq="D")
+    df_days["date"] = pd.date_range(date_start, periods=len(df_days), freq="D")
 
     return df_days
 
@@ -300,7 +300,7 @@ def main(
     path_out: str = typer.Argument(
         "./api/scripts/parsed_data", help="Path to the output folder"
     ),
-    start_date: str = typer.Option(
+    date_start: str = typer.Option(
         None,
         help="Start date of the challenge, if provided, it will be the current date",
     ),
@@ -346,7 +346,7 @@ def main(
     df_days = select_animethemes(
         df_anime_themes_easy,
         df_anime_themes_hardcore,
-        start_date=start_date,
+        date_start=date_start,
     )
 
     test_data(df_anime, df_anime_themes, df_days)
