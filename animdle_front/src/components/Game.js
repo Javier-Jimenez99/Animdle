@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom";
-import { getGameState, postGuess } from "../api/apiCalls";
+import { getGameState, postGuess, getPlayedModes } from "../api/apiCalls";
 import "../styles/Game.css";
 import "../styles/utils.css";
 import Video from "./game/Video";
@@ -53,6 +53,8 @@ function Game({ mode }) {
             setAllTitles(response.all_titles);
             setSpoiler(response.spoiler);
             setShowVideo(!response.spoiler);
+
+            getPlayedModes().then((data) => { setPlayedModes(data) });
 
         }).catch(error => {
             console.log(error);

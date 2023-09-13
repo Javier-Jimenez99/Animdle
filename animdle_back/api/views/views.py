@@ -117,6 +117,7 @@ def game_state(request, game_mode, date=japan_date()):
             "video_url": theme_data["video_url"],
             "spoiler": theme_data["spoiler"],
             "all_titles": all_titles,
+            "created": created,
         }
 
         return Response(response_data, status=status.HTTP_200_OK)

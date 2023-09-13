@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Game from "./components/Game";
 import Results from "./components/Results";
 import { createContext, useContext, useState, useEffect } from "react";
-import { getPlayedModes } from "./api/apiCalls";
 import './styles/utils.css';
 import ReactGA from 'react-ga4';
 
@@ -20,9 +19,6 @@ function App() {
   const modes = ["opening", "hardcore-opening", "ending", "hardcore-ending"];
 
   const [playedModes, setPlayedModes] = useState([]);
-  useEffect(() => {
-    getPlayedModes().then((data) => { setPlayedModes(data) });
-  }, []);
 
   const value = {
     playedModes,
