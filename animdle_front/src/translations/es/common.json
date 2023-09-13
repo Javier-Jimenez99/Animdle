@@ -20,7 +20,8 @@
             "streak": "RACHA",
             "record": "RÉCORD"
         },
-        "share": "¡Comparte tus resultados!"
+        "share": "¡Comparte tus resultados!",
+        "copied": "¡Enlace copiado al portapapeles!"
     },
     "guide": {
         "intro": {
