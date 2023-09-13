@@ -86,7 +86,6 @@ function Game({ mode }) {
             setResetVideo(true);
 
             if (response.state !== "pending") {
-                console.log([mode], response.state);
                 setPlayedModes({ ...playedModes, [mode]: response.state });
             }
 
