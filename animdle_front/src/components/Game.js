@@ -133,7 +133,7 @@ function Game({ mode }) {
             content: (
                 <div>
                     <h2>{t("guide.guess.title")}</h2>
-                    <p dangerouslySetInnerHTML={{ __html: t("guide.video.text") }} />
+                    <p dangerouslySetInnerHTML={{ __html: t("guide.guess.text") }} />
                 </div>
             )
         },
