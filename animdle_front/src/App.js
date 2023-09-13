@@ -7,6 +7,9 @@ import { Helmet } from "react-helmet";
 import { createContext, useContext, useState, useEffect } from "react";
 import { getPlayedModes } from "./api/apiCalls";
 import './styles/utils.css';
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize("G-DXNQ33D5NK");
 
 export const appContext = createContext();
 
