@@ -20,7 +20,8 @@
             "streak": "STREAK",
             "record": "RECORD"
         },
-        "share": "Share your results!"
+        "share": "Share your results!",
+        "copied": "Link copied to clipboard!"
     },
     "guide": {
         "intro": {

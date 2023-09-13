@@ -56,7 +56,7 @@ function Share({ results, date, game_mode }) {
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(generateMessage(results) + "\n\nhttps://animdle.com/");
-        alert('Link copied to clipboard!');
+        alert(t("results.copied"));
     };
 
     return (
