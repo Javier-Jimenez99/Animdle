@@ -25,6 +25,8 @@ function App() {
     setPlayedModes,
   };
 
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname })
+
   return (
     <appContext.Provider value={value}>
       <Routes>
