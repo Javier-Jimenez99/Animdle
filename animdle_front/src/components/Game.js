@@ -63,9 +63,11 @@ function Game({ mode }) {
 
     useEffect(() => {
         if (gameState && gameState !== "pending") {
+            const time = gameState == "win" ? 2000 : 500;
+
             const timer = setTimeout(() => {
                 navigate("/" + mode + "/results/" + (date ? date : ""));
-            }, 2000);
+            }, time);
 
             return () => clearTimeout(timer);
         }
