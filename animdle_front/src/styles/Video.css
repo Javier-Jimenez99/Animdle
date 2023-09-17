@@ -39,32 +39,6 @@
     color: white;
 }
 
-.progress-bar{
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-.progress-bar-line{
-    width:100%;
-}
-
-.MuiLinearProgress-root{
-    background-color: rgb(73, 68, 68) !important;
-}
-
-.MuiLinearProgress-barColorPrimary{
-    background-color: rgb(255, 255, 255) !important;
-}
-
-.progress-bar-time{
-    color: white;
-    margin: 0 15px;
-    width: 50px;
-    text-align: right;
-    font-size: 18px;
-}
-
 .overlay-text {
     position: absolute;
     top: 0;
