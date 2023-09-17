@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react"
 import ReactPlayer from "react-player";
-import { IconButton } from '@mui/material';
+import { IconButton, Slider } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import PauseRoundedIcon from '@mui/icons-material/PauseRounded';
 import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
-import LinearProgress from '@mui/material/LinearProgress';
 import "../../styles/Video.css";
 import "../../styles/utils.css";
 import { useTranslation } from "react-i18next";
@@ -20,7 +19,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
         if (resetVideo) {
             setPlaying(false);
             setProgress(0);
-            playerRef.current.seekTo(0);
+            playerRef.current.seekTo(0, "seconds");
         }
     }, [resetVideo])
 
@@ -34,7 +33,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
 
     const handleProgress = (progress) => {
         if (progress.playedSeconds > maxPlayableTime) {
-            playerRef.current.seekTo(0);
+            playerRef.current.seekTo(0, "seconds");
             setPlaying(false);
         };
         setProgress(progress.playedSeconds)
@@ -50,8 +49,16 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
     }
 
     const handleReplay = () => {
-        playerRef.current.seekTo(0);
+        playerRef.current.seekTo(0, "seconds");
         setPlaying(true);
+    }
+
+    const handleClickSlider = (e, value) => {
+        const percentage = value / 100;
+        const time = percentage * maxPlayableTime;
+        playerRef.current.seekTo(time, 'seconds');
+        setProgress(time);
+        console.log(value, time, maxPlayableTime);
     }
 
     return (
@@ -97,7 +104,7 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                             </IconButton>
                         }
                         <div className="progress-bar">
-                            <LinearProgress className="progress-bar-line round-border" variant="determinate" value={progress / maxPlayableTime * 100} />
+                            <Slider style={{ marginLeft: "10px", color: "white" }} value={progress / maxPlayableTime * 100} onChangeCommitted={handleClickSlider} />
                             <p className="progress-bar-time">
                                 {progress.toFixed() + " s"}
                             </p>

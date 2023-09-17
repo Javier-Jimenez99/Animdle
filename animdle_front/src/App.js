@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Game from "./components/Game";
 import Results from "./components/Results";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import './styles/utils.css';
 import ReactGA from 'react-ga4';
 

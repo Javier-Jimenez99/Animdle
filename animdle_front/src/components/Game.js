@@ -59,11 +59,11 @@ function Game({ mode }) {
         }).catch(error => {
             console.log(error);
         })
-    }, [mode, date])
+    }, [mode, date, setPlayedModes])
 
     useEffect(() => {
         if (gameState && gameState !== "pending") {
-            const time = gameState == "win" ? 2000 : 500;
+            const time = gameState === "win" ? 2000 : 500;
 
             const timer = setTimeout(() => {
                 navigate("/" + mode + "/results/" + (date ? date : ""));
