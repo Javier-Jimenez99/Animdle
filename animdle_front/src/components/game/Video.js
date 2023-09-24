@@ -115,10 +115,10 @@ function Video({ maxPlayableTime, blur, videoURL, resetVideo, setResetVideo, gam
                 ["win", "lose"].includes(gameState) ? null :
                     <div className="video-controls">
                         {playing ?
-                            <IconButton onClick={handlePause}>
+                            <IconButton id="pauseIcon" onClick={handlePause}>
                                 <PauseRoundedIcon className="control-icon" />
                             </IconButton> :
-                            <IconButton onClick={handlePlay} >
+                            <IconButton id="playIcon" onClick={handlePlay} >
                                 <PlayArrowRoundedIcon className="control-icon" />
                             </IconButton>
                         }
