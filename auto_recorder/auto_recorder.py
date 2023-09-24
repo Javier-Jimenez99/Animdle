@@ -221,7 +221,9 @@ def download_image(url, output_path):
 def create_video(video_folder, utils_folder, mode, anime_data):
     front_clip = VideoFileClip(f"{utils_folder}/front_{mode}.mp4")
 
-    liveclips = [compose_live_clip(f"{video_folder}/{i}.mp4", i) for i in [1, 3, 5]]
+    liveclips = [
+        compose_live_clip(f"{video_folder}/{i}.mp4", i, utils_folder) for i in [1, 3, 5]
+    ]
     main_clip = concatenate_videoclips(liveclips).resize(front_clip.size)
 
     audio = VideoFileClip(f"{video_folder}/5.mp4").audio
@@ -345,7 +347,6 @@ def record_game(
     if date is None:
         date = pd.Timestamp.now().strftime("%Y-%m-%d")
 
-    print(f"{data_dir}/days.json")
     days_df = pd.read_json(f"{data_dir}/days.json")
     days_df["date"] = days_df["fields"].apply(lambda x: x["date"])
     themes_df = pd.read_json(f"{data_dir}/themes.json")
@@ -370,8 +371,9 @@ def record_game(
         if not os.path.exists(game_folder):
             os.makedirs(game_folder)
 
-        if not force and all(
-            [os.path.exists(f"{game_folder}/{i}.mp4") for i in [1, 3, 5]]
+        # Fix this expression
+        if force or any(
+            [not os.path.exists(f"{game_folder}/{i}.mp4") for i in [1, 3, 5]]
         ):
             driver = webdriver.Chrome(service=service, options=options)
             driver.set_window_size(574, 1036)
@@ -381,9 +383,10 @@ def record_game(
             play_game(driver, game_folder)
             driver.quit()
 
+        print("Creating video...")
         create_video(game_folder, utils_folder, col, anime_data)
 
-        # Detén la grabación y cierra el navegador
+        print("Done!")
 
 
 if __name__ == "__main__":

@@ -2,14 +2,13 @@ FROM python:3.9-slim
 
 # xvfb & ffmpeg 
 RUN apt-get update && \
-    apt-get install -y xvfb ffmpeg pulseaudio imagemagick
+    apt-get install -y xvfb ffmpeg pulseaudio imagemagick cron rsyslog wget unzip
 
 # modify ImageMagick policy file so that Textclips work correctly.
 RUN sed -i 's/none/read,write/g' /etc/ImageMagick-6/policy.xml 
 
 # Google Chrome
-RUN apt-get install -y wget unzip \
-    && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt install -y ./google-chrome-stable_current_amd64.deb \
     && rm google-chrome-stable_current_amd64.deb
 
@@ -30,6 +29,8 @@ RUN pip install -r /app/requirements.txt
 
 COPY animdle_back/api/scripts/parsed_data/ /app/parsed_data/
 
+RUN crontab -l | { cat; echo "* * * * * bash /app/recorder_script.sh >> /var/log/recorder_script.log"; } | crontab -
+
 WORKDIR /app
 
-CMD ["bash", "recorder_script.sh"]
+CMD cron -f
