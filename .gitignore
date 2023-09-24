@@ -161,3 +161,4 @@ cython_debug/
 
 animdle_front/node_modules/
 package-lock.json
+videos/games/*

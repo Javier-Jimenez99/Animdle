@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://api.animdle.com/';
+export const API_BASE_URL = 'https://localhost:8000/';

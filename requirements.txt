@@ -9,3 +9,6 @@ gunicorn
 django-cors-headers
 whitenoise
 selenium
+webdriver-manager
+moviepy==2.0.0.dev1
+opencv-python
