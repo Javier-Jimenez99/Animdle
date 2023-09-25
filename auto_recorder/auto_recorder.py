@@ -35,7 +35,7 @@ def split_text(text, max_length=15):
 
 
 SECOND_TEXTS = [
-    "Din't guess it? Keep thinking!",
+    "Didn't guess it? Keep thinking!",
     "Don't worry you still have a last chance!",
 ]
 
@@ -159,7 +159,7 @@ def back_clip(
     text_clip = text_clip.set_position(("center", 500)).set_duration(end_duration)
 
     anime_title_clip = TextClip(
-        split_text(anime_title, max_length=25),
+        split_text(anime_title, max_length=23),
         color="white",
         font="Impact",
         align="center",
@@ -352,6 +352,8 @@ def record_game(
     themes_df = pd.read_json(f"{data_dir}/themes.json")
     animes_df = pd.read_json(f"{data_dir}/animes.json")
 
+    # for d in pd.date_range("2023-08-23", "2023-09-25"):
+    #    date = d.strftime("%Y-%m-%d")
     day = days_df[days_df["date"] == date]["fields"].values[0]
 
     output_folder = f"{videos_folder}/games/{date}"
