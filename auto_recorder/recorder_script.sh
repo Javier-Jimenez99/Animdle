@@ -11,4 +11,4 @@ nohup Xvfb :1 -screen 0 594x1056x24 +extension RANDR &
 rm -rf /var/run/pulse /var/lib/pulse /root/.config/pulse
 pulseaudio --start --load=module-native-protocol-tcp --exit-idle-time=-1
 
-/usr/local/bin/python /app/auto_recorder.py --data-dir /app/parsed_data --videos-folder /app/videos
+/usr/local/bin/python /app/auto_recorder.py --data-dir /app/parsed_data --videos-folder /app/videos --since "2023-09-07"

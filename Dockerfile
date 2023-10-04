@@ -7,20 +7,11 @@ RUN apt-get update && \
 # modify ImageMagick policy file so that Textclips work correctly.
 RUN sed -i 's/none/read,write/g' /etc/ImageMagick-6/policy.xml 
 
-# Google Chrome
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt install -y ./google-chrome-stable_current_amd64.deb \
-    && rm google-chrome-stable_current_amd64.deb
+# Chromium
+RUN apt-get install -y chromium
 
-RUN google-chrome --version
-
-# ChromeDriver
-RUN wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5938.88/linux64/chromedriver-linux64.zip \
-    && unzip chromedriver-linux64.zip \
-    && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
-    && chown root:root /usr/bin/chromedriver \
-    && chmod +x /usr/bin/chromedriver \
-    && rm chromedriver-linux64.zip
+# Driver
+RUN apt-get install chromium-driver
 
 COPY auto_recorder/* /app/
 COPY requirements.txt /app/requirements.txt
@@ -29,8 +20,8 @@ RUN pip install -r /app/requirements.txt
 
 COPY animdle_back/api/scripts/parsed_data/ /app/parsed_data/
 
-RUN crontab -l | { cat; echo "* * * * * bash /app/recorder_script.sh >> /var/log/recorder_script.log"; } | crontab -
+#RUN crontab -l | { cat; echo "* * * * * bash /app/recorder_script.sh >> /var/log/recorder_script.log"; } | crontab -
 
 WORKDIR /app
 
-CMD cron -f
+CMD bash /app/recorder_script.sh

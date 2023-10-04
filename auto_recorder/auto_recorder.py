@@ -326,11 +326,31 @@ def play_game(driver, output_folder):
 
 
 def record_game(
-    data_dir="./animdle_back/api/scripts/parsed_data",
-    videos_folder="videos",
-    date=None,
-    force=False,
+    data_dir: str = "./animdle_back/api/scripts/parsed_data",
+    videos_folder: str = "videos",
+    since: str = None,
+    date: str = None,
+    force: bool = False,
 ):
+    """
+    Record a bot playing the game
+
+    Parameters
+    ----------
+    data_dir : str, optional
+        Directory with the data needed,
+        by default "./animdle_back/api/scripts/parsed_data"
+    videos_folder : str, optional
+        Folder to save the videos, by default "videos"
+    since : str, optional
+        Date since the videos are generated until today, by default None
+        It can only be used if date is None
+    date : str, optional
+        Date to generate a video, by default None
+        If it is None, since will be used, and if since is None, today will be used
+    force : bool, optional
+        Force to create the video even if it exists, by default False
+    """
     options = webdriver.ChromeOptions()
     # options.add_argument('--headless')
     options.add_argument("--display=:1")
@@ -344,51 +364,60 @@ def record_game(
 
     service = Service()
 
-    if date is None:
-        date = pd.Timestamp.now().strftime("%Y-%m-%d")
-
     days_df = pd.read_json(f"{data_dir}/days.json")
+
     days_df["date"] = days_df["fields"].apply(lambda x: x["date"])
     themes_df = pd.read_json(f"{data_dir}/themes.json")
     animes_df = pd.read_json(f"{data_dir}/animes.json")
 
-    # for d in pd.date_range("2023-08-23", "2023-09-25"):
-    #    date = d.strftime("%Y-%m-%d")
-    day = days_df[days_df["date"] == date]["fields"].values[0]
+    if date is None:
+        if since is not None:
+            dates = pd.date_range(since, pd.Timestamp.now()).strftime("%Y-%m-%d")
+        else:
+            dates = [pd.Timestamp.now().strftime("%Y-%m-%d")]
+    else:
+        dates = [date]
 
-    output_folder = f"{videos_folder}/games/{date}"
-    utils_folder = f"{videos_folder}/utils"
+    for date in dates:
+        # for d in pd.date_range("2023-08-23", "2023-09-25"):
+        #    date = d.strftime("%Y-%m-%d")
+        day = days_df[days_df["date"] == date]["fields"].values[0]
 
-    base_url = "https://animdle.com"
-    for col in ["opening", "hardcore_opening", "ending", "hardcore_ending"]:
-        theme_id = day[col]
-        anime_id = themes_df[themes_df["pk"] == theme_id]["fields"].values[0]["anime"]
-        anime_data = animes_df[animes_df["pk"] == anime_id]["fields"].values[0]
+        output_folder = f"{videos_folder}/games/{date}"
+        utils_folder = f"{videos_folder}/utils"
 
-        url = f"{base_url}/{col.replace('_','-')}/{date}"
+        base_url = "https://animdle.com"
+        for col in ["opening", "hardcore_opening", "ending", "hardcore_ending"]:
+            theme_id = day[col]
+            anime_id = themes_df[themes_df["pk"] == theme_id]["fields"].values[0][
+                "anime"
+            ]
+            anime_data = animes_df[animes_df["pk"] == anime_id]["fields"].values[0]
 
-        print(f"Playing {url}...")
+            url = f"{base_url}/{col.replace('_','-')}/{date}"
 
-        game_folder = f"{output_folder}/{col}"
-        if not os.path.exists(game_folder):
-            os.makedirs(game_folder)
+            print(f"Playing {url}...")
 
-        # Fix this expression
-        if force or any(
-            [not os.path.exists(f"{game_folder}/{i}.mp4") for i in [1, 3, 5]]
-        ):
-            driver = webdriver.Chrome(service=service, options=options)
-            driver.set_window_size(574, 1036)
-            driver.get(url)
+            game_folder = f"{output_folder}/{col}"
+            if not os.path.exists(game_folder):
+                os.makedirs(game_folder)
 
-            time.sleep(2)
-            play_game(driver, game_folder)
-            driver.quit()
+            # Fix this expression
+            if force or any(
+                [not os.path.exists(f"{game_folder}/{i}.mp4") for i in [1, 3, 5]]
+            ):
+                driver = webdriver.Chrome(service=service, options=options)
+                driver.set_window_size(574, 1036)
+                driver.get(url)
 
-        print("Creating video...")
-        create_video(game_folder, utils_folder, col, anime_data)
+                time.sleep(2)
+                play_game(driver, game_folder)
+                driver.quit()
 
-        print("Done!")
+            print("Creating video...")
+            create_video(game_folder, utils_folder, col, anime_data)
+
+            print("Done!")
 
 
 if __name__ == "__main__":
